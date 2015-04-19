@@ -1,5 +1,5 @@
 {
-  "name": "redkite-cms/redkitecms-framework",
+  "name": "redkite-labs/redkitecms-framework",
   "description": "RedKiteCms is an Open Source Content Management System Application, built on top of Symfony2 components and TwitterBootstrap frameworks, providing an easy an intuitive user-interface, to improve the website's content management experience",
   "keywords": ["redkite", "redkite labs", "redkite cms", "cms"],
   "homepage": "http://redkite-labs.com",
@@ -16,8 +16,8 @@
   },
   "autoload": {
     "psr-0": {
-        "RedKiteCms": ["lib/framework", "lib/plugins", "app/plugins", "lib/tests/functional", "src"],
-        "Controller": "lib/controllers"
+        "RedKiteCms": ["framework", "plugins"],
+        "Controller": "controllers"
     }
   }
 }
