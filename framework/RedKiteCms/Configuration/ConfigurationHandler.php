@@ -66,6 +66,10 @@ class ConfigurationHandler
      */
     private $rootDir;
     /**
+     * @var string
+     */
+    private $frameworkAbsoluteDir;
+    /**
      * @type string
      */
     private $appDir;
@@ -181,6 +185,10 @@ class ConfigurationHandler
     {
         $this->rootDir = $rootDir;
         $this->siteName = $siteName;
+        $namespaceToPath =  '/framework/' . str_replace('\\', '/', __NAMESPACE__);
+        $this->frameworkAbsoluteDir = str_replace(realpath($rootDir) . '/', "", __DIR__);
+        $this->frameworkAbsoluteDir = str_replace($namespaceToPath, "", $this->frameworkAbsoluteDir);
+
         $this->filesystem = new Filesystem();
         $this->checkWhenInProduction();
         $this->checkWhenIsTheme();
@@ -230,9 +238,9 @@ class ConfigurationHandler
         $this->uploadAssetsDirProduction = $this->webDir . $this->absoluteUploadAssetsDir . '/production';
         $this->absoluteUploadAssetsDir .= '/backend';
         $this->uploadAssetsDir = $this->webDir . $this->absoluteUploadAssetsDir;
-        $this->corePluginsDir = $this->rootDir . '/lib/plugins/RedKiteCms';
+        $this->corePluginsDir = $this->rootDir . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms';
         $this->customPluginsDir = $this->appDir . '/plugins/RedKiteCms';
-        $this->coreConfigDir = $this->rootDir . '/lib/config';
+        $this->coreConfigDir = $this->rootDir . '/' . $this->frameworkAbsoluteDir . '//config';
         $this->pagesRootDir = $this->siteDir . '/pages';
         $this->pagesDir = $this->pagesRootDir . '/pages';
         $this->pagesRemovedDir = $this->pagesRootDir . '/removed';

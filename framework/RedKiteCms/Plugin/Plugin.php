@@ -40,6 +40,10 @@ class Plugin
     /**
      * @type string
      */
+    private $frameworkAbsoluteDir;
+    /**
+     * @type string
+     */
     private $pluginDir;
     /**
      * @type array
@@ -53,10 +57,11 @@ class Plugin
      * @param string $rootDir
      * @param string $type
      */
-    public function __construct($pluginName, $rootDir, $type)
+    public function __construct($pluginName, $type, $rootDir, $frameworkAbsoluteDir)
     {
         $this->name = $pluginName;
         $this->rootDir = $rootDir;
+        $this->frameworkAbsoluteDir = $frameworkAbsoluteDir;
         $this->pluginDir = $this->getBaseDir($type, $this->name);
         $this->filesystem = new Filesystem();
         $this->parseConfiguration();
@@ -109,7 +114,7 @@ class Plugin
      */
     public function isCore()
     {
-        return (bool)strpos($this->pluginDir, 'lib/plugins');
+        return (bool)strpos($this->pluginDir, $this->frameworkAbsoluteDir . '/plugins');
     }
 
     /**
@@ -170,7 +175,7 @@ class Plugin
     private function getBaseDir($type, $name)
     {
         $paths = array(
-            sprintf('%s/lib/plugins/RedKiteCms/%s/%s', $this->rootDir, $type, $name),
+            sprintf('%s/%s/plugins/RedKiteCms/%s/%s', $this->rootDir, $this->frameworkAbsoluteDir, $type, $name),
             sprintf('%s/app/plugins/RedKiteCms/%s/%s', $this->rootDir, $type, $name),
         );
 

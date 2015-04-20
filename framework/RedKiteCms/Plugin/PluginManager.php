@@ -168,14 +168,18 @@ class PluginManager
         }
 
         $plugins = array();
+
+        $rootDir = $this->configurationHandler->rootDir();
+        $frameworkAbsoluteDir = $this->configurationHandler->frameworkAbsoluteDir();
         $finder = new Finder();
         $folders = $finder->directories()->depth(0)->in($pluginsDir);
         foreach ($folders as $folder) {
             $pluginName = basename($folder);
             $plugins[$pluginName] = new Plugin(
                 $pluginName,
-                $this->configurationHandler->rootDir(),
-                basename($pluginsDir)
+                basename($pluginsDir),
+                $rootDir,
+                $frameworkAbsoluteDir
             );
         }
 

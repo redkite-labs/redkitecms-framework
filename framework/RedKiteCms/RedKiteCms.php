@@ -92,7 +92,7 @@ abstract class RedKiteCms
 {
     private $app;
     private $siteName;
-    private $siteBuilder = null;
+    private $frameworkAbsoluteDir;
     protected $routingServiceProvider;
 
     /**
@@ -150,11 +150,12 @@ abstract class RedKiteCms
         $this->app["red_kite_cms.configuration_handler"]->setConfigurationOptions($configurationOptions);
         $siteNameDir = $this->app["red_kite_cms.root_dir"] . '/app/data/' . $this->siteName;
         if (!is_dir($siteNameDir)) {
-            $this->siteBuilder = new SiteBuilder($this->app["red_kite_cms.root_dir"], $this->siteName);
-            $this->siteBuilder->build();
+            $siteBuilder = new SiteBuilder($this->app["red_kite_cms.root_dir"], $this->siteName);
+            $siteBuilder->build();
         }
 
         $this->app["red_kite_cms.configuration_handler"]->boot();
+        $this->frameworkAbsoluteDir = $this->app["red_kite_cms.configuration_handler"]->frameworkAbsoluteDir();
     }
 
     private function registerTwig()
@@ -163,9 +164,9 @@ abstract class RedKiteCms
             new TwigServiceProvider(),
             array(
                 'twig.path' => array(
-                    $this->app["red_kite_cms.root_dir"] . '/lib/plugins/RedKiteCms/Core',
-                    $this->app["red_kite_cms.root_dir"] . '/lib/plugins/RedKiteCms/Block',
-                    $this->app["red_kite_cms.root_dir"] . '/lib/plugins/RedKiteCms/Theme',
+                    $this->app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Core',
+                    $this->app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Block',
+                    $this->app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Theme',
                     $this->app["red_kite_cms.root_dir"] . '/app/plugins/RedKiteCms/Block',
                     $this->app["red_kite_cms.root_dir"] . '/app/plugins/RedKiteCms/Theme',
                     $this->app["red_kite_cms.root_dir"] . '/src',
@@ -239,8 +240,8 @@ abstract class RedKiteCms
                 'translator',
                 function ($translator, $app) {
                     $resources = array(
-                        $app["red_kite_cms.root_dir"] . '/lib/plugins/RedKiteCms/Core/RedKiteCms/Resources/translations',
-                        $app["red_kite_cms.root_dir"] . '/lib/plugins/RedKiteCms/Block/*/Resources/translations',
+                        $app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Core/RedKiteCms/Resources/translations',
+                        $app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Block/*/Resources/translations',
                     );
 
                     // This is a workaround required because Symfony2 Finder throws an exception when a folder does not exist, so the
