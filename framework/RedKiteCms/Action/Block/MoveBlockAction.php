@@ -26,6 +26,8 @@ class MoveBlockAction extends BaseAction
             'language' => $data['language'],
             'country' => $data['country'],
             'sourceSlot' => $data['sourceSlot'],
+            'oldName' => $data['oldName'],
+            'newName' => $data['newName'],
             'blockname' => $data['name'],
             'position' => $data['position'],
         );

@@ -235,13 +235,14 @@ abstract class RedKiteCms
 
         $this->registerTwig();
 
+        $frameworkAbsoluteDir = $this->frameworkAbsoluteDir;
         $this->app['translator'] = $this->app->share(
             $this->app->extend(
                 'translator',
-                function ($translator, $app) {
+                function ($translator, $app) use($frameworkAbsoluteDir) {
                     $resources = array(
-                        $app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Core/RedKiteCms/Resources/translations',
-                        $app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Block/*/Resources/translations',
+                        $app["red_kite_cms.root_dir"] . '/' . $frameworkAbsoluteDir . '/plugins/RedKiteCms/Core/RedKiteCms/Resources/translations',
+                        $app["red_kite_cms.root_dir"] . '/' . $frameworkAbsoluteDir . '/plugins/RedKiteCms/Block/*/Resources/translations',
                     );
 
                     // This is a workaround required because Symfony2 Finder throws an exception when a folder does not exist, so the

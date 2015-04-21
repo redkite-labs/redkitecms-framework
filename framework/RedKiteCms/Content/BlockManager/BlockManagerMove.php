@@ -80,13 +80,15 @@ class BlockManagerMove extends BlockManager
                 'country',
                 'sourceSlot',
                 'position',
-                'blockname',
             )
         );
 
         $this->optionsResolver->setDefined(
             array(
                 'targetSlot',
+                'blockname',
+                'oldName',
+                'newName',
             )
         );
 
@@ -155,14 +157,14 @@ class BlockManagerMove extends BlockManager
             new BlockMovingAnotherSlotEvent($this->serializer, $sourceSlot, $targetSlot)
         );
 
-        $sourceFile = sprintf('%s/blocks/%s.json', $sourceDir, $options["blockname"]);
-        $blockInfo = $this->addSourceBlockToTargetSlot($sourceFile, $targetDir, $options);
+        $sourceFile = sprintf('%s/blocks/%s.json', $sourceDir, $options["oldName"]);
+        $encodedBlock = $this->addSourceBlockToTargetSlot($sourceFile, $targetDir, $options);
 
-        $decodedBlock = $blockInfo["decodedBlock"];
-        $decodedBlock["position"] = $options["position"];
-        $archiveSourceFile = $sourceDir . '/archive/' . $options["blockname"];
-        $archiveTargetFile = $targetDir . '/archive/' . $decodedBlock["name"];
-        $this->moveArchiveDir($archiveSourceFile, $archiveTargetFile, $decodedBlock["name"], $options["slot"]);
+        $archiveSourceFile = $sourceDir . '/archive/' . $options["oldName"];
+        $archiveTargetFile = $targetDir . '/archive/' . $options["newName"];
+        $this->moveArchiveDir($archiveSourceFile, $archiveTargetFile, $options["newName"], $options["slot"]);
+
+        $options["blockname"] = $options["oldName"];
         $this->removeBlockFromSlotFile($options, $sourceDir);
 
         Dispatcher::dispatch(
@@ -172,17 +174,17 @@ class BlockManagerMove extends BlockManager
         DataLogger::log(
             sprintf(
                 'Block "%s" has been moved from the "%s" slot to the "%s" slot, on page "%s" for the "%s_%s" language. It has been renamed as "%s"',
-                $options["blockname"],
+                $options["oldName"],
                 $sourceSlot,
                 $targetSlot,
                 $options["page"],
                 $options["language"],
                 $options["country"],
-                $decodedBlock["name"]
+                $options["newName"]
             )
         );
 
-        return $blockInfo["encodedBlock"];
+        return $encodedBlock;
     }
 
     private function fetchSlotDir($slot, $options, $baseDir, $username)
@@ -196,19 +198,17 @@ class BlockManagerMove extends BlockManager
 
     private function addSourceBlockToTargetSlot($sourceFile, $targetDir, $options)
     {
-        $targetBlockName = $this->addBlockToSlot($targetDir, $options);
+        $targetBlockName = $options["blockname"] = $options["newName"];
+        $this->addBlockToSlot($targetDir, $options);
         $targetFile = sprintf('%s/blocks/%s.json', $targetDir, $targetBlockName);
 
         $this->filesystem->copy($sourceFile, $targetFile, true);
         $this->filesystem->remove($sourceFile);
 
-        $decodedBlock = $this->changeBlockSlotAndName($targetFile, $targetBlockName, $options["slot"]);
+        $this->changeBlockSlotAndName($targetFile, $targetBlockName, $options["slot"]);
         $encodedBlock = FilesystemTools::readFile($targetFile);
 
-        return array(
-            "decodedBlock" => $decodedBlock,
-            "encodedBlock" => $encodedBlock,
-        );
+        return $encodedBlock;
     }
 
     private function moveBlockToSameSlot($baseDir, array $options, $username)
@@ -220,7 +220,7 @@ class BlockManagerMove extends BlockManager
         $slotsFilename = sprintf('%s/slot.json', $sourceDir);
         $slot = JsonTools::jsonDecode(FilesystemTools::readFile($slotsFilename), true);
         $blocks = $slot["blocks"];
-        $key = array_search($options["blockname"], $slot["blocks"]);
+        $key = array_search($options["blockname"], $blocks);
         $blockName = $blocks[$key];
         unset($blocks[$key]);
         array_splice($blocks, $options["position"], 0, $blockName);

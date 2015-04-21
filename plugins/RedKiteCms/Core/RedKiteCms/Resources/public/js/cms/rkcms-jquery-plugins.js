@@ -287,27 +287,14 @@
                 'country': country
             }
         };
-
-        /*
-        var url = frontcontroller + '/backend/block/move';
-        var ajaxData = {
-            'sourceSlot': data["slot_name"],
-            'name': data["name"],
-            'position': index,
-            'page':  page,
-            'language': language,
-            'country': country
-        };
-
-        executeAjax(url, ajaxData);*/
     }
 
     function _moveBlockToAnotherSlot(ui, sortable)
     {
         $('body').data('rkcms-target-list', sortable);
 
-        var slot = ko.dataFor(sortable);
-        var targetSlotName = slot.slotName;
+        var targetSlot = ko.dataFor(sortable);
+        var targetSlotName = targetSlot.slotName;
 
         // Adds the block to target slot
         var block = ko.dataFor(ui.item[0]);
@@ -315,23 +302,31 @@
         block.slot_name = targetSlotName;
         var index = _getIndex(sortable, block["name"]);
 
+        var sourceSlot = ko.dataFor(ui.sender[0]);
+        var sourceBlockName = block.name;
+
         // When dragging an element to an empty slot we must refer to ko observable
         // otherwise, when adding to a not empty slot, we must refer to ko raw array
         // because, if we would refer to observable for this situation, ko refreshes
         // the slot and the dragged element is displayed twice
-        if (slot.blocks().length == 0) {
-            slot.blocks.splice(index, 0, block);
+        if (targetSlot.blocks().length == 0) {
+            targetSlot.blocks.splice(index, 0, block);
         }else {
-            slot.blocks().splice(index, 0, block);
+            var next = parseInt(targetSlot.next());
+            targetSlot.next(next + 1);
+            block.name = 'block' + next;
+            block.slot_name = targetSlotName;
+
+            targetSlot.blocks().splice(index, 0, block);
 
             // Here we must manually refresh the data-slot-name attribute
             $($(ui.item[0]).children()[0])
                 .attr('data-slot-name', targetSlotName)
+                .attr('data-name', block.name)
             ;
         }
 
         // Removes the block from source slot
-        var sourceSlot = ko.dataFor(ui.sender[0]);
         sourceSlot.blocks.remove(block);
 
         queue['rkcms-block-move-'  + sourceSlot.slotName + '-' +  targetSlotName] = {
@@ -340,37 +335,14 @@
             'data' :  {
                 'sourceSlot': sourceSlot.slotName,
                 'targetSlot': targetSlotName,
-                'name': block.name,
+                'oldName': sourceBlockName,
+                'newName': block.name,
                 'position': index,
                 'page':  page,
                 'language': language,
                 'country': country
             }
         };
-
-        /*
-        var url = frontcontroller + '/backend/block/move';
-        var ajaxData = {
-            'sourceSlot': sourceSlot.slotName,
-            'targetSlot': targetSlotName,
-            'name': block.name,
-            'position': index,
-            'page':  page,
-            'language': language,
-            'country': country
-        };
-
-        executeAjax(url, ajaxData,
-            function(response)
-            {
-                // Dragging a block to another slot chamges the block name, so we must update the block and
-                // find the dom elememt which represents the block itself and change the data-name attribute
-                // manually
-                var element = $("[data-slot-name='" + targetSlotName + "'][data-name='" + block["name"] + "']");
-                block.name = response.name;
-                $(element).attr('data-name', block.name);
-            }
-        );*/
     }
 
     function _getIndex(element, name)

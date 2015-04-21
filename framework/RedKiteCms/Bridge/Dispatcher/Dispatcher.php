@@ -59,8 +59,8 @@ class Dispatcher
             return $event;
         }
 
-        DataLogger::log(sprintf('The "%s" event was dispatched', $eventName));
         self::$dispatcher->dispatch($eventName, $event);
+        DataLogger::log(sprintf('The "%s" event was dispatched', $eventName));
         if ($event->getAbort()) {
             DataLogger::log(sprintf('The "%s" event was aborted', $eventName), DataLogger::ERROR);
 
