@@ -25,7 +25,6 @@
         self._editor = null;
         self._forceEditorInit = false;
         self._timer1 = null;
-        self._timer2 = null;
         self._model = null;
         self._visible = true;
 
@@ -91,27 +90,26 @@
 
     AceEditor.prototype.open = function()
     {
-        if(!this._forceEditorInit && this._model != null && this._model == $(document).data('rkcms-active-model')) {
-            return;
-        }
-
-        $(this._element)
-            .width(this._options.width)
-            .height(this._options.height)
-        ;
-        $('.rkcms-ace-editor-error').width(this._options.width);
-
-
-        if(this._editor != null) {
-            this._editor.destroy();
-        }
-
-        this._model = blockEditorModel.activeModel;
-        if (this._model == null) {
-            return;
-        }
-
         var self = this;
+        if(!self._forceEditorInit && self._model != null && self._model == $(document).data('rkcms-active-model')) {
+            return;
+        }
+
+        $(self._element)
+            .width(self._options.width)
+            .height(self._options.height)
+        ;
+        $('.rkcms-ace-editor-error').width(self._options.width);
+
+        if(self._editor != null) {
+            self._editor.destroy();
+        }
+
+        self._model = blockEditorModel.activeModel;
+        if (self._model == null) {
+            return;
+        }
+
         self._editor = ace.edit(self._element);
         self._editor.setTheme("ace/theme/" + self._options.theme);
         self._editor.setFontSize(14);
@@ -134,7 +132,6 @@
         function _update(content, source)
         {
             var model = self._model;
-            window.clearTimeout(self._timer2);
             if (model.source != content) {
                 self._forceEditorInit = true;
                 if (model.update(content, source) == false){
@@ -143,7 +140,6 @@
                 model.resize();
                 self._placeEditor();
                 _save();
-                //self._timer2 = window.setTimeout(_save, 1500);
             }
         }
 
@@ -164,7 +160,6 @@
 
                 _update(obj, content);
             } catch (err) {
-                window.clearTimeout(self._timer2);
                 msg = '<p>The yml code you entered is malformed:<br />' + err.message + '</p>';
             }
 
@@ -192,10 +187,6 @@
         $(".rkcms-blocks-editor:visible").toggle();
     };
 
-
-
-
-    
     // YMLEDITOR EDITOR PLUGIN DEFINITION
     // ==================================
     var old = $.fn.aceEditor;

@@ -89,7 +89,7 @@ class PermalinkManager
     }
 
     /**
-     * Removes the given block from permalins list
+     * Removes the given block from permalinks list
      *
      * @param $blockFile
      *

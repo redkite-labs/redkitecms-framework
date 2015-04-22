@@ -465,47 +465,7 @@ abstract class RedKiteCms
 
         $siteIncompleteFile = $this->app["red_kite_cms.root_dir"] . '/app/data/' . $this->siteName . '/incomplete.json';
         if (file_exists($siteIncompleteFile)) {
-            $isTheme = $this->app["red_kite_cms.configuration_handler"]->isTheme();
-            $user = null;
-            if (!$isTheme) {
-                $user = 'admin';
-            }
-
-            $language = "en_GB";
-            $pages = $theme->getPages();
-            $this->app["red_kite_cms.page_collection_manager"]->contributor($user);
-            $theme = $this->app["red_kite_cms.theme"];
-            foreach($pages as $pageName => $templateName) {
-                $page = array(
-                    "name" => $pageName,
-                    "template" => $templateName,
-                    "seo" => array(
-                        array(
-                        "permalink" => str_replace('_', '-', strtolower($language)) . "-" . $pageName,
-                        "changed_permalinks" => array(),
-                        "title" => $pageName . '-title',
-                        "description" => $pageName . '-description',
-                        "keywords" => $pageName . '-keywords',
-                        "sitemap_frequency" => 'monthly',
-                        "sitemap_priority" => '0.5',
-                        "language" => $language,
-                    ),)
-                );
-                $this->app["red_kite_cms.page_collection_manager"]
-                    ->add($theme, $page)
-                ;
-            }
-            $this->app["red_kite_cms.slots_generator"]->generate();
-
-            if (!$isTheme) {
-                $blockManager = new BlockManagerApprover(
-                    $this->app["jms.serializer"],
-                    $this->app["red_kite_cms.block_factory"],
-                    new OptionsResolver()
-                );
-                $this->app["red_kite_cms.page_collection_manager"]->saveAllPages($blockManager, array('en_GB'));
-            }
-
+            $this->createWebsitePages($theme);
             unlink($siteIncompleteFile);
         }
 
@@ -521,6 +481,78 @@ abstract class RedKiteCms
             CmsEvents::CMS_BOOTED,
             new CmsBootedEvent($this->app["red_kite_cms.configuration_handler"])
         );
+    }
+
+    private function createWebsitePages($theme)
+    {
+        $isTheme = $this->app["red_kite_cms.configuration_handler"]->isTheme();
+        $user = null;
+        if (!$isTheme) {
+            $user = 'admin';
+        }
+
+        $language = "en_GB";
+        $pages = $theme->getPages();
+        $this->app["red_kite_cms.page_collection_manager"]->contributor($user);
+        $theme = $this->app["red_kite_cms.theme"];
+
+        $this->app["red_kite_cms.slots_generator"]->generate();
+        foreach($pages as $pageName => $templateName) {
+            $page = array(
+                "name" => $pageName,
+                "template" => $templateName,
+                "seo" => array(
+                    array(
+                        "permalink" => str_replace('_', '-', strtolower($language)) . "-" . $pageName,
+                        "changed_permalinks" => array(),
+                        "title" => $pageName . '-title',
+                        "description" => $pageName . '-description',
+                        "keywords" => $pageName . '-keywords',
+                        "sitemap_frequency" => 'monthly',
+                        "sitemap_priority" => '0.5',
+                        "language" => $language,
+                    ),)
+            );
+            $this->app["red_kite_cms.page_collection_manager"]
+                ->add($theme, $page)
+            ;
+
+            $page = new Page($this->app["jms.serializer"],
+                new OptionsResolver(),
+                $this->app["red_kite_cms.slot_parser"]
+            );
+            $pageOptions = array(
+                'page' => $pageName,
+                'language' => 'en',
+                'country' => 'GB',
+            );
+            $page->render($this->app["red_kite_cms.configuration_handler"]->siteDir(), $pageOptions, $user);
+            $this->savePermalinks($page->getPageSlots());
+            $this->savePermalinks($page->getCommonSlots());
+            $this->app["red_kite_cms.permalink_manager"]->save();
+        }
+
+        if (!$isTheme) {
+            $blockManager = new BlockManagerApprover(
+                $this->app["jms.serializer"],
+                $this->app["red_kite_cms.block_factory"],
+                new OptionsResolver()
+            );
+            $this->app["red_kite_cms.page_collection_manager"]->saveAllPages($blockManager, array('en_GB'));
+        }
+    }
+
+    private function savePermalinks($slots)
+    {
+        foreach($slots as $slot) {
+            foreach($slot->getEntitiesInUse() as $block) {
+                $slotDir = $slot->getDirInUse();
+                $decodedBlock = json_decode($block, true);
+                $blockFile = $slotDir . '/blocks/' . $decodedBlock["name"] . '.json';
+                $htmlBlock = $this->app["red_kite_cms.page_renderer_production"]->renderBlock($block);
+                $this->app["red_kite_cms.permalink_manager"]->add($blockFile, $htmlBlock);
+            }
+        }
     }
 
     private function registerRoutes()

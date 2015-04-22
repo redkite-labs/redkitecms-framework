@@ -1,3 +1,18 @@
+{#
+   This file is part of the RedKite CMS Application and it is distributed
+   under the MIT License. To use this application you must leave
+   intact this copyright notice.
+
+   Copyright (c) RedKite Labs <webmaster@redkite-labs.com>
+
+   For the full copyright and license information, please view the LICENSE
+   file that was distributed with this source code.
+
+   For extra documentation and help please visit http://www.redkite-labs.com
+
+   @license    MIT License
+#}
+
 {% extends "RedKiteCms/Resources/views/Frontend/base.html.twig" %}
 
 {% block external_stylesheets %}
@@ -9,27 +24,25 @@
 <div class="container">
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            <h1>Error detected</h1>
-            <p>An error occured when saving changes to backend:</p>
+            <h1>{{ 'queue_error_detected_title'|trans({}, 'RedKiteCms', cms_language) }}</h1>
+            <p>{{ 'queue_error_detected_body'|trans({}, 'RedKiteCms', cms_language) }}</p>
             <div class="alert alert-danger" role="alert">{{ queue.error }}</div>
             <p>
-                This error should not happen and it is probably caused by a bug in the application. Please, try to
-                fix that issue and, if you can find that bug, please report it at <a href="https://github.com/redkite-labs/RedKiteCms/issues">https://github.com/redkite-labs/RedKiteCms/issues</a>.
+                {{ 'queue_error_detected_body_1'|trans({}, 'RedKiteCms', cms_language) }} <a href="https://github.com/redkite-labs/RedKiteCms/issues">https://github.com/redkite-labs/RedKiteCms/issues</a>.
             </p>
             <p>
-                If you are not able to fix that issue, you can try to remove the entry which causes the problem in the <b>{{ queue_file }}</b>,
-                but you will loose that operation and you might have other problems with the queue flow execution, if other operations
-                depends on the one you removed.
+                {{ 'queue_error_detected_body_2'|trans({}, 'RedKiteCms', cms_language) }} <b>{{ queue_file }}</b>,
+                {{ 'queue_error_detected_body_3'|trans({}, 'RedKiteCms', cms_language) }}
             </p>
             <p>
-                At last you can remove the <b>{{ queue_file }}</b> but you will loose all the operation you made.
+                {{ 'queue_error_detected_body_4'|trans({}, 'RedKiteCms', cms_language) }} <b>{{ queue_file }}</b> {{ 'queue_error_detected_body_5'|trans({}, 'RedKiteCms', cms_language) }}
             </p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            <h2>Queue</h2>
-            <p>You can find the first five operations not executed listed down below:</p>
+            <h2>{{ 'queue_title'|trans({}, 'RedKiteCms', cms_language) }}</h2>
+            <p>{{ 'queue_body'|trans({}, 'RedKiteCms', cms_language) }}</p>
             <table class="table table-striped">
                 {% for action in queue.queue|slice(0, 5) %}
                 <tr>
@@ -40,10 +53,10 @@
                 {% endfor %}
             </table>
             {% if queue.queue|length > 5 %}
-            <p>More {{ queue.queue|length - 5 }}</p>
+            <p>{{ 'queue_more'|trans({}, 'RedKiteCms', cms_language) }} {{ queue.queue|length - 5 }}</p>
             {% endif %}
             <form action="{{ path('_rkcms_save_queue') }}" method="post">
-                <button class="rkcms-queue-action-button btn btn-primary">Execute</button>
+                <button class="rkcms-queue-action-button btn btn-primary">{{ 'queue_execute'|trans({}, 'RedKiteCms', cms_language) }}</button>
             </form>
         </div>
     </div>

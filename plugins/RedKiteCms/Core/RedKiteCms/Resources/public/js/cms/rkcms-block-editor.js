@@ -67,7 +67,9 @@ var BlockEditorModel = function ()
             }
         };
 
+        objBlock.is_new = true;
         blocks.splice(position, 0, objBlock);
+
         $(document).trigger("rkcms.event.block_added", [ model ]);
     }.bind(self);
 

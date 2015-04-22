@@ -4,14 +4,14 @@
 
 <div id="rkcms-user">
     <div>
-        <h3>Change password for {{ user }} user</h3>
+        <h3>{{ "dashboard_label_change_password" | trans([], 'RedKiteCms', cms_language) }} {{ user }} {{ "dashboard_label_user" | trans([], 'RedKiteCms', cms_language) }}</h3>
         <form method="post" action="{{ path("_rkcms_save_user") }}">
             <div class="form-group">
-                <label for="password">New password</label>
+                <label for="password">{{ "dashboard_label_new_password" | trans([], 'RedKiteCms', cms_language) }}</label>
                 <input id="password" name="password" type="password" />
             </div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default">{{ "common_label_change" | trans([], 'RedKiteCms', cms_language) }}</button>
         </form>
     </div><br />
     {% for message in app.session.getFlashBag.get('user_messages') %}

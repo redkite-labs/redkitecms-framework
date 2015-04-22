@@ -37,14 +37,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">RedKite CMS {{ version }} Dashboard</a>
+    <a class="navbar-brand" href="index.html">RedKite CMS {{ version }} {{ "common_label_dashboard"|trans({}, 'RedKiteCms', cms_language) }}</a>
 </div>
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
             <li class="sidebar-search">
                 <div class="input-group custom-search-form">
-                    <h4>Hello {{ app['security'].getToken.getUser.getUserName|capitalize }}!</h4>
+                    <h4>{{ "dashboard_label_hello"|trans({}, 'RedKiteCms', cms_language) }} {{ app['security'].getToken.getUser.getUserName|capitalize }}!</h4>
                 </div>
                 <!-- /input-group -->
             </li>

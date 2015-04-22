@@ -11,13 +11,13 @@
 {% endblock %}
 <div id="rkcms-pages-editor-table" data-pages="{{ pages }}">
     <div>
-        <h1 class="page-header">Pages</h1>
+        <h1 class="page-header">{{ "common_label_pages"|trans({}, 'RedKiteCms', cms_language) }}</h1>
         <table class="table table-condensed table-responsive">
             <thead>
                 <tr>
                     <th> </th>
-                    <th>Page</th>
-                    <th>Template</th>
+                    <th>{{ "dashboard_label_page"|trans({}, 'RedKiteCms', cms_language) }}</th>
+                    <th>{{ "dashboard_label_template"|trans({}, 'RedKiteCms', cms_language) }}</th>
                 </tr>
             </thead>
 
@@ -51,7 +51,7 @@
         </table>
     </div>
     <div>
-        <button id="rkcms-add-page-button" class="btn btn-default btn-xs" data-bind="click: add"><i class="fa fa-plus"> Add new</i>
+        <button id="rkcms-add-page-button" class="btn btn-default btn-xs" data-bind="click: add"><i class="fa fa-plus"> {{ "dashboard_label_add_page"|trans({}, 'RedKiteCms', cms_language) }}</i>
     </div>
 </div>
 {% endblock %}

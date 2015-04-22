@@ -121,6 +121,10 @@
             <source>common_label_approve</source>
             <target>Approve</target>
         </trans-unit>
+        <trans-unit id="common_label_change">
+            <source>common_label_change</source>
+            <target>Change</target>
+        </trans-unit>
 
         <!-- CONTROL PANEL -->
         <trans-unit id="control_panel_edit_contents_button">
@@ -314,6 +318,82 @@
         <trans-unit id="production_page_not_available">
             <source>production_page_not_available</source>
             <target>The page you are looking for is not available</target>
+        </trans-unit>
+
+        <!-- DASHBOARD -->
+        <trans-unit id="dashboard_label_hello">
+            <source>dashboard_label_hello</source>
+            <target>Hello</target>
+        </trans-unit>
+        <trans-unit id="dashboard_label_page">
+            <source>dashboard_label_page</source>
+            <target>Page</target>
+        </trans-unit>
+        <trans-unit id="dashboard_label_template">
+            <source>dashboard_label_template</source>
+            <target>Template</target>
+        </trans-unit>
+        <trans-unit id="dashboard_label_add_page">
+            <source>dashboard_label_add_page</source>
+            <target>Add new page</target>
+        </trans-unit>
+        <trans-unit id="dashboard_label_change_password">
+            <source>dashboard_label_change_password</source>
+            <target>Change password for</target>
+        </trans-unit>
+        <trans-unit id="dashboard_label_user">
+            <source>dashboard_label_user</source>
+            <target>user</target>
+        </trans-unit>
+        <trans-unit id="dashboard_label_new_password">
+            <source>dashboard_label_new_password</source>
+            <target>New password</target>
+        </trans-unit>
+
+        <!-- QUEUE -->
+        <trans-unit id="queue_error_detected_title">
+            <source>queue_error_detected_title</source>
+            <target>Error detected</target>
+        </trans-unit>
+        <trans-unit id="queue_error_detected_body">
+            <source>queue_error_detected_body</source>
+            <target>An error occured when saving changes to backend:</target>
+        </trans-unit>
+        <trans-unit id="queue_error_detected_body_1">
+            <source>queue_error_detected_body_1</source>
+            <target>This error should not happen and it is probably caused by a bug in the application. Please, try to fix that issue and, if you can find that bug, please report it at</target>
+        </trans-unit>
+        <trans-unit id="queue_error_detected_body_2">
+            <source>queue_error_detected_body_2</source>
+            <target>If you are not able to fix that issue, you can try to remove the entry which causes the problem in the</target>
+        </trans-unit>
+        <trans-unit id="queue_error_detected_body_3">
+            <source>queue_error_detected_body_3</source>
+            <target>but you will loose that operation and you might have other problems with the queue flow execution, if other operations depends on the one you removed.</target>
+        </trans-unit>
+        <trans-unit id="queue_error_detected_body_4">
+            <source>queue_error_detected_body_4</source>
+            <target>At last you can remove the</target>
+        </trans-unit>
+        <trans-unit id="queue_error_detected_body_5">
+            <source>queue_error_detected_body_5</source>
+            <target>but you will loose all the operation you made.</target>
+        </trans-unit>
+        <trans-unit id="queue_title">
+            <source>queue_title</source>
+            <target>Queue</target>
+        </trans-unit>
+        <trans-unit id="queue_body">
+            <source>queue_body</source>
+            <target>You can find the first five operations not executed listed down below:</target>
+        </trans-unit>
+        <trans-unit id="queue_more">
+            <source>queue_more</source>
+            <target>More</target>
+        </trans-unit>
+        <trans-unit id="queue_execute">
+            <source>queue_execute</source>
+            <target>Execute queue again</target>
         </trans-unit>
     </body>
     </file>
