@@ -1,10 +1,10 @@
 {
     "author": "RedKite Labs",
     "website": "http://redkite-labs.com",
-    "description": "This block handles an html script",
+    "description": "This block handles an html content",
     "group": "RedKiteCMS",
     "enabled": "true",
     "external-javascripts": [
-        "js/rkcms-script.js"
+        "js/rkcms-html.js"
     ]
 }

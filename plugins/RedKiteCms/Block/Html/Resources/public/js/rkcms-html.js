@@ -67,8 +67,8 @@ Script.prototype.update = function(newValue, source)
     self.source = source;
 };
 
-ko.components.register('rkcms-script', {
+ko.components.register('rkcms-html', {
     viewModel: Script,
-    template: { element: 'rkcms-script-editor' }
+    template: { element: 'rkcms-html-editor' }
 });
 

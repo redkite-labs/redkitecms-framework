@@ -15,7 +15,7 @@
  *
  */
 
-namespace RedKiteCms\Block\Script\Core;
+namespace RedKiteCms\Block\Html\Core;
 
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
@@ -27,16 +27,16 @@ use RedKiteCms\Content\Block\ExtendableBlock;
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Block\Script\Core
  */
-class ScriptBlock extends ExtendableBlock
+class HtmlBlock extends ExtendableBlock
 {
     /**
      * @Type("string")
      */
-    protected $type = "Script";
+    protected $type = "Html";
     /**
      * @Type("string")
      */
-    protected $customTag = "rkcms-script";
+    protected $customTag = "rkcms-html";
     /**
      * @Type("string")
      */
