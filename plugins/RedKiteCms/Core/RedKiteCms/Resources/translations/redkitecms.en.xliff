@@ -279,6 +279,12 @@
             <source>frontend_confirm_seo_approved</source>
             <target>Are you sure to approve the seo elements for this page in production?</target>
         </trans-unit>
+        <trans-unit id="frontend_pending_queue">
+            <source>frontend_pending_queue</source>
+            <target>There were pending operations not saved to the backend: RedKite CMS just saved them. The page will be reloaded to complete the operation</target>
+        </trans-unit>
+
+
 
         <!-- THEME -->
         <trans-unit id="themes_author">

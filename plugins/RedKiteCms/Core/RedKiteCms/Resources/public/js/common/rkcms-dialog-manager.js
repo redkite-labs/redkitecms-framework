@@ -41,6 +41,7 @@ function confirmDialog(message, confirmCallback, cancelCallback, icon){
 function alertDialog(message, confirmCallback, icon, customTextClass){
     message = formatDialogMessage(icon, message);
 
+    textClass = 'primary';
     if (customTextClass != null) {
         textClass = customTextClass;
     }

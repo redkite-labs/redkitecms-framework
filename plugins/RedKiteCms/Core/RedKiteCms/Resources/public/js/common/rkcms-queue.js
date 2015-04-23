@@ -21,16 +21,40 @@ window.onbeforeunload = function (e) {
 };
 
 saveQueue = function(){
-    if (Object.keys(queue).length === 0) {
+    var localQueue = queue;
+    var hasPendingQueue = localStorage.getItem('rkcms-queue') != null;
+    if (hasPendingQueue) {
+        localQueue = ko.utils.parseJson(localStorage.getItem('rkcms-queue'));
+    }
+
+    if (Object.keys(localQueue).length === 0) {
         return;
     }
 
     var url = frontcontroller + '/backend/queue/save';
     executeAjax(url,
-        {"queue": queue},
-        null,
-        null,
+        {"queue": localQueue},
+        function() {
+            if (hasPendingQueue) {
+                localStorage.clear();
+                alertDialog(redkitecmsDomain.frontend_pending_queue, function()
+                {
+                    location.reload();
+                });
+            }
+
+            return true;
+        },
+        function() {
+            localStorage.setItem('rkcms-queue', JSON.stringify(queue));
+
+            return true;
+        },
         null,
         false
     );
 };
+
+$(document).ready(function(){
+    saveQueue();
+});

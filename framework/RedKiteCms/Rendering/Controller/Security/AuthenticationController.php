@@ -41,6 +41,8 @@ abstract class AuthenticationController extends BackendController
         if ($options["is_ajax"]) {
             $response = new Response();
             $response->setStatusCode('403');
+
+            return $response;
         }
 
         $params['target'] = '/backend/' . $options["red_kite_cms_config"]->homepagePermalink();

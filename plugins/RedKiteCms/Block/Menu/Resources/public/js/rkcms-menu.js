@@ -19,10 +19,6 @@ var Menu = function (params)
     var self = this;
     ExtendableCollection.call(self, params);
     self.toolbar.push("permalinks", "link-button", "icon-button", "icon-linked-button", "icon-stacked-button");
-
-    _initMenuEditor = function(){
-        $(".rkcms-ace-editor:visible").aceEditor('open', { height: '350px' });
-    };
 };
 
 Menu.prototype = Object.create(ExtendableCollection.prototype);
@@ -33,7 +29,7 @@ Menu.prototype.startBlockEditing = function()
         return true;
     }
 
-    _initMenuEditor();
+    $(".rkcms-ace-editor:visible").aceEditor('open', { height: '350px' });
 };
 
 ko.components.register('rkcms-menu', {

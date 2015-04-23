@@ -74,8 +74,8 @@
         {
             var $editor = $(self._element);
             $editor
-                .width(width)
-                .height(height)
+                .width(width + 'px')
+                .height(height + 'px')
             ;
             self._editor.resize();
         }
@@ -84,8 +84,8 @@
     AceEditor.DEFAULTS = {
         theme: 'twilight',
         mode: 'yaml',
-        width: 450,
-        height: 150
+        width: '450px',
+        height: '150px'
     };
 
     AceEditor.prototype.open = function()
@@ -111,6 +111,7 @@
         }
 
         self._editor = ace.edit(self._element);
+        self._editor.setValue(self._model.source, -1);
         self._editor.setTheme("ace/theme/" + self._options.theme);
         self._editor.setFontSize(14);
         self._editor.getSession().setMode("ace/mode/" + self._options.mode);
