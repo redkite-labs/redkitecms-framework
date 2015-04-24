@@ -1,0 +1,39 @@
+{#
+   This file is part of the RedKite CMS Application and it is distributed
+   under the MIT License. To use this application you must leave
+   intact this copyright notice.
+
+   Copyright (c) RedKite Labs <webmaster@redkite-labs.com>
+
+   For the full copyright and license information, please view the LICENSE
+   file that was distributed with this source code.
+
+   For extra documentation and help please visit http://www.redkite-labs.com
+
+   @license    MIT License
+#}
+
+{% extends "RedKiteCms/Resources/views/Frontend/base.html.twig" %}
+
+{% block external_stylesheets %}
+    <link href="/components/redkitecms/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/components/redkitecms/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <h1>{{ 'queue_error_detected_title'|trans({}, 'RedKiteCms', cms_language) }}</h1>
+            <p>
+                The theme {{ theme_name }} has not defined any page. Please add at least one page to this theme as explained <a href="https://github.com/redkite-labs/RedKiteCms/blob/master/docs/book/create-a-new-theme.md#define-the-pages-created-by-redkite-cms-when-a-web-site-is-started-from-a-theme">in this tutorial</a>.
+            </p>
+            <p>
+                Please manually remove the <b>{{ site_path }}</b> folder to have your website working again
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

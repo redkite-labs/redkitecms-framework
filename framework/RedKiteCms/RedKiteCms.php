@@ -63,6 +63,7 @@ use RedKiteCms\EventSystem\Listener\Page\PermalinkChangedListener;
 use RedKiteCms\EventSystem\Listener\Request\QueueListener;
 use RedKiteCms\EventSystem\Listener\Request\ThemeAlignerListener;
 use RedKiteCms\EventSystem\Listener\Request\SlotsAlignment;
+use RedKiteCms\Exception\General\RuntimeException;
 use RedKiteCms\FilesystemEntity\Page;
 use RedKiteCms\FilesystemEntity\SlotParser;
 use RedKiteCms\Plugin\PluginManager;
@@ -491,11 +492,17 @@ abstract class RedKiteCms
             $user = 'admin';
         }
 
+
         $language = "en_GB";
         $pages = $theme->getPages();
+        if (null == $pages) {
+            $this->registerTwig();
+            echo $this->app["twig"]->render('RedKiteCms/Resources/views/Bootstrap/bootstrap.html.twig', array("theme_name" => $theme->getName(), "site_path" => $this->app["red_kite_cms.configuration_handler"]->siteDir()));
+            exit;
+        }
         $this->app["red_kite_cms.page_collection_manager"]->contributor($user);
-        $theme = $this->app["red_kite_cms.theme"];
 
+        $theme = $this->app["red_kite_cms.theme"];
         $this->app["red_kite_cms.slots_generator"]->generate();
         foreach($pages as $pageName => $templateName) {
             $page = array(

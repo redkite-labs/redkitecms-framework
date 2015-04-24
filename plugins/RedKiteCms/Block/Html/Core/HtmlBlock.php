@@ -40,7 +40,7 @@ class HtmlBlock extends ExtendableBlock
     /**
      * @Type("string")
      */
-    private $html = "";
+    private $html = "<p>HTML content</p>";
 
     /**
      * Constructor
