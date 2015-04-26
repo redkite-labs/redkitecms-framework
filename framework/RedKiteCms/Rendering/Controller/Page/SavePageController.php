@@ -50,6 +50,8 @@ abstract class SavePageController extends BasePageController
             ->contributor($options["username"])
             ->save($blockManager, $saveOptions);
 
+        $options["sitemap_generator"]->writeSiteMap();
+
         return $this->buildJSonResponse(array());
     }
 
@@ -65,6 +67,7 @@ abstract class SavePageController extends BasePageController
             array(
                 'serializer',
                 'block_factory',
+                'sitemap_generator',
             )
         );
 
@@ -72,6 +75,7 @@ abstract class SavePageController extends BasePageController
             array(
                 'serializer' => '\JMS\Serializer\Serializer',
                 'block_factory' => '\RedKiteCms\Content\Block\BlockFactory',
+                'sitemap_generator' => '\RedKiteCms\Content\SitemapGenerator\SitemapGenerator',
             )
         );
     }

@@ -46,6 +46,8 @@ abstract class SaveAllPagesController extends SavePageController
             ->contributor($options["username"])
             ->saveAllPages($blockManager, $languages);
 
+        $options["sitemap_generator"]->writeSiteMap();
+
         return $this->buildJSonResponse(array());
     }
 
@@ -61,6 +63,7 @@ abstract class SaveAllPagesController extends SavePageController
             array(
                 'red_kite_cms_config',
                 'block_factory',
+                'sitemap_generator',
             )
         );
 
@@ -68,6 +71,7 @@ abstract class SaveAllPagesController extends SavePageController
             array(
                 'red_kite_cms_config' => '\RedKiteCms\Configuration\ConfigurationHandler',
                 'block_factory' => '\RedKiteCms\Content\Block\BlockFactory',
+                'sitemap_generator' => '\RedKiteCms\Content\SitemapGenerator\SitemapGenerator',
             )
         );
     }

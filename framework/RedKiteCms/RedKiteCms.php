@@ -44,6 +44,7 @@ use RedKiteCms\Content\PageCollection\PageCollectionManager;
 use RedKiteCms\Content\PageCollection\PagesCollectionParser;
 use RedKiteCms\Content\PageCollection\PermalinkManager;
 use RedKiteCms\Content\Page\PageManager;
+use RedKiteCms\Content\SitemapGenerator\SitemapGenerator;
 use RedKiteCms\Content\SlotsManager\SlotsManagerFactory;
 use RedKiteCms\Content\Theme\ThemeSlotsGenerator;
 use RedKiteCms\Content\Theme\Theme;
@@ -361,6 +362,8 @@ abstract class RedKiteCms
         $this->app["red_kite_cms.theme_deployer"] = new ThemeDeployer($this->app["red_kite_cms.configuration_handler"]);
         $this->app["red_kite_cms.factory_action"] = new FactoryAction($this->app);
         $this->app["red_kite_cms.queue_manager"] = new QueueManager($this->app["red_kite_cms.configuration_handler"], $this->app["red_kite_cms.factory_action"], $this->app["twig"]);
+
+        $this->app["red_kite_cms.sitemap_generator"] = new SitemapGenerator($this->app["red_kite_cms.configuration_handler"],$this->app["red_kite_cms.pages_collection_parser"],$this->app["twig"]);
     }
 
     private function checkPermissions($rootDir)
