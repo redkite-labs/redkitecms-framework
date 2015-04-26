@@ -157,21 +157,15 @@ abstract class FrontendController extends BaseController
 
     protected function renderSlots(Page $page)
     {
-        $slots = $this->options['page_renderer']->renderSlotsFromPage($page);
+        $this->options['page_renderer']->render($page);
 
         return array(
-            "slots" => $slots,
+            "slots" => $this->options['page_renderer']->getSlots(),
         );
     }
 
     protected function initTemplateAssetsManager()
     {
         return $this->options["template_assets"];
-        /*
-        $pluginManager = $this->options["plugin_manager"];
-        $templateAssetsManager = $this->options["template_assets"];
-        $templateAssetsManager->add($pluginManager->getAssets());
-
-        return $templateAssetsManager;*/
     }
 }

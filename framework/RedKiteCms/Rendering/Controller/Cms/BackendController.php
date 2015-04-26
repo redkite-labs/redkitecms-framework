@@ -145,12 +145,7 @@ abstract class BackendController extends FrontendController
     {
         $blockFactory = $this->options["block_factory"];
         $templateRenderer = $this->options['page_renderer'];
-        //$availableBlocks = $blockFactory->getAvailableBlocks();
-        /*
-        foreach($availableBlocks as $blockClass) {
-            print_r($this->options["serializer"]->deserialize)
-        }
-print_R($availableBlocks);exit;*/
+
         // We need to render all blocks to avoid problems when a kind ok block is
         // not present on a page
         $availableBlocks = array();
@@ -159,12 +154,13 @@ print_R($availableBlocks);exit;*/
             $availableBlocks[$block->getType()] = JsonTools::toJson($this->options["serializer"], $block);
         }
 
-        $slots = $templateRenderer->renderSlotsFromPage(
+        $templateRenderer->render(
             $page,
             array(
                 'available_blocks' => $availableBlocks,
             )
         );
+        $slots = $templateRenderer->getSlots();
 
         $cmsBlocks = $templateRenderer->renderCmsBlocks(
             $blocks,

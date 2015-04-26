@@ -18,6 +18,9 @@
 namespace RedKiteCms\FilesystemEntity;
 
 use JMS\Serializer\SerializerInterface;
+use RedKiteCms\Bridge\Dispatcher\Dispatcher;
+use RedKiteCms\EventSystem\Event\Render\PageRenderedEvent;
+use RedKiteCms\EventSystem\RenderEvents;
 use RedKiteCms\Exception\Publish\PageNotPublishedException;
 use RedKiteCms\Tools\FilesystemTools;
 use Symfony\Component\Finder\Finder;
@@ -97,6 +100,18 @@ class Page extends Entity implements RenderableInterface
     public function getPageAttributes()
     {
         return $this->pageAttributes;
+    }
+
+    /**
+     * Sets the seo attributes for this page
+     *
+     * @return $this
+     */
+    public function setSeoAttributes(array $seoAttributes)
+    {
+        $this->seoAttributes = $seoAttributes;
+
+        return $this;
     }
 
     /**

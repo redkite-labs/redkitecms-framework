@@ -26,6 +26,16 @@ namespace RedKiteCms\EventSystem;
 final class RenderEvents
 {
     /**
+     * The page.rendered event is raised after the page was rendered
+     *
+     * The event listener receives a
+     * RedKiteCms\EventSystem\Event\Render\PageRenderedEvent instance.
+     *
+     * @type string
+     */
+    CONST PAGE_RENDERED = 'page.rendered';
+
+    /**
      * The slots.rendering event is raised just before rendering the page's slots
      *
      * The event listener receives a

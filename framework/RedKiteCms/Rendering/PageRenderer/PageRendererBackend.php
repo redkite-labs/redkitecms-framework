@@ -20,6 +20,7 @@ namespace RedKiteCms\Rendering\PageRenderer;
 use RedKiteCms\Bridge\Dispatcher\Dispatcher;
 use RedKiteCms\Content\Block\BaseBlock;
 use RedKiteCms\Content\PageCollection\PagesCollectionParser;
+use RedKiteCms\EventSystem\Event\Render\PageRenderedEvent;
 use RedKiteCms\EventSystem\Event\Render\SlotsRenderedEvent;
 use RedKiteCms\EventSystem\Event\Render\SlotsRenderingEvent;
 use RedKiteCms\EventSystem\RenderEvents;
@@ -44,6 +45,8 @@ class PageRendererBackend
      */
     private $pagesParser;
 
+    private $slots = array();
+
     /**
      * Constructor
      *
@@ -57,17 +60,28 @@ class PageRendererBackend
     }
 
     /**
+     * @return array
+     */
+    public function getSlots()
+    {
+        return $this->slots;
+    }
+
+    /**
      * Renders the page slots from a Page entity
      * @param \RedKiteCms\FilesystemEntity\Page $page
      * @param array $options
      *
      * @return array
      */
-    public function renderSlotsFromPage(Page $page, array $options = array())
+    public function render(Page $page, array $options = array())
     {
         $slots = $page->getPageSlots();
+        $this->slots = $this->renderSlots($page, $slots, $options);
 
-        return $this->renderSlots($page, $slots, $options);
+        $event = Dispatcher::dispatch(RenderEvents::PAGE_RENDERED . '.' . strtolower($page->getPageName()), new PageRenderedEvent($page));
+
+        return $event->getPage();
     }
 
     /**
