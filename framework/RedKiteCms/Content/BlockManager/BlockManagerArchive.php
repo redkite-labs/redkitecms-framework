@@ -49,11 +49,12 @@ class BlockManagerArchive extends BlockManager
         $this->resolveOptions($options);
         $this->init($sourceDir, $options, $username);
         $dirname = sprintf('%s/archive/%s', $this->getDirInUse(), $options["blockname"]);
+        if (!is_dir($dirname)) {
+            mkdir($dirname, 0777, true);
+        }
+
         $filename = sprintf('%s/%s.json', $dirname, $block["history_name"]);
 
-        if (!is_dir($dirname)) {
-            mkdir($dirname);
-        }
         FilesystemTools::writeFile($filename, json_encode($block));
     }
 }
