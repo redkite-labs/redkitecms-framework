@@ -124,12 +124,10 @@ class FilesystemTools
             throw new RuntimeException(json_encode($exception));
         }
         if (fwrite($handle, $content) === false) {
-            $error = error_get_last();
             $exception = array(
                 "message" => 'exception_file_cannot_be_written',
                 "parameters" => array(
                     "%file%" => basename($file),
-                    "%error%" => $error['message'],
                 )
             );
             throw new RuntimeException(json_encode($exception));

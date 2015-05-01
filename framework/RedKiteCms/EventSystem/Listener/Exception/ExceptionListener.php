@@ -20,6 +20,7 @@ namespace RedKiteCms\EventSystem\Listener\Exception;
 use RedKiteCms\Bridge\Monolog\DataLogger;
 use RedKiteCms\Exception\Publish\PageNotPublishedException;
 use RedKiteCms\Exception\RedKiteCmsExceptionInterface;
+use RedKiteCms\Tools\Utils;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
@@ -92,33 +93,7 @@ class ExceptionListener
             return;
         }
 
-        $jsonMessage = json_decode($message, true);
-        if (!is_array($jsonMessage)) {
-            $jsonMessage = array(
-                'message' => $message,
-            );
-        }
-
-        $parameters = array(
-            'message' => '',
-            'parameters' => array(),
-            'domain' => 'RedKiteCms',
-            'locale' => null,
-        );
-        $cleanedParameters = array_intersect_key($jsonMessage, $parameters);
-        $parameters = array_merge($parameters, $cleanedParameters);
-
-        $message = $this->translator->trans(
-            $parameters["message"],
-            $parameters["parameters"],
-            $parameters["domain"],
-            $parameters["locale"]
-        );
-
-        if (array_key_exists("show_exception", $jsonMessage) && $jsonMessage["show_exception"]) {
-            $message = substr(strrchr(get_class($exception), '\\'), 1) . ": " . $message;
-        }
-
+        $message = Utils::translateException($message, $exception);
         $this->setUpResponse($event, $message);
 
         DataLogger::log($message, DataLogger::ERROR);

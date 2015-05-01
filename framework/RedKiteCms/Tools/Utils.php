@@ -17,6 +17,8 @@
 
 namespace RedKiteCms\Tools;
 
+use RedKiteCms\Bridge\Translation\Translator;
+
 /**
  * Class Utils collects several generic methods
  *
@@ -55,6 +57,38 @@ class Utils
         }
 
         return $text;
+    }
+
+    public static function translateException($message, \Exception $exception = null)
+    {
+        $jsonMessage = json_decode($message, true);
+        if (!is_array($jsonMessage)) {
+            $jsonMessage = array(
+                'message' => $message,
+            );
+        }
+
+        $parameters = array(
+            'message' => '',
+            'parameters' => array(),
+            'domain' => 'RedKiteCms',
+            'locale' => null,
+        );
+        $cleanedParameters = array_intersect_key($jsonMessage, $parameters);
+        $parameters = array_merge($parameters, $cleanedParameters);
+
+        $message = Translator::translate(
+            $parameters["message"],
+            $parameters["parameters"],
+            $parameters["domain"],
+            $parameters["locale"]
+        );
+
+        if (null !== $exception && array_key_exists("show_exception", $jsonMessage) && $jsonMessage["show_exception"]) {
+            $message = substr(strrchr(get_class($exception), '\\'), 1) . ": " . $message;
+        }
+
+        return $message;
     }
 
     /**

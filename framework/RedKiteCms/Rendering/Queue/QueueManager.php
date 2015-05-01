@@ -12,6 +12,7 @@ namespace RedKiteCms\Rendering\Queue;
 use RedKiteCms\Action\FactoryAction;
 use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Tools\FilesystemTools;
+use RedKiteCms\Tools\Utils;
 
 class QueueManager
 {
@@ -90,9 +91,11 @@ class QueueManager
         }
         $queue["queue"] = $queueItems;
 
+        $error = Utils::translateException($this->queue["error"]);
+
         return $this->twig->render(
             'RedKiteCms/Resources/views/Queue/queue.html.twig',
-            array("queue" => $this->queue, "queue_file" => $this->queueFile)
+            array("queue" => $this->queue, "queue_file" => $this->queueFile, "error" => $error)
         );
     }
 
