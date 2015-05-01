@@ -149,7 +149,7 @@ class RoutingGenerator
         $this->routes["homepage"] = $homeRouteName;
         if (!$this->explicitHomepageRoute) {
             $values = array_merge($homepageValues, array('_controller' => $this->frontController,));
-            $routes->add($this->homeRouteName, new Route($this->pattern, $values));
+            $routes->add($homeRouteName, new Route($this->pattern, $values));
         }
 
         $finder = new Finder();
