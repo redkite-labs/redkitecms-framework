@@ -17,8 +17,6 @@
 
 namespace RedKiteCms;
 
-
-
 use Assetic\Filter\CssRewriteFilter;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use JMS\Serializer\SerializerBuilder;
@@ -31,7 +29,6 @@ use RedKiteCms\Bridge\ElFinder\ElFinderMediaConnector;
 use RedKiteCms\Bridge\Form\FormFactory;
 use RedKiteCms\Bridge\Monolog\DataLogger;
 use RedKiteCms\Bridge\Routing\RoutingGenerator;
-use RedKiteCms\Bridge\Routing\RoutingProvider;
 use RedKiteCms\Bridge\Security\UserProvider;
 use RedKiteCms\Bridge\Translation\TranslationLoader;
 use RedKiteCms\Bridge\Translation\Translator;
@@ -63,10 +60,10 @@ use RedKiteCms\EventSystem\Listener\PageCollection\TemplateChangedListener;
 use RedKiteCms\EventSystem\Listener\Page\PermalinkChangedListener;
 use RedKiteCms\EventSystem\Listener\Request\QueueListener;
 use RedKiteCms\EventSystem\Listener\Request\ThemeAlignerListener;
-use RedKiteCms\EventSystem\Listener\Request\SlotsAlignment;
-use RedKiteCms\Exception\General\RuntimeException;
 use RedKiteCms\FilesystemEntity\Page;
 use RedKiteCms\FilesystemEntity\SlotParser;
+use RedKiteCms\Flint\ChainMatcher;
+use RedKiteCms\Flint\ChainUrlGenerator;
 use RedKiteCms\Plugin\PluginManager;
 use RedKiteCms\Rendering\PageRenderer\PageRendererBackend;
 use RedKiteCms\Rendering\PageRenderer\PageRendererProduction;
@@ -81,7 +78,9 @@ use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use RedKiteCms\Bridge\Routing\Routing;
 
 /**
  * Class RedKiteCms is the object deputed to bootstrap the CMS. This object is the application entry point and it is
@@ -95,7 +94,6 @@ abstract class RedKiteCms
     private $app;
     private $siteName;
     private $frameworkAbsoluteDir;
-    protected $routingServiceProvider;
 
     /**
      * Returns an array of options to change RedKite CMS configuration
@@ -118,7 +116,6 @@ abstract class RedKiteCms
     public function __construct(Application $app)
     {
         $this->app = $app;
-        $this->routingServiceProvider = new RoutingProvider();
     }
 
     /**
@@ -139,7 +136,12 @@ abstract class RedKiteCms
         $this->registerListeners();
         $this->register($this->app);
         $this->boot();
-        $this->registerRoutes();
+        $this->addWebsiteRoutes();
+
+        $this->app["dispatcher"]->dispatch(
+            CmsEvents::CMS_BOOTED,
+            new CmsBootedEvent($this->app["red_kite_cms.configuration_handler"])
+        );
     }
 
     private function initCmsRequiredServices()
@@ -172,6 +174,9 @@ abstract class RedKiteCms
                     $this->app["red_kite_cms.root_dir"] . '/app/plugins/RedKiteCms/Block',
                     $this->app["red_kite_cms.root_dir"] . '/app/plugins/RedKiteCms/Theme',
                     $this->app["red_kite_cms.root_dir"] . '/src',
+                ),
+                'twig.options' => array(
+                    'cache' => $this->app["red_kite_cms.configuration_handler"]->siteCacheDir() . '/twig',
                 ),
             )
         );
@@ -272,8 +277,6 @@ abstract class RedKiteCms
             )
         );
 
-
-
         $logFileName = $this->siteName;
         if ($this->app["debug"]){
             $logFileName .= '_dev';
@@ -288,6 +291,12 @@ abstract class RedKiteCms
                 'monolog.level' => $level,
             )
         );
+
+        $app['router'] = Routing::create($this->app["red_kite_cms.configuration_handler"], $this->app["debug"])->getRouter();
+
+        $generator = new ChainUrlGenerator(array($this->app['url_generator'], $this->app['router']));
+        $generator->setContext($this->app['request_context']);
+        $this->app['url_generator'] = $generator;
     }
 
     private function registerServices()
@@ -480,11 +489,22 @@ abstract class RedKiteCms
         $this->app["red_kite_cms.block_factory"]->boot();
         $this->app["red_kite_cms.template_assets"]->boot();
         $this->app["red_kite_cms.assetic"]->addFilter('cssrewrite', new CssRewriteFilter());
+    }
 
-        $this->app["dispatcher"]->dispatch(
-            CmsEvents::CMS_BOOTED,
-            new CmsBootedEvent($this->app["red_kite_cms.configuration_handler"])
-        );
+    private function addWebsiteRoutes()
+    {
+        // FIXME This information comes from security and it is not available at this level
+        $user = null;
+        if (!$this->app["red_kite_cms.configuration_handler"]->isTheme()) {
+            $user = 'admin';
+        }
+        $routingGenerator = new RoutingGenerator($this->app["red_kite_cms.configuration_handler"]);
+        Routing::create($this->app["red_kite_cms.configuration_handler"])->generateWebsiteRoutes($routingGenerator, $user);
+        $this->app["red_kite_cms.website_routes"] = $routingGenerator->getRoutes();
+
+        $matcher = new ChainMatcher(array($this->app['url_matcher'], $this->app['router']->getMatcher()));
+        $matcher->setContext($this->app['request_context']);
+        $this->app['url_matcher'] = $matcher;
     }
 
     private function createWebsitePages($theme)
@@ -494,7 +514,6 @@ abstract class RedKiteCms
         if (!$isTheme) {
             $user = 'admin';
         }
-
 
         $language = "en_GB";
         $pages = $theme->getPages();
@@ -550,6 +569,9 @@ abstract class RedKiteCms
             );
             $this->app["red_kite_cms.page_collection_manager"]->saveAllPages($blockManager, array('en_GB'));
         }
+
+        $fileSystem = new Filesystem();
+        $fileSystem->remove($this->app["red_kite_cms.configuration_handler"]->siteCacheDir());
     }
 
     private function savePermalinks($slots)
@@ -563,172 +585,5 @@ abstract class RedKiteCms
                 $this->app["red_kite_cms.permalink_manager"]->add($blockFile, $htmlBlock);
             }
         }
-    }
-
-    private function registerRoutes()
-    {
-        $backendRoutes = array(
-            array(
-                'pattern' => "/login",
-                'controller' => 'Controller\Security\AuthenticationController::loginAction',
-                'method' => array('get'),
-            ),
-            array(
-                'pattern' => "/backend/dashboard",
-                'controller' => 'Controller\Cms\DashboardController::showAction',
-                'method' => array('get'),
-                'bind' => '_rkcms_dashboard',
-            ),
-            array(
-                'pattern' => "/backend",
-                'controller' => 'Controller\Cms\BackendController::showAction',
-                'method' => array('get'),
-                'value' => array(
-                    'page' => $this->app["red_kite_cms.configuration_handler"]->homepagePermalink(),
-                    '_locale' => $this->app["red_kite_cms.configuration_handler"]->language(),
-                    'country' => $this->app["red_kite_cms.configuration_handler"]->country(),
-                ),
-                'bind' => '_rkcms_homepage',
-            ),
-        );
-
-        $pageRoutes = array(
-            array(
-                'pattern' => "/backend/page/collection/show",
-                'controller' => 'Controller\PageCollection\ShowPageCollectionController::showAction',
-                'method' => array('get'),
-                'bind' => '_rkcms_show_pages',
-            ),
-            array(
-                'pattern' => "/backend/page/collection/approve",
-                'controller' => 'Controller\PageCollection\ApprovePageController::approvePageAction',
-                'method' => array('post'),
-            ),
-            array(
-                'pattern' => "/backend/page/save",
-                'controller' => 'Controller\Page\SavePageController::saveAction',
-                'method' => array('post'),
-            ),
-            array(
-                'pattern' => "/backend/page/collection/save-all",
-                'controller' => 'Controller\PageCollection\SaveAllPagesController::saveAction',
-                'method' => array('post'),
-            ),
-        );
-
-        $seoRoutes = array(
-            array(
-                'pattern' => "/backend/page/approve",
-                'controller' => 'Controller\Page\ApprovePageController::approveAction',
-                'method' => array('post'),
-            ),
-            array(
-                'pattern' => "/backend/page/publish",
-                'controller' => 'Controller\Page\PublishPageController::publishAction',
-                'method' => array('post'),
-            ),
-            array(
-                'pattern' => "/backend/page/hide",
-                'controller' => 'Controller\Page\HidePageController::hideAction',
-                'method' => array('post'),
-            ),
-            array(
-                'pattern' => "/backend/page/permalinks",
-                'controller' => 'Controller\Page\PermalinksController::listPermalinksAction',
-                'method' => array('get'),
-            ),
-        );
-
-        $themeRoutes = array(
-            array(
-                'pattern' => "/backend/theme/show",
-                'controller' => 'Controller\Theme\ShowThemeController::showAction',
-                'method' => array('get'),
-                'bind' => '_rkcms_show_themes',
-            ),
-            array(
-                'pattern' => "/backend/theme/start",
-                'controller' => 'Controller\Theme\StartFromThemeController::startAction',
-                'method' => array('post'),
-                'bind' => '_rkcms_start_themes',
-            ),
-            array(
-                'pattern' => "/backend/theme/save",
-                'controller' => 'Controller\Theme\SaveThemeController::saveAction',
-                'method' => array('post'),
-                'bind' => '_rkcms_save_theme',
-            ),
-        );
-
-        $elFinder = array(
-            array(
-                'pattern' => "/backend/elfinder/media/connect",
-                'controller' => 'Controller\ElFinder\ElFinderMediaController::mediaAction',
-                'method' => array('get', 'post'),
-                'bind' => '_rkcms_connect_elfinder_media',
-            ),
-            array(
-                'pattern' => "/backend/elfinder/files/connect",
-                'controller' => 'Controller\ElFinder\ElFinderFilesController::filesAction',
-                'method' => array('get', 'post'),
-                'bind' => '_rkcms_connect_elfinder_media',
-            ),
-        );
-
-        $security = array(
-            array(
-                'pattern' => "/backend/users/show",
-                'controller' => 'Controller\Security\ShowUserController::showAction',
-                'method' => array('get'),
-                'bind' => '_rkcms_show_users',
-            ),
-            array(
-                'pattern' => "/backend/user/save",
-                'controller' => 'Controller\Security\SaveUserController::saveAction',
-                'method' => array('post'),
-                'bind' => '_rkcms_save_user',
-            ),
-        );
-
-        $queue = array(
-            array(
-                'pattern' => "/backend/queue/save",
-                'controller' => 'Controller\Queue\SaveQueueController::saveAction',
-                'method' => array('post'),
-                'bind' => '_rkcms_save_queue',
-            ),
-        );
-
-        // FIXME This information comes from security and it is not available at this level
-        $user = null;
-        if (!$this->app["red_kite_cms.configuration_handler"]->isTheme()) {
-            $user = 'admin';
-        }
-
-        $this->routingServiceProvider->addRoutes($this->app, $pageRoutes);
-        $this->routingServiceProvider->addRoutes($this->app, $seoRoutes);
-        $this->routingServiceProvider->addRoutes($this->app, $themeRoutes);
-        $this->routingServiceProvider->addRoutes($this->app, $elFinder);
-        $this->routingServiceProvider->addRoutes($this->app, $security);
-        $this->routingServiceProvider->addRoutes($this->app, $queue);
-        $this->routingServiceProvider->addRoutes($this->app, $backendRoutes);
-
-        $routingGenerator = new RoutingGenerator($this->app["red_kite_cms.configuration_handler"]);
-        $websitePageRoutes = $this->app["red_kite_cms.configuration_handler"]->isProduction() ?
-            $routingGenerator
-                ->pattern('/')
-                ->frontController('Controller\Cms\FrontendController::showAction')
-                ->generate()
-            :
-            $routingGenerator
-                ->pattern('/backend')
-                ->frontController('Controller\Cms\BackendController::showAction')
-                ->bindPrefix('_backend')
-                ->explicitHomepageRoute(true)
-                ->contributor($user)
-                ->generate();
-        $this->routingServiceProvider->addRoutes($this->app, $websitePageRoutes);
-
-        $this->app["red_kite_cms.website_routes"] = $routingGenerator->getRoutes();
     }
 }

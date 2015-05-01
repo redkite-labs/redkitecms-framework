@@ -37,6 +37,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method ConfigurationHandler usersDir() Returns the application users dir
  * @method ConfigurationHandler webDir() Returns the application web dir
  * @method ConfigurationHandler cacheDir() Returns the application cache dir
+ * @method ConfigurationHandler siteCacheDir() Returns the site cache dir
  * @method ConfigurationHandler corePluginsDir() Returns the application core plugins dir
  * @method ConfigurationHandler customPluginsDir() Returns the custom plugins root dir
  * @method ConfigurationHandler pagesDir() Returns the pages dir
@@ -97,6 +98,10 @@ class ConfigurationHandler
      * @type string
      */
     private $cacheDir;
+    /**
+     * @type string
+     */
+    private $siteCacheDir;
     /**
      * @type string
      */
@@ -231,6 +236,7 @@ class ConfigurationHandler
         $this->logDir = $this->appDir . '/logs';
         $this->webDir = $this->rootDir . '/' . $this->webDirname;
         $this->cacheDir = $this->appDir . '/cache';
+        $this->siteCacheDir = $this->cacheDir . '/' . $this->siteName;
         $this->dataDir = $this->appDir . '/data';
         $this->siteDir = $this->dataDir . '/' . $this->siteName;
         $this->usersDir = $this->siteDir . '/users';
@@ -240,7 +246,7 @@ class ConfigurationHandler
         $this->uploadAssetsDir = $this->webDir . $this->absoluteUploadAssetsDir;
         $this->corePluginsDir = $this->rootDir . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms';
         $this->customPluginsDir = $this->appDir . '/plugins/RedKiteCms';
-        $this->coreConfigDir = $this->rootDir . '/' . $this->frameworkAbsoluteDir . '//config';
+        $this->coreConfigDir = $this->rootDir . '/' . $this->frameworkAbsoluteDir . '/config';
         $this->pagesRootDir = $this->siteDir . '/pages';
         $this->pagesDir = $this->pagesRootDir . '/pages';
         $this->pagesRemovedDir = $this->pagesRootDir . '/removed';

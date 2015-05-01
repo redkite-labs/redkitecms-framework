@@ -96,7 +96,8 @@ class PermalinkChangedListener
 
         $this->permalinkManager
             ->update($previousPermalink, $newPermalink)
-            ->save();
+            ->save()
+        ;
     }
 
     private function updateHomepagePermalink($previousPermalink, $newPermalink)

@@ -88,6 +88,8 @@ class PageCollectionManager extends PageCollectionBase
             $this->folderNotCreated($pageDir);
         }
 
+        $seoValues = $page["seo"];
+        unset($page["seo"]);
         $encodedPage = json_encode($page);
         $pageFile = $pageDir . '/' . $this->pageFile;
         $event = Dispatcher::dispatch(PageCollectionEvents::PAGE_COLLECTION_ADDING, new PageCollectionAddingEvent($pageFile, $encodedPage));
@@ -97,7 +99,7 @@ class PageCollectionManager extends PageCollectionBase
             FilesystemTools::writeFile($pageDir . '/page.json', $encodedPage);
         }
 
-        foreach ($page["seo"] as $seoValue) {
+        foreach ($seoValues as $seoValue) {
             $languageName = $seoValue["language"];
             unset($seoValue["language"]);
 
@@ -232,7 +234,15 @@ class PageCollectionManager extends PageCollectionBase
         $pageDir .= '/' . $options["language"] . '_' . $options["country"];
         if ($this->seoFile != "seo.json") {
 
-            $filesystem->copy($pageDir . '/' . $this->seoFile, $pageDir . '/seo.json', true);
+            $sourceFile = $pageDir . '/' . $this->seoFile;
+            $values = json_decode(file_get_contents($sourceFile), true);
+            if (array_key_exists("current_permalink", $values)) {
+                $values["changed_permalinks"][] = $values["current_permalink"];
+                unset($values["current_permalink"]);
+                file_put_contents($sourceFile, json_encode($values));
+            }
+
+            $filesystem->copy($sourceFile, $pageDir . '/seo.json', true);
         }
         $approvedBlocks = $this->saveBlocks($approver, $pageDir, $options);
 

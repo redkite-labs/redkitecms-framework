@@ -20,6 +20,8 @@ namespace RedKiteCms\Bridge\Routing;
 use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Tools\FilesystemTools;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\Router;
 
 /**
  * This object is deputed to generate dynamically the website page routes
@@ -41,10 +43,6 @@ class RoutingGenerator
      * @type string
      */
     private $frontController = null;
-    /**
-     * @type string
-     */
-    private $bindPrefix = "";
     /**
      * @type string
      */
@@ -107,19 +105,6 @@ class RoutingGenerator
     }
 
     /**
-     * Sets a prefix added to route bind name
-     *
-     * @param $bindPrefix
-     * @return $this
-     */
-    public function bindPrefix($bindPrefix)
-    {
-        $this->bindPrefix = $bindPrefix;
-
-        return $this;
-    }
-
-    /**
      * Sets the contributer user
      *
      * @param $contributor
@@ -150,9 +135,9 @@ class RoutingGenerator
      *
      * @return array
      */
-    public function generate()
+    public function generate(Router $router)
     {
-        $routes = array();
+        $routes = $router->getRouteCollection();
         $pagesDir = $this->configurationHandler->pagesDir();
         $homepageValues = array(
             '_locale' => $this->configurationHandler->language(),
@@ -160,17 +145,12 @@ class RoutingGenerator
             'page' => $this->configurationHandler->homepage(),
         );
 
+        $homeRouteName = '_' . $homepageValues["_locale"] . '_' . $homepageValues["country"] . '_' . $homepageValues["page"];
+        $this->routes["homepage"] = $homeRouteName;
         if (!$this->explicitHomepageRoute) {
-            $hpRouteName = '_' . $homepageValues["_locale"] . '_' . $homepageValues["country"] . '_' . $homepageValues["page"];
-            $routes[] = array(
-                'pattern' => $this->pattern,
-                'controller' => $this->frontController,
-                'method' => array('get'),
-                'value' => $homepageValues,
-                'bind' => $hpRouteName,
-            );
+            $values = array_merge($homepageValues, array('_controller' => $this->frontController,));
+            $routes->add($this->homeRouteName, new Route($this->pattern, $values));
         }
-
 
         $finder = new Finder();
         $seoFileName = 'seo.json';
@@ -200,54 +180,34 @@ class RoutingGenerator
                     'country' => $languageTokens[1],
                     'page' => $pageName,
                 );
+                $this->routes["pages"][] = $routeName;
 
                 $pattern = $this->pattern;
                 if (substr($pattern, -1) != '/') {
                     $pattern .= '/';
                 }
                 $pageValues = json_decode(FilesystemTools::readFile($seoFile), true);
-                $changedPermalinkRoutes = $this->addChangedPermalinks($routeName, $pattern, $pageValues);
-                if (null !== $changedPermalinkRoutes) {
-                    $routes = array_merge($routes, $changedPermalinkRoutes);
-                };
+                $this->addChangedPermalinks($routes, $routeName, $pattern, $pageValues);
 
-                $routes[] = array(
-                    'pattern' => $pattern . $pageValues["permalink"],
-                    'controller' => $this->frontController,
-                    'method' => array('get'),
-                    'value' => $values,
-                    'bind' => $this->bindPrefix . $routeName,
-                );
-
-                $route = 'GET_backend_' . str_replace("-", "_", $pageValues["permalink"]);
-                $this->routes["pages"][] = $route;
-                if ($homepageValues == $values){
-                    $this->routes["homepage"] = $route;
-                }
+                $values = array_merge($values, array('_controller' => $this->frontController,));
+                $routes->add($routeName, new Route($pattern . $pageValues["permalink"], $values));
             }
         }
-
-        return $routes;
     }
 
-    private function addChangedPermalinks($routeName, $pattern, $values)
+    private function addChangedPermalinks($routes, $routeName, $pattern, $values)
     {
         if (!array_key_exists("changed_permalinks", $values)) {
             return null;
         }
 
-        $routes = array();
         foreach ($values["changed_permalinks"] as $permalink) {
-            $routes[] = array(
-                'pattern' => $pattern . $permalink,
-                'controller' => 'Controller\Cms\MissingPermalinkController::redirectAction',
-                'method' => array('get'),
-                'value' => array(
-                    'route_name' => $routeName,
-                ),
+            $removeRouteName = '_removed_' . $permalink;
+            $routeParams = array(
+                'route_name' => $routeName,
+                '_controller' => 'Controller\Cms\MissingPermalinkController::redirectAction',
             );
+            $routes->add($removeRouteName, new Route($pattern . $permalink, $routeParams));
         }
-
-        return $routes;
     }
 }

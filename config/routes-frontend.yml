@@ -1,0 +1,4 @@
+_login:
+    path:     /login
+    defaults: { _controller: 'Controller\Security\AuthenticationController::loginAction' }
+    methods:  [GET]

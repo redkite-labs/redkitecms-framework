@@ -19,6 +19,7 @@ namespace RedKiteCms\Rendering\Controller\PageCollection;
 
 use Controller\Page\SavePageController;
 use RedKiteCms\Content\BlockManager\BlockManagerApprover;
+use RedKiteCms\Rendering\Controller\Page\BaseSavePageController;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -27,7 +28,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Page
  */
-abstract class SaveAllPagesController extends SavePageController
+abstract class SaveAllPagesController extends BaseSavePageController
 {
     /**
      * Implements the action to save the website
@@ -39,40 +40,16 @@ abstract class SaveAllPagesController extends SavePageController
     {
         $serializer = $options["serializer"];
         $pageManager = $options["page_collection_manager"];
-        $languages = $options["red_kite_cms_config"]->languages();
+        $languages = $options["configuration_handler"]->languages();
 
         $blockManager = new BlockManagerApprover($serializer, $options["block_factory"], new OptionsResolver());
         $pageManager
             ->contributor($options["username"])
             ->saveAllPages($blockManager, $languages);
 
-        $options["sitemap_generator"]->writeSiteMap();
+        $this->buldSitemap($options);
+        $this->removeCache($options);
 
         return $this->buildJSonResponse(array());
-    }
-
-    /**
-     * Configures the options for the resolver
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    protected function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setRequired(
-            array(
-                'red_kite_cms_config',
-                'block_factory',
-                'sitemap_generator',
-            )
-        );
-
-        $resolver->setAllowedTypes(
-            array(
-                'red_kite_cms_config' => '\RedKiteCms\Configuration\ConfigurationHandler',
-                'block_factory' => '\RedKiteCms\Content\Block\BlockFactory',
-                'sitemap_generator' => '\RedKiteCms\Content\SitemapGenerator\SitemapGenerator',
-            )
-        );
     }
 }

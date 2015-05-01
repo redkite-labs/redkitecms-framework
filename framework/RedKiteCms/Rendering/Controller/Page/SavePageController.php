@@ -18,6 +18,7 @@
 namespace RedKiteCms\Rendering\Controller\Page;
 
 use RedKiteCms\Content\BlockManager\BlockManagerApprover;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -26,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Page
  */
-abstract class SavePageController extends BasePageController
+abstract class SavePageController extends BaseSavePageController
 {
     /**
      * Implements the action to save the page
@@ -48,35 +49,12 @@ abstract class SavePageController extends BasePageController
         $blockManager = new BlockManagerApprover($serializer, $options["block_factory"], new OptionsResolver());
         $pageManager
             ->contributor($options["username"])
-            ->save($blockManager, $saveOptions);
+            ->save($blockManager, $saveOptions)
+        ;
 
-        $options["sitemap_generator"]->writeSiteMap();
+        $this->buldSitemap($options);
+        $this->removeCache($options);
 
         return $this->buildJSonResponse(array());
-    }
-
-    /**
-     * Configures the options for the resolver
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    protected function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setRequired(
-            array(
-                'serializer',
-                'block_factory',
-                'sitemap_generator',
-            )
-        );
-
-        $resolver->setAllowedTypes(
-            array(
-                'serializer' => '\JMS\Serializer\Serializer',
-                'block_factory' => '\RedKiteCms\Content\Block\BlockFactory',
-                'sitemap_generator' => '\RedKiteCms\Content\SitemapGenerator\SitemapGenerator',
-            )
-        );
     }
 }

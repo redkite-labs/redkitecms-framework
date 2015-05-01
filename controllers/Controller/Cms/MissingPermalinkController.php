@@ -33,6 +33,6 @@ class MissingPermalinkController
         $routeName = $request->get('route_name');
         $url = $app['url_generator']->generate($routeName);
 
-        return $app->redirect($url);
+        return $app->redirect($url, 303);
     }
 }

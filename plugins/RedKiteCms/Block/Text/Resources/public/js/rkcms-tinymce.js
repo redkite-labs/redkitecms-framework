@@ -82,7 +82,7 @@
             },
             file_browser_callback : function (id, value, type, win)
             {
-                var url = frontcontroller + 'backend/' + $('#al_available_languages option:selected').val() + '/al_elFinderMediaConnect';
+                var url = frontcontroller + '/backend/elfinder/media/connect';
                 mediaLibrary(url, function (url)
                 {
                     var fieldElm = win.document.getElementById(id);

@@ -96,7 +96,7 @@ class TemplateAssetsManager
         );
 
         $this->webDir = $this->configurationHandler->webDir();
-        $this->cacheDir = $this->configurationHandler->cacheDir() . '/assetic/redkitecms/' . $type;
+        $this->cacheDir = $this->configurationHandler->siteCacheDir() . '/assetic/' . $type;
         $assets = $this->configurationHandler->getAssetsByType($type);
         $this->assets = array_merge($this->assets, $assets);
 

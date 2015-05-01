@@ -44,7 +44,7 @@ class SaveAllPagesController extends BaseSaveAllPagesController
             "block_factory" => $app["red_kite_cms.block_factory"],
             "sitemap_generator" => $app["red_kite_cms.sitemap_generator"],
             "serializer" => $app["jms.serializer"],
-            "red_kite_cms_config" => $app["red_kite_cms.configuration_handler"],
+            "configuration_handler" => $app["red_kite_cms.configuration_handler"],
             "username" => $this->fetchUsername($app["security"], $app["red_kite_cms.configuration_handler"]),
         );
 

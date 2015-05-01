@@ -72,12 +72,10 @@ class PageManager extends PageCollectionBase
         $currentSeo = json_decode(FilesystemTools::readFile($seoFile), true);
 
         $values = $this->slugifyPermalink($values);
-        $encodedSeo = json_encode($values);
-        $event = Dispatcher::dispatch(PageEvents::PAGE_EDITING, new PageEditingEvent($seoFile, $encodedSeo));
-        $encodedSeo = $event->getFileContent();
-        FilesystemTools::writeFile($seoFile, $encodedSeo);
-
         if ($currentSeo["permalink"] != $values["permalink"]) {
+            if (!array_key_exists("current_permalink", $values)) {
+                $values["current_permalink"] = $currentSeo["permalink"];
+            }
             $this->changedPermalink = array(
                 'old' => $currentSeo["permalink"],
                 'new' => $values["permalink"],
@@ -87,6 +85,13 @@ class PageManager extends PageCollectionBase
                 new PermalinkChangedEvent($currentSeo["permalink"], $values["permalink"])
             );
         }
+
+        $encodedSeo = json_encode($values);
+        $event = Dispatcher::dispatch(PageEvents::PAGE_EDITING, new PageEditingEvent($seoFile, $encodedSeo));
+        $encodedSeo = $event->getFileContent();
+        FilesystemTools::writeFile($seoFile, $encodedSeo);
+
+
         Dispatcher::dispatch(PageEvents::PAGE_EDITED, new PageEditedEvent($seoFile, $encodedSeo));
         DataLogger::log(
             sprintf('Page SEO attributes "%s" for language "%s" were edited', $pageName, $values["language"])
