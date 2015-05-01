@@ -26,7 +26,7 @@ function executeAjax(url, data, successCallback, failureCallback, completeCallba
         data: data,
         async: async,
         beforeSend: function() {
-            $('.rkcms-saving-progress').show();
+            $('#rkcms-overlay').show();
         },
         success: function(response) {
             if (null != successCallback) {
@@ -46,7 +46,7 @@ function executeAjax(url, data, successCallback, failureCallback, completeCallba
             if (null != completeCallback) {
                 completeCallback();
             }
-            $('.rkcms-saving-progress').hide();
+            $('#rkcms-overlay').hide();
         }
     });
 }

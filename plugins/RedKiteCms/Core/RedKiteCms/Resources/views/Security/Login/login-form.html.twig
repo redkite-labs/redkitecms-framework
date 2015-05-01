@@ -21,6 +21,9 @@
     {% endfor %}
 {% endblock %}
 
+{% block internal_body_javascripts %}
+{% endblock %}
+
 {% block body %}
 {% set login_route = route|default("backend_login_check") %}
 <div class="container">
