@@ -147,7 +147,7 @@ class RoutingGenerator
 
         $homeRouteName = '_home_' . $homepageValues["_locale"] . '_' . $homepageValues["country"] . '_' . $homepageValues["page"];
         $this->routes["homepage"] = $homeRouteName;
-        if ($this->explicitHomepageRoute) {print_r($homepageValues);
+        if ($this->explicitHomepageRoute) {
             $values = array_merge($homepageValues, array('_controller' => $this->frontController,));
             $routes->add($homeRouteName, new Route($this->pattern, $values));
         }
