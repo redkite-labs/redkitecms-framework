@@ -132,6 +132,9 @@ Block.prototype.initHistory = function(values, model)
 
         model.history.push(new ArchiveBlock(model, block));
     });
+
+    model.block.history = [];
+    model.block.history_name = "";
 };
 
 Block.prototype.blockToJson = function()

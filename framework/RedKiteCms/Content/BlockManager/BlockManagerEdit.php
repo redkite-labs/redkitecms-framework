@@ -54,9 +54,6 @@ class BlockManagerEdit extends BlockManager
         $values = $this->parseChildren($values);
 
         $block = JsonTools::join($currentBlock, $values);
-        // Block's history is not saved because it is injected when the block is rendered
-        $block["history"] = array();
-        $block["history_name"] = "";
         $encodedBlock = $this->serializer->serialize($block, 'json');
 
         $blockClass = Utils::blockClassFromType($block["type"]);

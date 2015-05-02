@@ -22,12 +22,13 @@ window.onbeforeunload = function (e) {
 
 saveQueue = function(){
     var localQueue = queue;
-    var hasPendingQueue = localStorage.getItem('rkcms-queue') != null;
+    var queueItems = Object.keys(localQueue).length;
+    var hasPendingQueue = localStorage.getItem('rkcms-queue') != null && queueItems > 0;
     if (hasPendingQueue) {
         localQueue = ko.utils.parseJson(localStorage.getItem('rkcms-queue'));
     }
 
-    if (Object.keys(localQueue).length === 0) {
+    if (queueItems === 0) {
         return;
     }
 

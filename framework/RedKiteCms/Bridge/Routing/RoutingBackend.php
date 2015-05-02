@@ -44,7 +44,6 @@ class RoutingBackend extends RoutingBase
         $routingGenerator
             ->pattern('/backend')
             ->frontController('Controller\Cms\BackendController::showAction')
-            ->explicitHomepageRoute(true)
             ->contributor($user)
             ->generate($this->router)
         ;

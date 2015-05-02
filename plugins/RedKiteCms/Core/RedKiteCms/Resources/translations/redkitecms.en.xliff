@@ -283,8 +283,10 @@
             <source>frontend_pending_queue</source>
             <target>There were pending operations not saved to the backend: RedKite CMS just saved them. The page will be reloaded to complete the operation</target>
         </trans-unit>
-
-
+        <trans-unit id="frontend_block_restoration_completed">
+            <source>frontend_block_restoration_completed</source>
+            <target>The block has been restored from history</target>
+        </trans-unit>
 
         <!-- THEME -->
         <trans-unit id="themes_author">

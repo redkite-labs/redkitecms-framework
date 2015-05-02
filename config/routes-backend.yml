@@ -38,7 +38,7 @@ _rkcms_page_hide:
     defaults: { _controller: 'Controller\Page\HidePageController::hideAction' }
     methods:  [POST]
 
-_login:
+_rkcms_list_permalinks:
     path:     /backend/page/permalinks
     defaults: { _controller: 'Controller\Page\PermalinksController::listPermalinksAction' }
     methods:  [GET]

@@ -44,6 +44,7 @@ class RoutingFrontend extends RoutingBase
         $routingGenerator
             ->pattern('/')
             ->frontController('Controller\Cms\FrontendController::showAction')
+            ->explicitHomepageRoute(true)
             ->generate($this->router)
         ;
     }

@@ -303,6 +303,8 @@ BlockEditorModel.prototype.confirmRestoration = function ()
              'data': activeModel.blockToJson()
              }
          };
+
+        alertDialog(redkitecmsDomain.frontend_block_restoration_completed);
     }
 };
 
