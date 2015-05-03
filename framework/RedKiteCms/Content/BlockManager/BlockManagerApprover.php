@@ -58,7 +58,6 @@ class BlockManagerApprover extends BlockManager
 
         $blockValues = JsonTools::jsonDecode(FilesystemTools::readFile($sourceFilename));
         $blockValues["history"] = array();
-        $this->archiveBlock($options['blockname'], $this->productionDir);
         FilesystemTools::writeFile($targetFilename, json_encode($blockValues));
 
         $slotDefinitionContribution = $this->getSlotDefinition($this->getContributorDir());

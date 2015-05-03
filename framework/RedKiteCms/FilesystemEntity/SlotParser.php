@@ -27,6 +27,7 @@ use Symfony\Component\Finder\Finder;
 class SlotParser
 {
     private $serializer;
+    private $isProduction = false;
 
     public function __construct(SerializerInterface $serializer)
     {
@@ -54,6 +55,8 @@ class SlotParser
             return $slot;
         }
 
+        $this->isProduction = $productionDir === $slotDir;
+
         $found = array();
         $blocks = json_decode(FilesystemTools::readFile($file), true);
         foreach ($blocks["blocks"] as $blockName) {
@@ -75,6 +78,10 @@ class SlotParser
         $filename = $slotDir . '/blocks/' . $blockName . '.json';
         if (!file_exists($filename)) {
             return null;
+        }
+
+        if ($this->isProduction) {
+            return file_get_contents($filename);
         }
 
         $block = $this->updateBlock($filename, $slotName, $blockName);
@@ -109,14 +116,20 @@ class SlotParser
 
         $found = array();
         $blockName = basename($archiveDir);
-        $finder = new Finder();
-        $files = $finder->files()->depth(0)->in($archiveDir);
-        foreach ($files as $file) {
-            $block = $this->updateBlock($file, $slotName, $blockName);
+
+        // Backward compatibility
+        $this->updateHistory($archiveDir);
+
+        $historyFile = $archiveDir . '/history.json';
+        $history = json_decode(file_get_contents($historyFile), true);
+        foreach ($history as $name => $block) {
+            $block = JsonTools::toBlock($this->serializer, json_encode($block));
             if (null === $block) {
                 continue;
             }
-            $name = basename((string)$file, '.json');
+
+            $block->setName($blockName);
+            $block->setSlotName($slotName);
             $block->setHistoryName($name);
             $found[$name] = $block;
         }
@@ -124,5 +137,25 @@ class SlotParser
         $result = array_values($found);
 
         return $result;
+    }
+
+    private function updateHistory($archiveDir)
+    {
+        $historyFile = $archiveDir . '/history.json';
+        if (file_exists($historyFile)) {
+            return;
+        }
+
+        $finder = new Finder();
+        $files = $finder->files()->depth(0)->in($archiveDir);
+
+        $history = array();
+        foreach ($files as $file) {
+            $name = basename($file, '.json');
+            $history[$name] = json_decode(file_get_contents($file), true);
+            unlink($file);
+        }
+
+        file_put_contents($historyFile, json_encode($history));
     }
 } 

@@ -234,23 +234,4 @@ class BlockManager extends FilesystemEntity
 
         return $blockName;
     }
-
-    /**
-     * TODO: CAN BE REMOVED?
-     * Archives the given block
-     *
-     * @param string $blockName
-     * @param string $targetDir
-     */
-    protected function archiveBlock($blockName, $targetDir = null)
-    {
-        $targetDir = $this->workDirectory($targetDir);
-        $filename = $targetDir . '/blocks/' . $blockName . '.json';
-        if (!file_exists($filename)) {
-            return;
-        }
-
-        $archiveFilename = sprintf('%s/%s/%s.json', $this->getArchiveDir($targetDir), $blockName, date("Y-m-d-H.i.s"));
-        $this->filesystem->copy($filename, $archiveFilename, true);
-    }
 }

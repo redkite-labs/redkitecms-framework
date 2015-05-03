@@ -30,33 +30,41 @@ use RedKiteCms\EventSystem\Event\Block\BlockRestoringEvent;
  */
 class BlockManagerRestore extends BlockManager
 {
-    public function restore($sourceDir, array $options, $username, $archiveFile)
+    public function restore($sourceDir, array $options, $username, $restoringBlockName)
     {
         $this->createContributorDir($sourceDir, $options, $username);
-        $this->archiveBlock($options["blockname"]);
-        $archiveDir = $this->getArchiveDir() . '/' . $options["blockname"];
+        $historyFileName = sprintf('%s/%s/history.json', $this->getArchiveDir(), $options["blockname"]);
+        $history = json_decode(file_get_contents($historyFileName), true);
 
-        $filename = $this->contributorDir . '/blocks/' . $options["blockname"] . '.json';
-        $activeBlockArchiveFilename = sprintf('%s/%s.json', $archiveDir, date("Y-m-d-H.i.s"));
-        $archiveFilename = sprintf('%s/%s.json', $archiveDir, $archiveFile);
+        // This happens when a user confirms a restoration then returns back and confirms again.
+        // In this case there's nothing to restore.
+        if (!array_key_exists($restoringBlockName, $history)) {
+            return;
+        }
+        $restoringBlock = $history[$restoringBlockName];
+        $filename = sprintf('%s/blocks/%s.json', $this->contributorDir, $options["blockname"]);
+        $currentBlock = file_get_contents($filename);
 
         Dispatcher::dispatch(
             BlockEvents::BLOCK_RESTORING,
-            new BlockRestoringEvent($this->serializer, $filename, $archiveFilename)
+            new BlockRestoringEvent($this->serializer, $filename, $restoringBlock)
         );
 
-        $this->filesystem->copy($filename, $activeBlockArchiveFilename, true);
-        $this->filesystem->copy($archiveFilename, $filename, true);
-        $this->filesystem->remove($archiveFilename);
+        file_put_contents($filename, json_encode($restoringBlock));
+        unset($history[$restoringBlockName]);
+        $now = date("Y-m-d-H.i.s");
+        $history[$now] = json_decode($currentBlock, true);
+        file_put_contents($historyFileName, json_encode($history));
 
         Dispatcher::dispatch(
             BlockEvents::BLOCK_RESTORED,
-            new BlockRestoredEvent($this->serializer, $filename, $archiveFilename)
+            new BlockRestoredEvent($this->serializer, $filename, $restoringBlock)
         );
+
         DataLogger::log(
             sprintf(
                 'Block "%s" has been restored as "%s" on the slot "%s" on "%s" page for "%s_%s" language',
-                $archiveFilename,
+                $restoringBlockName,
                 $options["blockname"],
                 $options["slot"],
                 $options["page"],

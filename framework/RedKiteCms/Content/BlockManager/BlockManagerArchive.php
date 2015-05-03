@@ -48,13 +48,18 @@ class BlockManagerArchive extends BlockManager
         $block["history"] = array();
         $this->resolveOptions($options);
         $this->init($sourceDir, $options, $username);
-        $dirname = sprintf('%s/archive/%s', $this->getDirInUse(), $options["blockname"]);
-        if (!is_dir($dirname)) {
-            mkdir($dirname, 0777, true);
+        $historyDirName = sprintf('%s/archive/%s', $this->getDirInUse(), $options["blockname"]);
+        $historyFileName = $historyDirName . '/history.json';
+        if (!is_dir($historyDirName)) {
+            mkdir($historyDirName);
         }
 
-        $filename = sprintf('%s/%s.json', $dirname, $block["history_name"]);
+        $history = array();
+        if (file_exists($historyFileName)) {
+            $history = json_decode(file_get_contents($historyFileName), true);
+        }
+        $history = array_merge($history, array($block["history_name"] => $block));
 
-        FilesystemTools::writeFile($filename, json_encode($block));
+        FilesystemTools::writeFile($historyFileName, json_encode($history));
     }
 }

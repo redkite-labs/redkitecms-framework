@@ -30,7 +30,7 @@ class BlockRestoringEvent extends BlockEventBase
     /**
      * @type string
      */
-    protected $archiveFilePath;
+    protected $restoringBlock;
 
     /**
      * Constructor
@@ -44,34 +44,34 @@ class BlockRestoringEvent extends BlockEventBase
     public function __construct(
         SerializerInterface $serializer,
         $filePath = null,
-        $archiveFilePath = null,
+        $restoringBlock = null,
         $fileContent = null,
         $blockClass = null
     ) {
         parent::__construct($serializer, $filePath, $fileContent, $blockClass);
 
-        $this->archiveFilePath = $archiveFilePath;
+        $this->restoringBlock = $restoringBlock;
     }
 
     /**
-     * Returns the path pf the archived file
+     * Returns the restoring block
      *
      * @return string
      */
-    public function getArchiveFilePath()
+    public function getRestoringBlock()
     {
-        return $this->archiveFilePath;
+        return $this->restoringBlock;
     }
 
     /**
-     * Sets the path pf the archived file
-     * @param $archiveFilePath
+     * Sets the restoring block
+     * @param $restoringBlock
      *
      * @return $this
      */
-    public function setArchiveFilePath($archiveFilePath)
+    public function setRestoringBlock($restoringBlock)
     {
-        $this->archiveFilePath = $archiveFilePath;
+        $this->restoringBlock = $restoringBlock;
 
         return $this;
     }
