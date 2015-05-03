@@ -17,15 +17,15 @@
         </trans-unit>
         <trans-unit id="exception_cannot_create_folder">
             <source>exception_cannot_create_folder</source>
-            <target>RedKite CMS cannot create the folder "%folder%": please check the user permissions for that path.</target>
+            <target>RedKite CMS cannot create the folder "%folder%": please check the user permissions for this path.</target>
         </trans-unit>
         <trans-unit id="exception_file_cannot_be_locked_for_reading">
             <source>exception_file_cannot_be_locked_for_reading</source>
-            <target>The file %file% cannot be locked for reading. This happens when someone else is working on the same file. Please, try again later.</target>
+            <target>Somebody else appears to be working on the file %file% so it currently has a Read Only status. Please try again later.</target>
         </trans-unit>
         <trans-unit id="exception_file_cannot_be_locked_for_writing">
             <source>exception_file_cannot_be_locked_for_writing</source>
-            <target>The file %file% cannot be locked for writing. This happens when someone else is working on the same file. Please, try again later.</target>
+            <target>Somebody else appears to be working on the file %file% so it currently has a Read Only status. Please try again later.</target>
         </trans-unit>
         <trans-unit id="exception_file_cannot_be_written">
             <source>exception_file_cannot_be_locked_for_writing</source>
@@ -33,7 +33,7 @@
         </trans-unit>
         <trans-unit id="exception_page_not_published">
             <source>exception_page_not_published</source>
-            <target>The page you are trying to approve is not published yet. You must publish that page then you can approve it.</target>
+            <target>The page you are trying to approve is not published yet. You must publish the page before you can approve it.</target>
         </trans-unit>
         <trans-unit id="exception_abort_message">
             <source>exception_abort_message</source>
@@ -83,7 +83,7 @@
         </trans-unit>
         <trans-unit id="common_label_seo_panel_title">
             <source>common_label_seo_panel_title</source>
-            <target>Search Engine Optimiziation</target>
+            <target>Search Engine Optimization</target>
         </trans-unit>
         <trans-unit id="common_label_site_map_title">
             <source>common_label_site_map_title</source>
@@ -175,7 +175,7 @@
         </trans-unit>
         <trans-unit id="history_blocks_title">
             <source>history_blocks_title</source>
-            <target>Block's history</target>
+            <target>Blocks history</target>
         </trans-unit>
         <trans-unit id="history_empty">
             <source>history_empty</source>
@@ -213,15 +213,15 @@
         <!-- FRONTEND -->
         <trans-unit id="frontend_confirm_block_remove">
             <source>frontend_confirm_block_remove</source>
-            <target>Are you sure to remove the selected block?</target>
+            <target>Are you sure you want to remove the selected block?</target>
         </trans-unit>
         <trans-unit id="frontend_missing_block_to_json_method_implementation">
             <source>frontend_missing_block_to_json_method_implementation</source>
-            <target>A derived object must implement the self.blockToJson method: RedKite CMS cannot save the block until you don't implement that method</target>
+            <target>A derived object must implement the self.blockToJson method: RedKite CMS cannot save the block until you implement this method</target>
         </trans-unit>
         <trans-unit id="frontend_missing_remove_method_implementation">
             <source>frontend_missing_remove_method_implementation</source>
-            <target>A derived object must implement the self.restore method: RedKite CMS cannot restore the block until you don't implement that method</target>
+            <target>A derived object must implement the self.restore method: RedKite CMS cannot restore the block until you implement this method</target>
         </trans-unit>
         <trans-unit id="frontend_page_saved">
             <source>frontend_page_saved</source>
@@ -231,21 +231,21 @@
             <source>frontend_site_saved</source>
             <target>The site has been correctly published in production</target>
         </trans-unit>
-        <trans-unit id="frontend_page_already_exists">
+        <trans-unit id="frontend_page_already_exists"> 
             <source>frontend_page_already_exists</source>
-            <target>Warning: ths page already exists in your website, so it has not been saved</target>
+            <target>Warning: this page already exists in your website. It has not been saved</target>
         </trans-unit>
         <trans-unit id="frontend_confirm_save_page">
             <source>frontend_confirm_save_page</source>
-            <target>Are you sure to confirm the publication of the current page in production?</target>
+            <target>Are you sure you want to confirm the publication of the current page in production?</target>
         </trans-unit>
         <trans-unit id="frontend_confirm_save_site">
             <source>frontend_confirm_save_site</source>
-            <target>Are you sure to confirm the publication of the whole website in production?</target>
+            <target>Are you sure you want to confirm the publication of the whole website in production?</target>
         </trans-unit>
         <trans-unit id="frontend_confirm_save_theme">
             <source>frontend_confirm_save_theme</source>
-            <target>This operation will save the current website as a theme. The operation will override the current theme contents: are you sure to continue?</target>
+            <target>This operation will save the current website as a theme. The operation will override the current theme contents: are you sure you wish to continue?</target>
         </trans-unit>
         <trans-unit id="frontend_confirm_logout">
             <source>frontend_confirm_logout</source>
@@ -253,7 +253,7 @@
         </trans-unit>
         <trans-unit id="frontend_confirm_page_remove">
             <source>frontend_confirm_page_remove</source>
-            <target>Are you sure to remove the page?</target>
+            <target>Are you sure you want to remove the page?</target>
         </trans-unit>
         <trans-unit id="frontend_theme_saved">
             <source>frontend_theme_saved</source>
@@ -261,23 +261,23 @@
         </trans-unit>
         <trans-unit id="frontend_save_page_disable_in_theme_mode">
             <source>frontend_save_page_disable_in_theme_mode</source>
-            <target>It is not necessary saving the page when working in theme mode because block contents are immediately saved in production: just click the "Save as theme" button to transfer the page contents to the handled theme.</target>
+            <target>It is not necessary to save the page when working in theme mode because block contents are immediately saved in production: just click the "Save as theme" button to transfer the page contents to the handled theme.</target>
         </trans-unit>
         <trans-unit id="frontend_save_site_disable_in_theme_mode">
             <source>frontend_save_site_disable_in_theme_mode</source>
-            <target>It is not necessary saving the site when working in theme mode because block contents are immediately saved in production: just click the "Save as theme" button to transfer the page contents to the handled theme.</target>
+            <target>It is not necessary to save the site when working in theme mode because block contents are immediately saved in production: just click the "Save as theme" button to transfer the page contents to the handled theme.</target>
         </trans-unit>
         <trans-unit id="frontend_confirm_publish_page">
             <source>frontend_confirm_publish_page</source>
-            <target>Are you sure to publish this page in production?</target>
+            <target>Are you sure you want to publish this page in production?</target>
         </trans-unit>
         <trans-unit id="frontend_confirm_hide_page">
             <source>frontend_confirm_hide_page</source>
-            <target>Are you sure to hide this page from production?</target>
+            <target>Are you sure you want to hide this page from production?</target>
         </trans-unit>
         <trans-unit id="frontend_confirm_seo_approved">
             <source>frontend_confirm_seo_approved</source>
-            <target>Are you sure to approve the seo elements for this page in production?</target>
+            <target>Are you sure you want to approve the seo elements for this page in production?</target>
         </trans-unit>
         <trans-unit id="frontend_pending_queue">
             <source>frontend_pending_queue</source>
@@ -299,11 +299,11 @@
         </trans-unit>
         <trans-unit id="themes_no_active_theme_choosen">
             <source>theme_no_active_theme_choosen</source>
-            <target>Any active theme has been defined</target>
+            <target>No active theme has been defined</target>
         </trans-unit>
         <trans-unit id="themes_choose_theme">
             <source>theme_choose_theme</source>
-            <target>Choose the active theme from the right panel</target>
+            <target>Choose the active theme from the panelon the right</target>
         </trans-unit>
         <trans-unit id="themes_no_other_theme_installed">
             <source>themes_no_other_theme_installed</source>
@@ -365,27 +365,27 @@
         </trans-unit>
         <trans-unit id="queue_error_detected_body">
             <source>queue_error_detected_body</source>
-            <target>An error occured when saving changes to backend:</target>
+            <target>An error occured when saving changes to the backend:</target>
         </trans-unit>
         <trans-unit id="queue_error_detected_body_1">
             <source>queue_error_detected_body_1</source>
-            <target>This error should not happen and it is probably caused by a bug in the application. Please, try to fix that issue and, if you can find that bug, please report it at</target>
+            <target>This error should not happen so it is probably caused by a bug in the application. Please try to fix the issue if possible. If you can find the bug, please report it to</target>
         </trans-unit>
         <trans-unit id="queue_error_detected_body_2">
             <source>queue_error_detected_body_2</source>
-            <target>If you are not able to fix that issue, you can try to remove the entry which causes the problem in the</target>
+            <target>If you are unable to fix the issue, you can try removing the entry which causes the problem in the</target>
         </trans-unit>
         <trans-unit id="queue_error_detected_body_3">
             <source>queue_error_detected_body_3</source>
-            <target>but you will loose that operation and you might have other problems with the queue flow execution, if other operations depends on the one you removed.</target>
+            <target>but you will lose that operation and you might have other problems with the queue flow execution if other operations depends on the one you removed.</target>
         </trans-unit>
         <trans-unit id="queue_error_detected_body_4">
             <source>queue_error_detected_body_4</source>
-            <target>At last you can remove the</target>
+            <target>Now you can remove the</target>
         </trans-unit>
         <trans-unit id="queue_error_detected_body_5">
             <source>queue_error_detected_body_5</source>
-            <target>but you will loose all the operation you made.</target>
+            <target>but you will lose all the operations you made.</target>
         </trans-unit>
         <trans-unit id="queue_title">
             <source>queue_title</source>
