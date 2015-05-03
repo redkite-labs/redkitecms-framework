@@ -1,1 +1,4 @@
 /plugins/RedKiteCms/Core/RedKiteCms/Resources/public/css/skins/redkite/lib/.sass-cache
+/.idea/
+/vendor/
+/composer.lock

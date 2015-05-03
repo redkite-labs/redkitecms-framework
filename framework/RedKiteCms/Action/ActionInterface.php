@@ -17,27 +17,20 @@
 
 namespace RedKiteCms\Action;
 
-use Silex\Application;
-
 /**
- * Class BaseAction defines the base class an Action object must inherit from
+ * Represents a class to define a specific action.
  *
- * @package RedKiteCms\Action
+ * @author  RedKite Labs <webmaster@redkite-labs.com>
+ * @package RedKiteCms\Content\Block
  */
-abstract class BaseAction implements ActionInterface
+interface ActionInterface
 {
     /**
-     * @var Application
-     */
-    protected $app;
-
-    /**
-     * Constructor
+     * Executes the action
      *
-     * @param Application $app
+     * @param array $options
+     * @param $username
+     * @return mixed
      */
-    public function __construct(Application $app)
-    {
-        $this->app = $app;
-    }
-} 
+    public function execute(array $options, $username);
+}

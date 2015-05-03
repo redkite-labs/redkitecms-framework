@@ -15,29 +15,8 @@
  *
  */
 
-namespace RedKiteCms\Action;
+namespace RedKiteCms;
 
-use Silex\Application;
-
-/**
- * Class BaseAction defines the base class an Action object must inherit from
- *
- * @package RedKiteCms\Action
- */
-abstract class BaseAction implements ActionInterface
+abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var Application
-     */
-    protected $app;
-
-    /**
-     * Constructor
-     *
-     * @param Application $app
-     */
-    public function __construct(Application $app)
-    {
-        $this->app = $app;
-    }
-} 
+}

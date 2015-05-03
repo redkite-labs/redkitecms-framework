@@ -1,9 +1,18 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: alphalemon
- * Date: 13/04/15
- * Time: 5.24
+ * This file is part of the RedKite CMS Application and it is distributed
+ * under the GPL LICENSE Version 2.0. To use this application you must leave
+ * intact this copyright notice.
+ *
+ * Copyright (c) RedKite Labs <info@redkite-labs.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * For extra documentation and help please visit http://www.redkite-labs.com
+ *
+ * @license    GPL LICENSE Version 2.0
+ *
  */
 
 namespace RedKiteCms\Action\Seo;
@@ -15,8 +24,16 @@ use RedKiteCms\Content\Page\PageManager;
 use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class EditSeoAction defines the object deputed to edit a page for a specific language
+ *
+ * @package RedKiteCms\Action
+ */
 class EditSeoAction extends BaseAction
 {
+    /**
+     * {@inheritdoc}
+     */
     public function execute(array $options, $username)
     {
         $data = $options["data"];

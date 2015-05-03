@@ -15,29 +15,11 @@
  *
  */
 
-namespace RedKiteCms\Action;
-
-use Silex\Application;
-
-/**
- * Class BaseAction defines the base class an Action object must inherit from
- *
- * @package RedKiteCms\Action
- */
-abstract class BaseAction implements ActionInterface
-{
-    /**
-     * @var Application
-     */
-    protected $app;
-
-    /**
-     * Constructor
-     *
-     * @param Application $app
-     */
-    public function __construct(Application $app)
-    {
-        $this->app = $app;
-    }
-} 
+if (!@include __DIR__ . '/../vendor/autoload.php') {
+    die(<<<'EOT'
+You must set up the project dependencies, run the following commands:
+wget http://getcomposer.org/composer.phar
+php composer.phar install
+EOT
+    );
+}

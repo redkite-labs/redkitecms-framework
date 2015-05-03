@@ -17,27 +17,12 @@
 
 namespace RedKiteCms\Action;
 
-use Silex\Application;
+use RedKiteCms\TestCase;
 
-/**
- * Class BaseAction defines the base class an Action object must inherit from
- *
- * @package RedKiteCms\Action
- */
-abstract class BaseAction implements ActionInterface
+class FactoryActionTest extends TestCase
 {
-    /**
-     * @var Application
-     */
-    protected $app;
-
-    /**
-     * Constructor
-     *
-     * @param Application $app
-     */
-    public function __construct(Application $app)
+    public function testFoo()
     {
-        $this->app = $app;
+        $this->assertEquals(1, 1);
     }
-} 
+}
