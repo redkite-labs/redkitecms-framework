@@ -37,6 +37,7 @@ use RedKiteCms\Configuration\SiteBuilder;
 use RedKiteCms\Content\Block\BlockFactory;
 use RedKiteCms\Content\BlockManager\BlockManager;
 use RedKiteCms\Content\BlockManager\BlockManagerApprover;
+use RedKiteCms\Content\BlockManager\BlockManagerFactory;
 use RedKiteCms\Content\PageCollection\PageCollectionManager;
 use RedKiteCms\Content\PageCollection\PagesCollectionParser;
 use RedKiteCms\Content\PageCollection\PermalinkManager;
@@ -312,6 +313,12 @@ abstract class RedKiteCms
             $this->app["red_kite_cms.slot_parser"]
         );
         $this->app["red_kite_cms.block_factory"] = new BlockFactory($this->app["red_kite_cms.configuration_handler"]);
+
+        $this->app["red_kite_cms.blocks_manager_factory"] = new BlockManagerFactory(
+            $this->app["jms.serializer"],
+            $this->app["red_kite_cms.block_factory"],
+            clone $optionsResolver
+        );
         $this->app["red_kite_cms.pages_collection_parser"] = new PagesCollectionParser($this->app["red_kite_cms.configuration_handler"]);
         $this->app["red_kite_cms.form_factory"] = new FormFactory(
             $this->app["red_kite_cms.configuration_handler"],

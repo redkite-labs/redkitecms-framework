@@ -46,7 +46,7 @@ class AddBlockAction extends BaseAction
             'position' => $data['position'],
         );
 
-        $blockManager = new BlockManagerAdd($this->app["jms.serializer"], $this->app["red_kite_cms.block_factory"], new OptionsResolver());
+        $blockManager = $this->app["red_kite_cms.blocks_manager_factory"]->create('add');
 
         return $blockManager->add($this->app["red_kite_cms.configuration_handler"]->siteDir(), $addOptions, $username);
     }
