@@ -46,7 +46,7 @@ class RestoreBlockAction extends BaseAction
             'blockname' => $data['name'],
         );
 
-        $blockManager = new BlockManagerRestore($this->app["jms.serializer"], $this->app["red_kite_cms.block_factory"], new OptionsResolver());
+        $blockManager = $this->app["red_kite_cms.blocks_manager_factory"]->create('restore');
         $blockManager->restore(
             $this->app["red_kite_cms.configuration_handler"]->siteDir(),
             $restoreOptions,

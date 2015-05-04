@@ -30,6 +30,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BlockManagerFactory
 {
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+    /**
+     * @var BlockFactoryInterface
+     */
+    private $blockFactory;
+    /**
+     * @var OptionsResolver
+     */
+    private $optionsResolver;
+
+    /**
      * Constructor
      *
      * @param SerializerInterface $serializer

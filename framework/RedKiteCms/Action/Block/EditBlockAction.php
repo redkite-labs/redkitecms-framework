@@ -45,7 +45,7 @@ class EditBlockAction extends BaseAction
             'blockname' => $data['name'],
         );
 
-        $blockManager = new BlockManagerEdit($this->app["jms.serializer"], $this->app["red_kite_cms.block_factory"], new OptionsResolver());
+        $blockManager = $this->app["red_kite_cms.blocks_manager_factory"]->create('edit');
         $blockManager->edit(
             $this->app["red_kite_cms.configuration_handler"]->siteDir(),
             $editOptions,

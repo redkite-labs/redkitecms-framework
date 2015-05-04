@@ -46,7 +46,7 @@ class ArchiveBlockAction extends BaseAction
             'blockname' => $data['name'],
         );
 
-        $blockManager = new BlockManagerArchive($this->app["jms.serializer"], $this->app["red_kite_cms.block_factory"], new OptionsResolver());
+        $blockManager = $this->app["red_kite_cms.blocks_manager_factory"]->create('archive');
         $blockManager->archive(
             $this->app["red_kite_cms.configuration_handler"]->siteDir(),
             $archiveOptions,

@@ -53,9 +53,8 @@ class MoveBlockAction extends BaseAction
             $moveOptions['targetSlot'] = $data['targetSlot'];
         }
 
-
-        $blockManager = new BlockManagerMove($this->app["jms.serializer"], $this->app["red_kite_cms.block_factory"], new OptionsResolver());
-
+        $blockManager = $this->app["red_kite_cms.blocks_manager_factory"]->create('move');
+        
         return $blockManager->move($this->app["red_kite_cms.configuration_handler"]->siteDir(), $moveOptions, $username);
     }
 }
