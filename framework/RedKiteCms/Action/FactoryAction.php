@@ -31,11 +31,23 @@ class FactoryAction
 {
     private $app;
 
+    /**
+     * Constructor
+     *
+     * @param Application $app
+     */
     public function __construct(Application $app)
     {
         $this->app = $app;
     }
 
+    /**
+     * Creates an action object
+     *
+     * @param $entity
+     * @param $action
+     * @return null|\RedKiteCms\Action\ActionInterface
+     */
     public function create($entity, $action)
     {
         $type = ucfirst($entity);

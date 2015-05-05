@@ -17,6 +17,38 @@
 
 namespace RedKiteCms;
 
+use RedKiteCms\Bridge\Dispatcher\Dispatcher;
+use RedKiteCms\Bridge\Monolog\DataLogger;
+
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
+    protected $dispatcher;
+    protected $logger;
+
+    protected function setUp()
+    {
+        $this->dispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $this->logger = $this->getMock('\Psr\Log\LoggerInterface');
+
+        DataLogger::init($this->logger);
+        Dispatcher::setDispatcher($this->dispatcher);
+    }
+
+    protected function dispatch($at, $eventName, $eventClass)
+    {
+        $this->dispatcher
+            ->expects($this->at($at))
+            ->method('dispatch')
+            ->with($eventName, $this->isInstanceOf($eventClass))
+        ;
+    }
+
+    protected function log($at, $method, $text)
+    {
+        $this->logger
+            ->expects($this->at($at))
+            ->method($method)
+            ->with($text)
+        ;
+    }
 }

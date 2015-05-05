@@ -19,10 +19,33 @@ namespace RedKiteCms\Action;
 
 use RedKiteCms\TestCase;
 
+/**
+ * Class FactoryActionTest
+ */
 class FactoryActionTest extends TestCase
 {
-    public function testFoo()
+    private $factoryAction = null;
+    private $app = null;
+
+    protected function setUp()
     {
-        $this->assertEquals(1, 1);
+        $this->app = $this
+            ->getMockBuilder('\Silex\Application')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+        $this->factoryAction = new FactoryAction($this->app);
+    }
+
+    public function testCreateReturnsNullWhenActionClassDoesNotExists()
+    {
+        $action = $this->factoryAction->create('foo', 'bar');
+        $this->assertNull($action);
+    }
+
+    public function testCreateReturnsActionObject()
+    {
+        $action = $this->factoryAction->create('block', 'add');
+        $this->assertInstanceOf('\RedKiteCms\Action\Block\AddBlockAction', $action);
     }
 }

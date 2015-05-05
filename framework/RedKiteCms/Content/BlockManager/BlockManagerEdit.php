@@ -54,7 +54,7 @@ class BlockManagerEdit extends BlockManager
         $values = $this->parseChildren($values);
 
         $block = JsonTools::join($currentBlock, $values);
-        $encodedBlock = $this->serializer->serialize($block, 'json');
+        $encodedBlock = json_encode($block);
 
         $blockClass = Utils::blockClassFromType($block["type"]);
         $event = Dispatcher::dispatch(

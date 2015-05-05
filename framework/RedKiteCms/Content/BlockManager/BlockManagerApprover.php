@@ -102,7 +102,6 @@ class BlockManagerApprover extends BlockManager
             new BlockApprovingRemovalEvent($this->serializer, $targetFilename)
         );
 
-        $this->archiveRemovedFile($this->productionDir, $targetFilename, $options);
         $this->filesystem->remove($targetFilename);
 
         $slotDefinition = $this->getSlotDefinition($this->productionDir);
