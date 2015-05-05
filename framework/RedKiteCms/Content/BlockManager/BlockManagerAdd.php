@@ -43,7 +43,7 @@ class BlockManagerAdd extends BlockManager
      */
     public function add($sourceDir, array $options, $username)
     {
-        $this->resolveOptions($options);
+        $this->resolveAddOptions($options);
         $this->createContributorDir($sourceDir, $options, $username);
 
         $dir = $this
@@ -72,12 +72,13 @@ class BlockManagerAdd extends BlockManager
      *
      * @param array $options
      */
-    protected function resolveOptions(array $options)
+    protected function resolveAddOptions(array $options)
     {
         if ($this->optionsResolved) {
             return;
         }
 
+        $this->optionsResolver->clear();
         $this->optionsResolver->setRequired(
             array(
                 'page',

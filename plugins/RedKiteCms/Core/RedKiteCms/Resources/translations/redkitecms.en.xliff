@@ -381,7 +381,7 @@
         </trans-unit>
         <trans-unit id="queue_error_detected_body_4">
             <source>queue_error_detected_body_4</source>
-            <target>Now you can remove the</target>
+            <target>At last you can remove the</target>
         </trans-unit>
         <trans-unit id="queue_error_detected_body_5">
             <source>queue_error_detected_body_5</source>

@@ -67,7 +67,7 @@ class QueueManager
                 return false;
             }
 
-            unset($this->queue[$key]);
+            unset($this->queue["queue"][$key]);
         }
 
         if ($this->queueExists) {
@@ -91,7 +91,9 @@ class QueueManager
         }
         $queue["queue"] = $queueItems;
 
-        $error = Utils::translateException($this->queue["error"]);
+        if (array_key_exists("error", $this->queue)) {
+            $error = Utils::translateException($this->queue["error"]);
+        }
 
         return $this->twig->render(
             'RedKiteCms/Resources/views/Queue/queue.html.twig',

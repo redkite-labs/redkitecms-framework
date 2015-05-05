@@ -42,9 +42,9 @@
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code ",
-                "insertdatetime media table contextmenu save"
+                "insertdatetime media table contextmenu"
             ],
-            toolbar: "save | styleselect | bold italic | bullist numlist | link image table | code",
+            toolbar: "styleselect | bold italic | bullist numlist | link image table | code",
             link_list : frontcontroller + '/backend/page/permalinks',
             init_instance_callback : function(editor)
             {
