@@ -45,16 +45,19 @@ class MoveBlockAction extends BaseAction
             'sourceSlot' => $data['sourceSlot'],
             'oldName' => $data['oldName'],
             'newName' => $data['newName'],
-            'blockname' => $data['name'],
             'position' => $data['position'],
         );
+
+        if (array_key_exists('name', $data)) {
+            $moveOptions['blockname'] = $data['name'];
+        }
 
         if (null !== $data['targetSlot']) {
             $moveOptions['targetSlot'] = $data['targetSlot'];
         }
 
         $blockManager = $this->app["red_kite_cms.blocks_manager_factory"]->create('move');
-        
+
         return $blockManager->move($this->app["red_kite_cms.configuration_handler"]->siteDir(), $moveOptions, $username);
     }
 }

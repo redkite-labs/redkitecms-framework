@@ -47,8 +47,7 @@ class BlockManagerMove extends BlockManager
      */
     public function move($baseDir, array $options, $username)
     {
-        $this->resolveOptions($options);
-
+        $this->resolveMoveOptions($options);
         if (array_key_exists("targetSlot", $options)) {
             $options["slot"] = $options["targetSlot"];
             $block = $this->moveBlockToAnotherSlot($baseDir, $options, $username);
@@ -67,12 +66,13 @@ class BlockManagerMove extends BlockManager
      *
      * @param array $options
      */
-    protected function resolveOptions(array $options)
+    protected function resolveMoveOptions(array $options)
     {
         if ($this->optionsResolved) {
             return;
         }
 
+        $this->optionsResolver->clear();
         $this->optionsResolver->setRequired(
             array(
                 'page',
@@ -89,6 +89,7 @@ class BlockManagerMove extends BlockManager
                 'blockname',
                 'oldName',
                 'newName',
+                'slot',
             )
         );
 
@@ -146,8 +147,15 @@ class BlockManagerMove extends BlockManager
         unset($options["sourceSlot"]);
         unset($options["targetSlot"]);
 
-        $sourceDir = $this->fetchSlotDir($sourceSlot, $options, $baseDir, $username);
-        $targetDir = $this->fetchSlotDir($targetSlot, $options, $baseDir, $username);
+        $slotDirOptions = $options;
+        $newName = $slotDirOptions["newName"];
+        $slotDirOptions["blockname"] = $slotDirOptions["oldName"];
+        unset($slotDirOptions["oldName"]);
+        unset($slotDirOptions["newName"]);
+        unset($slotDirOptions["position"]);
+        $sourceDir = $this->fetchSlotDir($sourceSlot, $slotDirOptions, $baseDir, $username);
+        $slotDirOptions["blockname"] = $newName;
+        $targetDir = $this->fetchSlotDir($targetSlot, $slotDirOptions, $baseDir, $username);
         if (!is_dir($targetDir)) {
             $this->createContributorDir($baseDir, $options, $username);
         }
@@ -193,7 +201,8 @@ class BlockManagerMove extends BlockManager
 
         return $this
             ->init($baseDir, $options, $username)
-            ->getDirInUse();
+            ->getDirInUse()
+        ;
     }
 
     private function addSourceBlockToTargetSlot($sourceFile, $targetDir, $options)
