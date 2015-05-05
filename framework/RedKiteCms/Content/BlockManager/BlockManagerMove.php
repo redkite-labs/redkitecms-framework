@@ -112,11 +112,16 @@ class BlockManagerMove extends BlockManager
 
         $this->filesystem->mirror($archiveSourceFile, $archiveTargetFile);
         $this->filesystem->remove($archiveSourceFile);
-        $finder = new Finder();
-        $files = $finder->files()->depth(0)->in($archiveTargetFile);
-        foreach ($files as $file) {
-            $this->changeBlockSlotAndName((string)$file, $blockName, $slotName);
+
+        $historyChanged = array();
+        $historyFile = $archiveTargetFile . '/history.json';
+        $history = json_decode(file_get_contents($historyFile), true);
+        foreach($history as $key => $values) {
+            $values["name"] = $blockName;
+            $values["slot_name"] = $slotName;
+            $historyChanged[$key] = $values;
         }
+        file_put_contents($historyFile, json_encode($historyChanged));
     }
 
     /**

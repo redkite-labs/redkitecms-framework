@@ -48,7 +48,8 @@ class BlockManagerAdd extends BlockManager
 
         $dir = $this
             ->init($sourceDir, $options, $username)
-            ->getDirInUse();
+            ->getDirInUse()
+        ;
         $blockName = $this->addBlockToSlot($dir, $options);
         $blockContent = $this->addBlock($dir, $options, $blockName);
 
