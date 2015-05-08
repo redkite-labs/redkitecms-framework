@@ -52,7 +52,7 @@ class MoveBlockAction extends BaseAction
             $moveOptions['blockname'] = $data['name'];
         }
 
-        if (null !== $data['targetSlot']) {
+        if (array_key_exists('targetSlot', $data) && null !== $data['targetSlot']) {
             $moveOptions['targetSlot'] = $data['targetSlot'];
         }
 

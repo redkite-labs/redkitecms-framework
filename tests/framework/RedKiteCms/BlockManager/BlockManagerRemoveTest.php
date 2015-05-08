@@ -54,16 +54,9 @@ class BlockManagerRemoveTest extends BlockManagerBaseTestCase
         $this->checkNonExistentFiles($expectedNonExistentFiles);
     }
 
-    protected function configureContributionManager($username, array $options, $method = 'add')
-    {
-        $options["block"] = json_decode($options["block"], true);
-        $this->contributionManager
-            ->expects($this->once())
-            ->method($method)
-            ->with($username, $options)
-        ;
-    }
-
+    /**
+     * @codeCoverageIgnore
+     */
     public function deleteProvider()
     {
         return array(

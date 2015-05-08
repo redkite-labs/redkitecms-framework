@@ -39,19 +39,21 @@ class BlockManagerRestoreTest extends BlockManagerBaseTestCase
     /**
      * @dataProvider restoreProvider
      */
-    public function testRestore($folders, $options, $expectedAddedBlocks, $username = 'john')
+    public function testRestore($folders, $options, $restoreBlockName, $expectedRestoredBlock, $expectedAddedBlocks, $username = 'john')
     {
         $this->configureFilesystem($folders);
-        $changedBlock = file_get_contents('vfs://root/redkitecms.com/slots/logo/contributors/john/blocks/block1.json');
-        $this->blockManager->restore(vfsStream::url('root\redkitecms.com'), $options, $username, '2014-11-18-19.25.43');
+        $this->blockManager->restore(vfsStream::url('root\redkitecms.com'), $options, $username, $restoreBlockName);
         $this->checkBlockFiles($expectedAddedBlocks);
         $history = json_decode(file_get_contents('vfs://root/redkitecms.com/slots/logo/contributors/john/archive/block1/history.json'), true);
 
         // Checks that the active block just replaced has been added to history
         $historyBlock = array_values($history);
-        $this->assertEquals(json_encode($historyBlock[0]), $changedBlock);
+        $this->assertEquals(json_encode($historyBlock[0]), $expectedRestoredBlock);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function restoreProvider()
     {
         return array(
@@ -85,8 +87,47 @@ class BlockManagerRestoreTest extends BlockManagerBaseTestCase
                     'slot' => 'logo',
                     'blockname' => 'block1',
                 ),
+                '2014-11-18-19.25.43',
+                '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>John text<\/p>","editor_configuration":"standard"}',
                 array(
                     'root\redkitecms.com\slots\logo\contributors\john\blocks\block1.json' => '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>This is a text<\/p>","editor_configuration":"standard"}',
+                    'root\redkitecms.com\slots\logo\contributors\john\slot.json' => '{"next":2,"blocks":["block1"],"revision":1}',
+                ),
+            ),
+            // Block is not restored because the operation has been cancelled on the frontend
+            array(
+                array(
+                    'redkitecms.com' => array(
+                        'slots' => array(
+                            'logo' => array(
+                                'contributors' => array(
+                                    'john' => array(
+                                        'archive' => array(
+                                            'block1' => array(
+                                                'history.json' => '{"2014-11-18-19.25.43":{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>This is a text<\/p>","editor_configuration":"standard"}}',
+                                            ),
+                                        ),
+                                        'blocks' => array(
+                                            'block1.json' => '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>John text<\/p>","editor_configuration":"standard"}',
+                                        ),
+                                        'slot.json' => '{"next":2,"blocks":["block1"],"revision":1}',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                array(
+                    'page' => 'index',
+                    'language' => 'en',
+                    'country' => 'GB',
+                    'slot' => 'logo',
+                    'blockname' => 'block1',
+                ),
+                '2014-11-18-20.25.43',
+                '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>This is a text<\/p>","editor_configuration":"standard"}',
+                array(
+                    'root\redkitecms.com\slots\logo\contributors\john\blocks\block1.json' => '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>John text<\/p>","editor_configuration":"standard"}',
                     'root\redkitecms.com\slots\logo\contributors\john\slot.json' => '{"next":2,"blocks":["block1"],"revision":1}',
                 ),
             ),

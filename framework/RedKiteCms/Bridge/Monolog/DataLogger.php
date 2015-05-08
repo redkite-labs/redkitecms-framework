@@ -44,9 +44,9 @@ class DataLogger
     /**
      * Injects the logger
      *
-     * @param LoggerInterface $logger
+     * @param null|LoggerInterface $logger
      */
-    public static function init(LoggerInterface $logger)
+    public static function init(LoggerInterface $logger = null)
     {
         self::$logger = $logger;
     }

@@ -31,7 +31,6 @@ class BlockManagerBaseTestCase extends TestCase
 {
     protected $serializer;
     protected $root;
-    protected $contributionManager;
     protected $optionsResolver;
     protected $blockFactory;
     
@@ -40,7 +39,6 @@ class BlockManagerBaseTestCase extends TestCase
         parent::setUp();
 
         $this->serializer = $this->getMock('JMS\Serializer\SerializerInterface');
-        $this->contributionManager = $this->getMock('RedKiteCms\Contribution\ContributionManagerInterface');
         $this->optionsResolver = $this->getMock('Symfony\Component\OptionsResolver\OptionsResolver');
         $this->blockFactory = $this->getMock('\RedKiteCms\Content\Block\BlockFactoryInterface');
     }

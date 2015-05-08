@@ -94,7 +94,9 @@ class BlockManagerApprover extends BlockManager
         $this->init($sourceDir, $options, $username);
         $targetFilename = sprintf('%s/blocks/%s.json', $this->productionDir, $options['blockname']);
         if (!file_exists($targetFilename)) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
         Dispatcher::dispatch(

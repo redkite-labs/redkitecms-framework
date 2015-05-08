@@ -56,6 +56,9 @@ class BlockManagerMoveTest extends BlockManagerBaseTestCase
         }
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function moveProvider()
     {
         return array(
@@ -189,6 +192,64 @@ class BlockManagerMoveTest extends BlockManagerBaseTestCase
                 'vfs://root\redkitecms.com\slots\menu\contributors\john\archive\block2\history.json',
                 '{"2014-11-18-19.25.43":{"slot_name":"menu","name":"block2","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 first text<\/p>","editor_configuration":"standard"},"2014-11-18-19.26.14":{"slot_name":"menu","name":"block2","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 second text<\/p>","editor_configuration":"standard"},"2014-11-18-19.26.58":{"slot_name":"menu","name":"block2","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 third text<\/p>","editor_configuration":"standard"}}',
             ),
+            // The same test above but RedKite CMS creates the contributors folder on the slots where the content is moved
+            array(
+                array(
+                    'redkitecms.com' => array(
+                        'slots' => array(
+                            'logo' => array(
+                                'contributors' => array(
+                                    'john' => array(
+                                        'archive' => array(
+                                            'block1' => array(
+                                                'history.json' => '
+                                                {"2014-11-18-19.25.43":{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 first text<\/p>","editor_configuration":"standard"},
+                                                "2014-11-18-19.26.14":{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 second text<\/p>","editor_configuration":"standard"},
+                                                "2014-11-18-19.26.58":{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 third text<\/p>","editor_configuration":"standard"}}',
+                                            ),
+                                        ),
+                                        'blocks' => array(
+                                            'block1.json' => '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 text<\/p>","editor_configuration":"standard"}',
+                                        ),
+                                        'slot.json' => '{"next":2,"blocks":["block1"],"revision":1}',
+                                    ),
+                                ),
+                            ),
+                            'menu' => array(
+                                'active' => array(
+                                    'blocks' => array(
+                                        'block1.json' => '{"slot_name":"menu","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 text<\/p>","editor_configuration":"standard"}',
+                                    ),
+                                    'slot.json' => '{"next":2,"blocks":["block1"],"revision":1}',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                array(
+                    'page' => 'index',
+                    'language' => 'en',
+                    'country' => 'GB',
+                    'oldName' => 'block1',
+                    'newName' => 'block2',
+                    'position' => 0,
+                    'sourceSlot' => 'logo',
+                    'targetSlot' => 'menu',
+                ),
+                '{"slot_name":"menu","name":"block2","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 text<\/p>","editor_configuration":"standard"}',
+                array(
+                    'root\redkitecms.com\slots\menu\contributors\john\blocks\block1.json' => '{"slot_name":"menu","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 text<\/p>","editor_configuration":"standard"}',
+                    'root\redkitecms.com\slots\menu\contributors\john\blocks\block2.json' => '{"slot_name":"menu","name":"block2","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 text<\/p>","editor_configuration":"standard"}',
+                    'root\redkitecms.com\slots\logo\contributors\john\slot.json' => '{"next":2,"blocks":[],"revision":1}',
+                    'root\redkitecms.com\slots\menu\contributors\john\slot.json' => '{"next":3,"blocks":["block2","block1"],"revision":1}',
+                ),
+                array(
+                    'root\redkitecms.com\slots\logo\contributors\john\blocks\block1.json',
+                    'root\redkitecms.com\slots\logo\contributors\john\archive\block1',
+                ),
+                'vfs://root\redkitecms.com\slots\menu\contributors\john\archive\block2\history.json',
+                '{"2014-11-18-19.25.43":{"slot_name":"menu","name":"block2","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 first text<\/p>","editor_configuration":"standard"},"2014-11-18-19.26.14":{"slot_name":"menu","name":"block2","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 second text<\/p>","editor_configuration":"standard"},"2014-11-18-19.26.58":{"slot_name":"menu","name":"block2","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>Block1 third text<\/p>","editor_configuration":"standard"}}',
+            ),
             // Block1 from logo slot has been moved to the empty menu slot
             array(
                 array(
@@ -266,7 +327,8 @@ class BlockManagerMoveTest extends BlockManagerBaseTestCase
                 ),
                 array(
                     'page' => 'index',
-                    'language' => 'en_GB',
+                    'language' => 'en',
+                    'country' => 'GB',
                     'oldName' => 'block2',
                     'newName' => 'block2',
                     'position' => 1,

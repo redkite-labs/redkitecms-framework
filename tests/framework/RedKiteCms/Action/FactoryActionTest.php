@@ -21,6 +21,8 @@ use RedKiteCms\TestCase;
 
 /**
  * Class FactoryActionTest
+ *
+ * @author RedKite Labs <webmaster@redkite-labs.com>
  */
 class FactoryActionTest extends TestCase
 {

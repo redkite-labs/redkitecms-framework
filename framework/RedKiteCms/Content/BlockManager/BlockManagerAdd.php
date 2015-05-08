@@ -75,7 +75,9 @@ class BlockManagerAdd extends BlockManager
     protected function resolveAddOptions(array $options)
     {
         if ($this->optionsResolved) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
         $this->optionsResolver->clear();

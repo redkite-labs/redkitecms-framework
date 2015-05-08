@@ -92,7 +92,9 @@ class BlockManagerEdit extends BlockManager
         $children = $values["children"];
         foreach ($children as $child) {
             if (!array_key_exists("type", $child)) {
+                // @codeCoverageIgnoreStart
                 continue;
+                // @codeCoverageIgnoreEnd
             }
 
             $block = $this->blockFactory->createBlock($child["type"]);

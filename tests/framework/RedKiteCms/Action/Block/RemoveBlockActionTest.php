@@ -18,13 +18,13 @@
 namespace RedKiteCms\Action\Block;
 
 /**
- * Class AddBlockActionTest
+ * Class RemoveBlockActionTest
  *
  * @author RedKite Labs <webmaster@redkite-labs.com>
  */
-class AddBlockActionTest extends TestBaseAction
+class RemoveBlockActionTest extends TestBaseAction
 {
-    public function testAddBlock()
+    public function testRemoveBlock()
     {
         $username = 'john';
         $options = array("data" => array(
@@ -33,14 +33,11 @@ class AddBlockActionTest extends TestBaseAction
             'country' => 'GB',
             'slot' => 'logo',
             'name' => 'block2',
-            'direction' => 'top',
-            'type' => 'Link',
-            'position' => '1',
         ));
 
-        $this->boot($options, $username, 'add');
+        $this->boot($options, $username, 'remove');
 
-        $addBlockAction = new AddBlockAction($this->app);
+        $addBlockAction = new RemoveBlockAction($this->app);
         $addBlockAction->execute($options, $username);
     }
 
@@ -49,14 +46,14 @@ class AddBlockActionTest extends TestBaseAction
         $options = $this->normalizeOptions($options);
 
         $blockManager = $this
-            ->getMockBuilder('\RedKiteCms\Content\BlockManager\BlockManagerAdd')
+            ->getMockBuilder('\RedKiteCms\Content\BlockManager\BlockManagerRemove')
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
         $blockManager
             ->expects($this->once())
-            ->method('add')
+            ->method('remove')
             ->with($siteDir, $options, $username)
         ;
 

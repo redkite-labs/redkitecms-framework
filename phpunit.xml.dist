@@ -6,21 +6,24 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false"
+         stopOnFailure="true"
          syntaxCheck="false"
          bootstrap="./tests/bootstrap.php"
         >
     <php>
-        <server name="BASE_URL" value="http://redkite-labs.com.local" />
+        <server name="BASE_URL" value="http://redkite-labs.com" />
     </php>
     <testsuites>
-        <testsuite name="Silex app test suite">
+        <testsuite name="RedKite CMS app test suite">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory>./tests/</directory>
+            <directory>./framework</directory>
+            <exclude>
+                <directory>./tests</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>

@@ -40,14 +40,14 @@ class BlockManagerArchive extends BlockManager
      * @param string $sourceDir
      * @param array $options
      * @param string $username
-     * @param array $values
+     * @param array $block
      */
-    public function archive($sourceDir, array $options, $username, $values)
+    public function archive($sourceDir, array $options, $username, $block)
     {
         $this->resolveOptions($options);
 
+        $block = json_decode($block, true);
         $block["history"] = array();
-        $block = json_decode($values, true);
         $this->init($sourceDir, $options, $username);
         $historyDirName = sprintf('%s/archive/%s', $this->getDirInUse(), $options["blockname"]);
         $historyFileName = $historyDirName . '/history.json';

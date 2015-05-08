@@ -69,7 +69,9 @@ class BlockManagerMove extends BlockManager
     protected function resolveMoveOptions(array $options)
     {
         if ($this->optionsResolved) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
         $this->optionsResolver->clear();

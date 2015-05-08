@@ -22,7 +22,7 @@ use RedKiteCms\Content\Block\BlockFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * This object is deputed to build a BlockManager object
+ * This object is deputed to instantiate a new BlockManager object from the action required
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\BlockManager

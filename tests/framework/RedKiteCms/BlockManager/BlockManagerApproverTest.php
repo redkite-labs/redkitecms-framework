@@ -70,6 +70,9 @@ class BlockManagerApproverTest extends BlockManagerBaseTestCase
         $this->checkBlockFiles($expectedActiveBlocks);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function approveProvider()
     {
         return array(
@@ -194,6 +197,9 @@ class BlockManagerApproverTest extends BlockManagerBaseTestCase
         );
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function approveRemovalProvider()
     {
         return array(

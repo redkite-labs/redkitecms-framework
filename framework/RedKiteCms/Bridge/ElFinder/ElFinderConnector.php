@@ -69,21 +69,6 @@ abstract class ElFinderConnector implements ElFinderConnectorInterface
         }
     }
 
-    private function loadConnectors()
-    {
-        if ($this->connectorLoaded) {
-            return;
-        }
-
-        $webDir = $this->configurationHandler->webDir();
-        require_once $webDir . '/components/redkitecms/elfinder/php/elFinderConnector.class.php';
-        require_once $webDir . '/components/redkitecms/elfinder/php/elFinder.class.php';
-        require_once $webDir . '/components/redkitecms/elfinder/php/elFinderVolumeDriver.class.php';
-        require_once $webDir . '/components/redkitecms/elfinder/php/elFinderVolumeLocalFileSystem.class.php';
-
-        $this->connectorLoaded = true;
-    }
-
     /**
      * Starts the elFinder connector
      */
@@ -126,5 +111,20 @@ abstract class ElFinderConnector implements ElFinderConnectorInterface
         );
 
         return $options;
+    }
+
+    private function loadConnectors()
+    {
+        if ($this->connectorLoaded) {
+            return;
+        }
+
+        $webDir = $this->configurationHandler->webDir();
+        require_once $webDir . '/components/redkitecms/elfinder/php/elFinderConnector.class.php';
+        require_once $webDir . '/components/redkitecms/elfinder/php/elFinder.class.php';
+        require_once $webDir . '/components/redkitecms/elfinder/php/elFinderVolumeDriver.class.php';
+        require_once $webDir . '/components/redkitecms/elfinder/php/elFinderVolumeLocalFileSystem.class.php';
+
+        $this->connectorLoaded = true;
     }
 }

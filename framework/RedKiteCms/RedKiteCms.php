@@ -338,11 +338,6 @@ abstract class RedKiteCms
         $this->app["red_kite_cms.page_renderer_production"] = new PageRendererProduction(
             $this->app["red_kite_cms.configuration_handler"], $this->app["jms.serializer"], $this->app["twig"]
         );
-        $this->app["red_kite_cms.block_manager"] = new BlockManager(
-            $this->app["jms.serializer"],
-            $this->app["red_kite_cms.block_factory"],
-            clone $optionsResolver
-        );
         $this->app["red_kite_cms.slots_manager_factory"] = new SlotsManagerFactory(
             $this->app["red_kite_cms.configuration_handler"]
         );

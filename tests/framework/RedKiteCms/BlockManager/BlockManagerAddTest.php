@@ -111,9 +111,85 @@ class BlockManagerAddTest extends BlockManagerBaseTestCase
         $this->log(2, 'info', $logMessage);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function addProvider()
     {
         return array(
+            // Block2 is added under block1 when designing a theme
+            array(
+                array(
+                    'redkitecms.com' => array(
+                        'slots' => array(
+                            'logo' => array(
+                                'active' => array(
+                                    'blocks' => array(
+                                        'block1.json' => '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>This is a text<\/p>","editor_configuration":"standard"}',
+                                    ),
+                                    'slot.json' => '{"next":2,"blocks":["block1"],"revision":1}',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                array(
+                    'page' => 'index',
+                    'language' => 'en',
+                    'country' => 'GB',
+                    'slot' => 'logo',
+                    'type' => 'Link',
+                    'position' => 1,
+                    'direction' => 'bottom',
+                    'block' => '{"foo":"bar"}',
+                    'baseBlock' => '{"foo":"bar"}',
+                    'blockname' => 'block2',
+                ),
+                'block2',
+                array(
+                    'root\redkitecms.com\slots\logo\active\blocks\block1.json' => '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>This is a text<\/p>","editor_configuration":"standard"}',
+                    'root\redkitecms.com\slots\logo\active\blocks\block2.json' => '{"foo":"bar"}',
+                    'root\redkitecms.com\slots\logo\active\slot.json' => '{"next":3,"blocks":["block1","block2"],"revision":1}',
+                ),
+                'Block "block2" has been added to the "logo" slot on page "index" for the "en_GB" language',
+                null
+            ),
+            // Block2 is added under block1 after creating the contributors folder
+            array(
+                array(
+                    'redkitecms.com' => array(
+                        'slots' => array(
+                            'logo' => array(
+                                'active' => array(
+                                    'blocks' => array(
+                                        'block1.json' => '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>This is a text<\/p>","editor_configuration":"standard"}',
+                                    ),
+                                    'slot.json' => '{"next":2,"blocks":["block1"],"revision":1}',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                array(
+                    'page' => 'index',
+                    'language' => 'en',
+                    'country' => 'GB',
+                    'slot' => 'logo',
+                    'type' => 'Link',
+                    'position' => 1,
+                    'direction' => 'bottom',
+                    'block' => '{"foo":"bar"}',
+                    'baseBlock' => '{"foo":"bar"}',
+                    'blockname' => 'block2',
+                ),
+                'block2',
+                array(
+                    'root\redkitecms.com\slots\logo\contributors\john\blocks\block1.json' => '{"slot_name":"logo","name":"block1","list_name":"","type":"Text","is_child":false,"editor_disabled":false,"custom_tag":"rkcms-text","history_name":"","history":[],"revision":1,"is_removed":false,"html":"<p>This is a text<\/p>","editor_configuration":"standard"}',
+                    'root\redkitecms.com\slots\logo\contributors\john\blocks\block2.json' => '{"foo":"bar"}',
+                    'root\redkitecms.com\slots\logo\contributors\john\slot.json' => '{"next":3,"blocks":["block1","block2"],"revision":1}',
+                ),
+                'Block "block2" has been added to the "logo" slot on page "index" for the "en_GB" language'
+            ),
             // Block2 is added under block1
             array(
                 array(

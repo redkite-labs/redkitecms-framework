@@ -39,9 +39,9 @@ class Dispatcher
     /**
      * Sets the dispatcher
      *
-     * @param EventDispatcherInterface $dispatcher
+     * @param null|EventDispatcherInterface $dispatcher
      */
-    public static function setDispatcher(EventDispatcherInterface $dispatcher)
+    public static function setDispatcher(EventDispatcherInterface $dispatcher = null)
     {
         self::$dispatcher = $dispatcher;
     }

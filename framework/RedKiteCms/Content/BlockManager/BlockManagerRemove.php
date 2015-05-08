@@ -52,7 +52,6 @@ class BlockManagerRemove extends BlockManager
         $options["block"] = JsonTools::jsonDecode(FilesystemTools::readFile($filename));
         Dispatcher::dispatch(BlockEvents::BLOCK_REMOVING, new BlockRemovingEvent($this->serializer, $filename));
 
-        $this->archiveRemovedFile($dir, $filename, $options);
         $this->filesystem->remove($filename);
         $this->removeBlockFromSlotFile($options, $dir);
 

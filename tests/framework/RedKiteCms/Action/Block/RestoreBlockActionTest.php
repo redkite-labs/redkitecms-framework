@@ -18,13 +18,13 @@
 namespace RedKiteCms\Action\Block;
 
 /**
- * Class AddBlockActionTest
+ * Class RestoreBlockActionTest
  *
  * @author RedKite Labs <webmaster@redkite-labs.com>
  */
-class AddBlockActionTest extends TestBaseAction
+class RestoreBlockActionTest extends TestBaseAction
 {
-    public function testAddBlock()
+    public function testRestoreBlock()
     {
         $username = 'john';
         $options = array("data" => array(
@@ -33,30 +33,29 @@ class AddBlockActionTest extends TestBaseAction
             'country' => 'GB',
             'slot' => 'logo',
             'name' => 'block2',
-            'direction' => 'top',
-            'type' => 'Link',
-            'position' => '1',
+            'archiveFile' => '2015/05/05 13.52.12',
         ));
 
-        $this->boot($options, $username, 'add');
+        $this->boot($options, $username, 'restore');
 
-        $addBlockAction = new AddBlockAction($this->app);
+        $addBlockAction = new RestoreBlockAction($this->app);
         $addBlockAction->execute($options, $username);
     }
 
     protected function initBlockManager($siteDir, $options, $username)
     {
+        unset($options['data']['archiveFile']);
         $options = $this->normalizeOptions($options);
 
         $blockManager = $this
-            ->getMockBuilder('\RedKiteCms\Content\BlockManager\BlockManagerAdd')
+            ->getMockBuilder('\RedKiteCms\Content\BlockManager\BlockManagerRestore')
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
         $blockManager
             ->expects($this->once())
-            ->method('add')
+            ->method('restore')
             ->with($siteDir, $options, $username)
         ;
 
