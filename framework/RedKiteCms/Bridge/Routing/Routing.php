@@ -36,6 +36,14 @@ class Routing
     private static $routing = null;
 
     /**
+     * @return null|RoutingBase
+     */
+    public static function getRouting()
+    {
+        return self::$routing;
+    }
+
+    /**
      * @param \RedKiteCms\Configuration\ConfigurationHandler $configurationHandler
      * @param bool $debug
      *
@@ -43,10 +51,8 @@ class Routing
      */
     public static function create(ConfigurationHandler $configurationHandler, $debug = false)
     {
-        if (null === self::$routing) {
-            self::$routing = self::initRouter($configurationHandler);
-            self::$routing ->createRouter($debug);
-        }
+        self::$routing = self::initRouter($configurationHandler);
+        self::$routing->createRouter($debug);
 
         return self::$routing;
     }

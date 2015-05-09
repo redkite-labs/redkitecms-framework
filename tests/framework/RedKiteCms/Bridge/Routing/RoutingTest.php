@@ -35,22 +35,39 @@ class RoutingTest extends TestCase
     {
         $this->configurationHandler = $this
             ->getMockBuilder('\RedKiteCms\Configuration\ConfigurationHandler')
+            ->setMethods(array('isProduction'))
             ->disableOriginalConstructor()
             ->getMock()
         ;
     }
 
-    public function testRoutingInstantiation()
+    /**
+     * @dataProvider routingProvider
+     */
+    public function testRoutingInstantiation($isProduction, $expectedObjectClass)
     {
-        $isProduction = true;
         $this->configurationHandler
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('isProduction')
             ->will($this->returnValue($isProduction))
         ;
 
         $router = Routing::create($this->configurationHandler);
-        $this->assertInstanceOf('\RedKiteCms\Bridge\Routing\RoutingFrontend', $router);
+        $this->assertInstanceOf($expectedObjectClass, $router);
+        $this->assertInstanceOf($expectedObjectClass, Routing::getRouting());
     }
 
+    public function routingProvider()
+    {
+        return array(
+            array(
+                true,
+                '\RedKiteCms\Bridge\Routing\RoutingFrontend',
+            ),
+            array(
+                false,
+                '\RedKiteCms\Bridge\Routing\RoutingBackend',
+            ),
+        );
+    }
 }

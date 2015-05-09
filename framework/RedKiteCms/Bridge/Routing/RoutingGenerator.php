@@ -22,6 +22,7 @@ use RedKiteCms\Tools\FilesystemTools;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * This object is deputed to generate dynamically the website page routes
@@ -135,7 +136,7 @@ class RoutingGenerator
      *
      * @return array
      */
-    public function generate(Router $router)
+    public function generate(RouterInterface $router)
     {
         $routes = $router->getRouteCollection();
         $pagesDir = $this->configurationHandler->pagesDir();
@@ -152,46 +153,51 @@ class RoutingGenerator
             $routes->add($homeRouteName, new Route($this->pattern, $values));
         }
 
-        $finder = new Finder();
         $seoFileName = 'seo.json';
         if (null !== $this->contributor) {
             $seoFileName = $this->contributor . '.json';
         }
 
+        $finder = new Finder();
         $pages = $finder->directories()->depth(0)->in($pagesDir);
         foreach ($pages as $page) {
-            $page = (string)$page;
-            $pageName = basename($page);
+            $this->generateLanguagesRoutes($routes, $page, $seoFileName);
+        }
+    }
 
-            $languagesFinder = new Finder();
-            $languages = $languagesFinder->directories()->depth(0)->in($page);
-            foreach ($languages as $language) {
-                $language = (string)$language;
-                $seoFile = $language . '/' . $seoFileName;
-                if (!file_exists($seoFile)) {
-                    continue;
-                }
+    private function generateLanguagesRoutes($routes, $page, $seoFileName)
+    {
+        $page = (string)$page;
+        $pageName = basename($page);
 
-                $languageName = basename($language);
-                $languageTokens = explode('_', $languageName);
-                $routeName = '_' . $languageName . '_' . $pageName;
-                $values = array(
-                    '_locale' => $languageTokens[0],
-                    'country' => $languageTokens[1],
-                    'page' => $pageName,
-                );
-                $this->routes["pages"][] = $routeName;
-
-                $pattern = $this->pattern;
-                if (substr($pattern, -1) != '/') {
-                    $pattern .= '/';
-                }
-                $pageValues = json_decode(FilesystemTools::readFile($seoFile), true);
-                $this->addChangedPermalinks($routes, $routeName, $pattern, $pageValues);
-
-                $values = array_merge($values, array('_controller' => $this->frontController,));
-                $routes->add($routeName, new Route($pattern . $pageValues["permalink"], $values));
+        $languagesFinder = new Finder();
+        $languages = $languagesFinder->directories()->depth(0)->in($page);
+        foreach ($languages as $language) {
+            $language = (string)$language;
+            $seoFile = $language . '/' . $seoFileName;
+            if (!file_exists($seoFile)) {
+                continue;
             }
+
+            $languageName = basename($language);
+            $languageTokens = explode('_', $languageName);
+            $routeName = '_' . $languageName . '_' . $pageName;
+            $values = array(
+                '_locale' => $languageTokens[0],
+                'country' => $languageTokens[1],
+                'page' => $pageName,
+            );
+            $this->routes["pages"][] = $routeName;
+
+            $pattern = $this->pattern;
+            if (substr($pattern, -1) != '/') {
+                $pattern .= '/';
+            }
+            $pageValues = json_decode(FilesystemTools::readFile($seoFile), true);
+            $this->addChangedPermalinks($routes, $routeName, $pattern, $pageValues);
+
+            $values = array_merge($values, array('_controller' => $this->frontController,));
+            $routes->add($routeName, new Route($pattern . $pageValues["permalink"], $values));
         }
     }
 
