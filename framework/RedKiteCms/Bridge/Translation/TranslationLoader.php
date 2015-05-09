@@ -19,7 +19,7 @@ namespace RedKiteCms\Bridge\Translation;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Loader\XliffFileLoader;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 
 /**
  * This object extends the XliffFileLoader object to register RedKite CMS translation resources
@@ -32,10 +32,10 @@ class TranslationLoader extends XliffFileLoader
     /**
      * Register the translation resources read from the given folders
      *
-     * @param TranslatorInterface $translator
+     * @param Translator $translator
      * @param array               $dirs
      */
-    public function registerResources(TranslatorInterface $translator, array $dirs)
+    public function registerResources(Translator $translator, array $dirs)
     {
         $finder = new Finder();
         $files = $finder->files()->depth(0)->ignoreUnreadableDirs()->in($dirs);

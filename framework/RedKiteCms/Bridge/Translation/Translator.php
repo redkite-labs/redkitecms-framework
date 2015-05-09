@@ -55,7 +55,7 @@ class Translator
     public static function translate($message, $parameters = array(), $domain = "RedKiteCms", $locale = null)
     {
         if (null === self::$translator) {
-            return;
+            return $message;
         }
 
         return self::$translator->trans($message, $parameters, $domain, $locale);
