@@ -51,8 +51,10 @@ class Routing
      */
     public static function create(ConfigurationHandler $configurationHandler, $debug = false)
     {
-        self::$routing = self::initRouter($configurationHandler);
-        self::$routing->createRouter($debug);
+        if (null === self::$routing) {
+            self::$routing = self::initRouter($configurationHandler);
+            self::$routing->createRouter($debug);
+        }
 
         return self::$routing;
     }

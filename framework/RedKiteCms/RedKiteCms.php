@@ -30,7 +30,7 @@ use RedKiteCms\Bridge\Form\FormFactory;
 use RedKiteCms\Bridge\Monolog\DataLogger;
 use RedKiteCms\Bridge\Routing\RoutingGenerator;
 use RedKiteCms\Bridge\Security\UserProvider;
-use RedKiteCms\Bridge\Translation\TranslationLoader;
+use RedKiteCms\Bridge\Translation\Loader\TranslationLoader;
 use RedKiteCms\Bridge\Translation\Translator;
 use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Configuration\SiteBuilder;

@@ -21,7 +21,7 @@ use org\bovigo\vfs\vfsStream;
 use RedKiteCms\Bridge\Dispatcher\Dispatcher;
 use RedKiteCms\Bridge\Routing\Routing;
 use RedKiteCms\Bridge\Routing\RoutingFrontend;
-use RedKiteCms\Bridge\Translation\TranslationLoader;
+use RedKiteCms\Bridge\Translation\Loader\TranslationLoader;
 use RedKiteCms\Bridge\Translation\Translator;
 use RedKiteCms\TestCase;
 

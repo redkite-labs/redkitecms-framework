@@ -15,7 +15,7 @@
  *
  */
 
-namespace RedKiteCms\Bridge\Translation;
+namespace RedKiteCms\Bridge\Translation\Loader;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Loader\XliffFileLoader;
