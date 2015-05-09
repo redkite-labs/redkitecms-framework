@@ -22,6 +22,14 @@ use RedKiteCms\Bridge\Routing\Routing;
 use RedKiteCms\Bridge\Routing\RoutingFrontend;
 use RedKiteCms\TestCase;
 
+class RoutingTester extends Routing
+{
+    public static function clear()
+    {
+        self::$routing = null;
+    }
+}
+
 /**
  * Class RoutingTest
  *
@@ -52,7 +60,8 @@ class RoutingTest extends TestCase
             ->will($this->returnValue($isProduction))
         ;
 
-        $router = Routing::create($this->configurationHandler);
+        RoutingTester::clear();
+        $router = RoutingTester::create($this->configurationHandler);
         $this->assertInstanceOf($expectedObjectClass, $router);
         $this->assertInstanceOf($expectedObjectClass, Routing::getRouting());
     }
