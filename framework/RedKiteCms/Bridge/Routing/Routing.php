@@ -33,7 +33,7 @@ class Routing
     /**
      * @type null|\RedKiteCms\Bridge\Routing\RoutingBase
      */
-    private static $routing = null;
+    protected static $routing = null;
 
     /**
      * @return null|RoutingBase
