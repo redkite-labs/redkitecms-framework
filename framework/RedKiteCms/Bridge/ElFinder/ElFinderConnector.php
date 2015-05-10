@@ -19,6 +19,7 @@ namespace RedKiteCms\Bridge\ElFinder;
 
 use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Exception\General\InvalidArgumentException;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The object deputed to handle a base elFinder connector
@@ -44,36 +45,33 @@ abstract class ElFinderConnector implements ElFinderConnectorInterface
     /**
      * Constructor
      */
-    public function __construct(ConfigurationHandler $configurationHandler)
+    public function __construct(ConfigurationHandler $configurationHandler, OptionsResolver $optionsResolver = null)
     {
         $this->configurationHandler = $configurationHandler;
-        $this->loadConnectors();
-        $this->options = $this->configure();
-
-        if (null === $this->options) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    "The configure method cannot return a null value. Check the value returned by the configure method in the %className% object",
-                    \get_class($this)
-                )
-            );
+        if (null === $optionsResolver) {
+            $optionsResolver = new OptionsResolver();
         }
+        $optionsResolver->setRequired(
+            array(
+                'folder',
+                'alias',
+            )
+        );
 
-        if (!is_array($this->options)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    "The configure method must return an array. Check the value returned by the configure method in the %className% object",
-                    \get_class($this)
-                )
-            );
-        }
+        $configuration = $this->configure();
+        $optionsResolver->resolve($configuration);
+
+        $this->options = $this->generateOptions($configuration["folder"], $configuration["alias"]);
     }
 
     /**
      * Starts the elFinder connector
+     *
+     * @codeCoverageIgnore
      */
     public function connect()
     {
+        $this->loadConnectors();
         $connector = new \elFinderConnector(new \elFinder($this->options));
         $connector->run();
     }
@@ -85,7 +83,7 @@ abstract class ElFinderConnector implements ElFinderConnectorInterface
      * @param string $rootAlias
      * @return array
      */
-    protected function generateOptions($folder, $rootAlias)
+    private function generateOptions($folder, $rootAlias)
     {
         $assetsPath = $this->configurationHandler->uploadAssetsDir() . '/' . $folder;
         if (!is_dir($assetsPath)) {

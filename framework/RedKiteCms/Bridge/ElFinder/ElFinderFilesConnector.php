@@ -30,6 +30,9 @@ class ElFinderFilesConnector extends ElFinderConnector
      */
     public function configure()
     {
-        return $this->generateOptions('files', 'Files');
+        return array(
+            "folder" => 'files',
+            "alias" => 'Files',
+        );
     }
 }

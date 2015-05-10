@@ -30,6 +30,9 @@ class ElFinderMediaConnector extends ElFinderConnector
      */
     public function configure()
     {
-        return $this->generateOptions('media', 'Media');
+        return array(
+            "folder" => 'media',
+            "alias" => 'Media',
+        );
     }
 }
