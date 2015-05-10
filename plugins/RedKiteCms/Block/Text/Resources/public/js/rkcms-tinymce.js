@@ -42,9 +42,9 @@
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code ",
-                "insertdatetime media table contextmenu"
+                "insertdatetime media table contextmenu close"
             ],
-            toolbar: "styleselect | bold italic | bullist numlist | link image table | code",
+            toolbar: "styleselect | bold italic | bullist numlist | link image table | code | close",
             link_list : frontcontroller + '/backend/page/permalinks',
             init_instance_callback : function(editor)
             {
@@ -66,13 +66,10 @@
                         _save(element, editor.getContent());
                     }
                 });                
-                editor.on("dblclick", function(event)
+                editor.on("remove", function(event)
                 {
-                    if (!editor.isNotDirty) {
-                        _save(element, editor.getContent());
-                    }
-                    
-                    editor.remove();
+                    _save(element, editor.getContent());
+
                     blockEditorModel.closeEditor();
                 });
             },
