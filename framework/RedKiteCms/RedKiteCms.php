@@ -202,7 +202,6 @@ abstract class RedKiteCms
         );
 
         $app = $this->app;
-        $siteName = $this->siteName;
         $this->app['security.firewalls'] = array(
             'backend' => array(
                 'pattern' => '^/backend',
@@ -215,8 +214,8 @@ abstract class RedKiteCms
                     'target_url' => '/login',
                 ),
                 'users' => $this->app->share(
-                    function () use ($app, $siteName) {
-                        return new UserProvider($app["red_kite_cms.root_dir"], $siteName);
+                    function () use ($app) {
+                        return new UserProvider($app["red_kite_cms.configuration_handler"]);
                     }
                 ),
             ),

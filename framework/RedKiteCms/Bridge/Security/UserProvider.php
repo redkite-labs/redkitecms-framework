@@ -17,6 +17,7 @@
 
 namespace RedKiteCms\Bridge\Security;
 
+use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Configuration\SiteMatcher;
 use RedKiteCms\Tools\FilesystemTools;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -33,13 +34,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class UserProvider implements UserProviderInterface
 {
     /**
-     * @type string
+     * @var ConfigurationHandler
      */
-    private $rootDir;
-    /**
-     * @type string
-     */
-    private $siteName;
+    private $configurationHandler;
 
     /**
      * Constructor
@@ -47,10 +44,9 @@ class UserProvider implements UserProviderInterface
      * @param $rootDir
      * @param $siteName
      */
-    public function __construct($rootDir, $siteName)
+    public function __construct(ConfigurationHandler $configurationHandler)
     {
-        $this->rootDir = $rootDir;
-        $this->siteName = $siteName;
+        $this->configurationHandler = $configurationHandler;
     }
 
     /**
@@ -72,7 +68,7 @@ class UserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $json = FilesystemTools::readFile(sprintf('%s/app/data/%s/users/users.json', $this->rootDir, $this->siteName));
+        $json = FilesystemTools::readFile(sprintf('%s/users/users.json', $this->configurationHandler->siteDir()));
         $users = json_decode($json, true);
 
         if (array_key_exists($username, $users)) {
