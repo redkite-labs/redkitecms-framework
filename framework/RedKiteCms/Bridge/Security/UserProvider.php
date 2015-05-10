@@ -84,6 +84,8 @@ class UserProvider implements UserProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     public function supportsClass($class)
     {
