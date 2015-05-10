@@ -51,6 +51,7 @@ abstract class ElFinderConnector implements ElFinderConnectorInterface
         if (null === $optionsResolver) {
             $optionsResolver = new OptionsResolver();
         }
+
         $optionsResolver->setRequired(
             array(
                 'folder',
@@ -111,6 +112,9 @@ abstract class ElFinderConnector implements ElFinderConnectorInterface
         return $options;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function loadConnectors()
     {
         if ($this->connectorLoaded) {
