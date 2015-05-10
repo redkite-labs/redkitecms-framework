@@ -1,0 +1,9 @@
+RedKite CMS Framework Alpha 1 (2015/05/11)
+4834689 changed how tinymce editor is closed by adding a button to tinymce toolbar which closes it; removed the double click action used to close the editor
+86c2d43 fixed move which did not work when adding a new block and immediately move it
+7f279d5 removed BlockManager instantiation in actions and delegated BlockManagerFactory to instantiate objects
+6ef1f75 added BlockManagerFactory to instantiate a new BlockManager object
+40be305 changed how blocks history works. Before this change each block was saved in a single file and that slowed the application because
+        RedKite CMS must open several files for each block every time the page is opened. Now history is saved in a single file so page is
+        opened faster. In production the history restoring process is now skipped because is not required.
+
