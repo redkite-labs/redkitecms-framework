@@ -67,6 +67,7 @@ abstract class BlockManager extends FilesystemEntity
             return;
         }
 
+        $this->optionsResolver->clear();
         $this->optionsResolver->setRequired(
             array(
                 'blockname',

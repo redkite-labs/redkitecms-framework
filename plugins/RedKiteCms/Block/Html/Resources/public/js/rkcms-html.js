@@ -22,7 +22,7 @@ var Script = function (params)
     self.isScriptExecuted = ko.observable(params.block.is_new != undefined ? false : true);
 
     _initScriptEditor = function(){
-        $(".rkcms-ace-editor:visible").aceEditor('open', { mode: 'html' });
+        $(".rkcms-ace-editor").aceEditor('open', { mode: 'html' });
     };
 
     $(document).on("rkcms.event.blocks_editor_started", function(){
