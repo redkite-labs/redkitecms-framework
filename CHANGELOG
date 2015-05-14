@@ -1,3 +1,9 @@
+RedKite CMS Framework Alpha 2 (2015/05/14)
+2c9aa7b showed the class where the error is raised in the queue execution flow
+ed610cd cleared options resolver in BlockManager to avoid unwanted options mix
+        fixed elfinder routes to make the uploader working
+        fixed html editor which does not open in certain situations
+
 RedKite CMS Framework Alpha 1 (2015/05/11)
 4834689 changed how tinymce editor is closed by adding a button to tinymce toolbar which closes it; removed the double click action used to close the editor
 86c2d43 fixed move which did not work when adding a new block and immediately move it
