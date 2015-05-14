@@ -369,15 +369,15 @@
         </trans-unit>
         <trans-unit id="queue_error_detected_body_1">
             <source>queue_error_detected_body_1</source>
-            <target>This error should not happen so it is probably caused by a bug in the application. Please try to fix the issue if possible. If you can find the bug, please report it to</target>
+            <target>This error should not happen so it is probably caused by a bug in the application. The first thing to do is to try to run the queue operation again, clicking on the "Execute queue again" button down below. If that does not fix the issue, you can try to fix it debugging the "Failured class" reported in the queue operation flow and, if you are able to fix the bug, please consider to open an issue at </target>
         </trans-unit>
         <trans-unit id="queue_error_detected_body_2">
             <source>queue_error_detected_body_2</source>
-            <target>If you are unable to fix the issue, you can try removing the entry which causes the problem in the</target>
+            <target>Alternatively, you can try removing the entry which causes the problem in the</target>
         </trans-unit>
         <trans-unit id="queue_error_detected_body_3">
             <source>queue_error_detected_body_3</source>
-            <target>but you will lose that operation and you might have other problems with the queue flow execution if other operations depends on the one you removed.</target>
+            <target>and run the queue again but you will lose that operation and you might have other problems with the queue flow execution if other operations depends on the one you removed, which must be also progressively removed.</target>
         </trans-unit>
         <trans-unit id="queue_error_detected_body_4">
             <source>queue_error_detected_body_4</source>
@@ -402,6 +402,18 @@
         <trans-unit id="queue_execute">
             <source>queue_execute</source>
             <target>Execute queue again</target>
+        </trans-unit>
+        <trans-unit id="queue_table_operation">
+            <source>queue_table_operation</source>
+            <target>Operation</target>
+        </trans-unit>
+        <trans-unit id="queue_table_entity">
+            <source>queue_table_entity</source>
+            <target>Entity</target>
+        </trans-unit>
+        <trans-unit id="queue_table_failured_class">
+            <source>queue_table_failured_class</source>
+            <target>Failured class</target>
         </trans-unit>
     </body>
     </file>
