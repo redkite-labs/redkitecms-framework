@@ -191,8 +191,8 @@ class ConfigurationHandler
         $this->rootDir = $rootDir;
         $this->siteName = $siteName;
         $namespaceToPath =  '/framework/' . str_replace('\\', '/', __NAMESPACE__);
-        $this->frameworkAbsoluteDir = str_replace(realpath($rootDir) . '/', "", __DIR__);
-        $this->frameworkAbsoluteDir = str_replace($namespaceToPath, "", $this->frameworkAbsoluteDir);
+        $frameworkAbsoluteDir = str_replace(realpath($rootDir) . '/', "", __DIR__);
+        $this->frameworkAbsoluteDir = str_replace($namespaceToPath, "", $frameworkAbsoluteDir);
 
         $this->filesystem = new Filesystem();
         $this->checkWhenInProduction();
@@ -216,6 +216,128 @@ class ConfigurationHandler
         $this->initPaths();
         $this->readConfiguration();
         $this->fetchSiteInfo();
+    }
+
+    /**
+     * Magic method that returns configuration values
+     *
+     * @param string $name
+     * @param string $params
+     */
+    public function __call($name, $params)
+    {
+        if (property_exists($this, $name)) {
+            return $this->$name;
+        }
+
+        if (array_key_exists($name, $this->configuration)) {
+            return $this->configuration[$name];
+        }
+
+        if (array_key_exists($name, $this->configuration["general"])) {
+            return $this->configuration["general"][$name];
+        }
+
+        throw new RuntimeException(sprintf('Method "%s" does not exist for ConfigurationHandler object', $name));
+    }
+
+    /**
+     * Configures the configuration options
+     *
+     * @param array $options
+     */
+    public function setConfigurationOptions(array $options = array())
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined(
+            array(
+                'web_dir',
+                'uploads_dir',
+            )
+        );
+        $resolver->resolve($options);
+
+        if (array_key_exists('web_dir', $options)) {
+            $this->webDirname = $options['web_dir'];
+        }
+
+        if (array_key_exists('uploads_dir', $options)) {
+            $this->absoluteUploadAssetsDir = $options['uploads_dir'];
+        }
+    }
+
+    /**
+     * Returns the assets for the requested type
+     *
+     * @param $type
+     * @return array
+     */
+    public function getAssetsByType($type)
+    {
+        if (!array_key_exists($type, $this->configuration["assets"])) {
+            return array();
+        }
+
+        return $this->configuration["assets"][$type];
+    }
+
+    /**
+     * Returns the plugin folders
+     *
+     * @return array
+     */
+    public function pluginFolders()
+    {
+        return array(
+            $this->corePluginsDir,
+            $this->customPluginsDir,
+        );
+    }
+
+    public function handledTheme()
+    {
+        return $this->siteInfo["handled_theme"];
+    }
+
+    public function theme()
+    {
+        return $this->siteInfo["theme"];
+    }
+
+    public function homepagePermalink()
+    {
+        return $this->siteInfo["homepage_permalink"];
+    }
+
+    public function defaultLanguage()
+    {
+        return $this->siteInfo["locale_default"];
+    }
+
+    public function languages()
+    {
+        return $this->siteInfo["languages"];
+    }
+
+    /**
+     * Returns the homepage template
+     *
+     * @return string
+     */
+    public function homepageTemplate()
+    {
+        if (null === $this->homepageTemplate) {
+            $homepageFile = $this->pagesDir . "/" . $this->homepage() . '/page.json';
+            $page = json_decode(FilesystemTools::readFile($homepageFile), true);
+            $this->homepageTemplate = $page["template"];
+        }
+
+        return $this->homepageTemplate;
+    }
+
+    public function homepage()
+    {
+        return $this->siteInfo["homepage"];
     }
 
     private function checkWhenInProduction()
@@ -292,9 +414,6 @@ class ConfigurationHandler
             unset($siteCustomConfiguration["assets"]["prod"]);
         }
 
-
-
-
         $this->configuration = array_merge_recursive($coreConfiguration, $globalCustomConfiguration, $siteCustomConfiguration);
     }
 
@@ -323,137 +442,5 @@ class ConfigurationHandler
         $fullLanguage = explode('_', $this->siteInfo["locale_default"]);
         $this->language = $fullLanguage[0];
         $this->country = $fullLanguage[1];
-    }
-
-    /**
-     * Magic method that returns configuration values
-     *
-     * @param string $name
-     * @param string $params
-     */
-    public function __call($name, $params)
-    {
-        if (property_exists($this, $name)) {
-            return $this->$name;
-        }
-
-        if (array_key_exists($name, $this->configuration)) {
-            return $this->configuration[$name];
-        }
-
-        if (array_key_exists($name, $this->configuration["general"])) {
-            return $this->configuration["general"][$name];
-        }
-
-        throw new RuntimeException(sprintf('Method "%s" does not exist for ConfigurationHandler object', $name));
-    }
-
-    /**
-     * Configure the configuration options
-     *
-     * @param array $options
-     */
-    public function setConfigurationOptions(array $options = array())
-    {
-        $resolver = new OptionsResolver();
-        $resolver->setDefined(
-            array(
-                'web_dir',
-                'uploads_dir',
-            )
-        );
-        $resolver->resolve($options);
-
-        if (array_key_exists('web_dir', $options)) {
-            $this->webDirname = $options['web_dir'];
-        }
-
-        if (array_key_exists('uploads_dir', $options)) {
-            $this->absoluteUploadAssetsDir = $options['uploads_dir'];
-        }
-    }
-
-    /**
-     * Returns true when the website is a theme
-     *
-     * @return bool
-
-    public function isTheme()
-    {
-        return $this->isTheme;
-    }*/
-
-    /**
-     * Returns the assets for the requested type
-     *
-     * @param $type
-     * @return array
-     */
-    public function getAssetsByType($type)
-    {
-        if (!array_key_exists($type, $this->configuration["assets"])) {
-            return array();
-        }
-
-        return $this->configuration["assets"][$type];
-    }
-
-    /**
-     * Returns the plugin folders
-     *
-     * @return array
-     */
-    public function pluginFolders()
-    {
-        return array(
-            $this->corePluginsDir,
-            $this->customPluginsDir,
-        );
-    }
-
-    public function handledTheme()
-    {
-        return $this->siteInfo["handled_theme"];
-    }
-
-    public function theme()
-    {
-        return $this->siteInfo["theme"];
-    }
-
-    public function homepagePermalink()
-    {
-        return $this->siteInfo["homepage_permalink"];
-    }
-
-    public function defaultLanguage()
-    {
-        return $this->siteInfo["locale_default"];
-    }
-
-    public function languages()
-    {
-        return $this->siteInfo["languages"];
-    }
-
-    /**
-     * Returns the homepage template
-     *
-     * @return string
-     */
-    public function homepageTemplate()
-    {
-        if (null === $this->homepageTemplate) {
-            $homepageFile = $this->pagesDir . "/" . $this->homepage() . '/page.json';
-            $page = json_decode(FilesystemTools::readFile($homepageFile), true);
-            $this->homepageTemplate = $page["template"];
-        }
-
-        return $this->homepageTemplate;
-    }
-
-    public function homepage()
-    {
-        return $this->siteInfo["homepage"];
     }
 }
