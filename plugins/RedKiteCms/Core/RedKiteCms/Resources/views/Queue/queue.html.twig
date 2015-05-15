@@ -37,18 +37,27 @@
             <p>
                 {{ 'queue_error_detected_body_4'|trans({}, 'RedKiteCms', cms_language) }} <b>{{ queue_file }}</b> {{ 'queue_error_detected_body_5'|trans({}, 'RedKiteCms', cms_language) }}
             </p>
-        </div>
     </div>
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
             <h2>{{ 'queue_title'|trans({}, 'RedKiteCms', cms_language) }}</h2>
             <p>{{ 'queue_body'|trans({}, 'RedKiteCms', cms_language) }}</p>
             <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>{{ 'queue_table_operation'|trans({}, 'RedKiteCms', cms_language) }}</th>
+                    <th>{{ 'queue_table_entity'|trans({}, 'RedKiteCms', cms_language) }}</th>
+                    <th>{{ 'queue_table_failured_class'|trans({}, 'RedKiteCms', cms_language) }}</th>
+                </tr>
                 {% for action in queue.queue|slice(0, 5) %}
                 <tr>
                     <td>{% if loop.first %}<i class="fa fa-warning text-danger"></i>{% endif %}</td>
                     <td>{{ action.action }}</td>
                     <td>{{ action.entity }}</td>
+                    {% if loop.first %}
+                    {% set action_name = action.entity|capitalize %}
+                    <td><b>RedKiteCms\Action\{{ action_name }}\{{ action.action|capitalize }}{{ action_name }}Action</b></td>
+                    {%  endif %}
                 </tr>
                 {% endfor %}
             </table>

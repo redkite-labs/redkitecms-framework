@@ -61,12 +61,10 @@ _rkcms_save_theme:
 _rkcms_connect_elfinder_media:
     path:     /backend/elfinder/media/connect
     defaults: { _controller: 'Controller\ElFinder\ElFinderMediaController::mediaAction' }
-    methods:  [GET]
 
 _rkcms_connect_elfinder_media:
     path:     /backend/elfinder/files/connect
     defaults: { _controller: 'Controller\ElFinder\ElFinderFilesController::filesAction' }
-    methods:  [GET]
 
 _rkcms_show_users:
     path:     /backend/users/show

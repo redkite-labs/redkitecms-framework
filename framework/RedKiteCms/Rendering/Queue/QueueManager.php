@@ -83,14 +83,6 @@ class QueueManager
             return "An error occured when saving to the backend";
         }
 
-        $queue = $this->queue;
-        $queueItems = array();
-        foreach ($queue["queue"] as $actionName => $queueAction) {
-            $queueAction["data"] = rawurlencode(json_encode($queueAction));
-            $queueItems[$actionName] = $queueAction;
-        }
-        $queue["queue"] = $queueItems;
-
         if (array_key_exists("error", $this->queue)) {
             $error = Utils::translateException($this->queue["error"]);
         }
