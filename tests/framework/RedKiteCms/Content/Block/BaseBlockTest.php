@@ -75,18 +75,6 @@ class BlockTest extends BaseBlock
  */
 class BaseBlockTest extends TestCase
 {
-    /*
-    private $blockFactory;
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->init();
-        $configurationHandler = $this->initConfigurationHandler();
-        $this->blockFactory = new BlockFactory($configurationHandler);
-    }*/
-
     /**
      * @expectedException \RedKiteCms\Exception\General\LogicException
      * @expectedExceptionMessage A derived class must always define the block type. Please define a protected property $type to set up the block type.
