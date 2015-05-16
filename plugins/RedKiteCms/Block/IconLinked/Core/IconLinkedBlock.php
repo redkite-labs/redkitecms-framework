@@ -53,10 +53,10 @@ class IconLinkedBlock extends ExtendableCollectionBlock
      */
     public function __construct()
     {
-        $this->children = array(
+        $children = array(
             new IconBlock(),
         );
 
-        parent::__construct();
+        parent::__construct($children);
     }
 } 

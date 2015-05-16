@@ -52,12 +52,12 @@ class IconStackedBlock extends ExtendableCollectionBlock
      */
     public function __construct()
     {
-        $this->children = array(
+        $children = array(
             new IconBlock("", array('class' => "fa fa-circle-o fa-stack-2x")),
             new IconBlock("", array('class' => "fa fa-cog fa-stack-1x")),
         );
 
-        parent::__construct();
+        parent::__construct($children);
     }
 
     /**
