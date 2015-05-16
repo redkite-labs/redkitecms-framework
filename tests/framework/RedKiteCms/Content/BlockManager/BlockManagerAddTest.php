@@ -15,7 +15,7 @@
  *
  */
 
-namespace RedKiteCms\BlockManager;
+namespace RedKiteCms\Content\BlockManager;
 
 use org\bovigo\vfs\vfsStream;
 use RedKiteCms\Content\BlockManager\BlockManagerAdd;

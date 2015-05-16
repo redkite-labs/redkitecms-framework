@@ -15,7 +15,7 @@
  *
  */
 
-namespace RedKiteCms\BlockManager;
+namespace RedKiteCms\Content\BlockManager;
 
 use RedKiteCms\Content\BlockManager\BlockManagerFactory;
 
