@@ -185,14 +185,21 @@ class ConfigurationHandler
      *
      * @param string $rootDir
      * @param string $siteName
+     * @param string $frameworkAbsoluteDir
      */
-    public function __construct($rootDir, $siteName)
+    public function __construct($rootDir, $siteName, $frameworkAbsoluteDir = null)
     {
         $this->rootDir = $rootDir;
         $this->siteName = $siteName;
-        $namespaceToPath =  '/framework/' . str_replace('\\', '/', __NAMESPACE__);
-        $this->frameworkAbsoluteDir = str_replace(realpath($rootDir) . '/', "", __DIR__);
-        $this->frameworkAbsoluteDir = str_replace($namespaceToPath, "", $this->frameworkAbsoluteDir);
+
+        $this->frameworkAbsoluteDir = $frameworkAbsoluteDir;
+        if (null === $this->frameworkAbsoluteDir) {
+            // @codeCoverageIgnoreStart
+            $namespaceToPath =  '/framework/' . str_replace('\\', '/', __NAMESPACE__);
+            $frameworkAbsoluteDir = str_replace(realpath($rootDir) . '/', "", __DIR__);
+            $this->frameworkAbsoluteDir = str_replace($namespaceToPath, "", $frameworkAbsoluteDir);
+        }
+        // @codeCoverageIgnoreEnd
 
         $this->filesystem = new Filesystem();
         $this->checkWhenInProduction();
@@ -202,6 +209,7 @@ class ConfigurationHandler
     /**
      * Returns the application version number
      * @return string
+     * @codeCoverageIgnore
      */
     public static function getVersion()
     {
@@ -216,113 +224,6 @@ class ConfigurationHandler
         $this->initPaths();
         $this->readConfiguration();
         $this->fetchSiteInfo();
-    }
-
-    private function checkWhenInProduction()
-    {
-        $this->isProduction = !(strpos($_SERVER["REQUEST_URI"], '/backend') !== false);
-    }
-
-    private function checkWhenIsTheme()
-    {
-        if (preg_match('/(.*?)\.theme/', $this->siteName, $match)) {
-            $this->isTheme = true;
-        }
-    }
-
-    private function initPaths()
-    {
-        $this->appDir = $this->rootDir . '/app';
-        $this->logDir = $this->appDir . '/logs';
-        $this->webDir = $this->rootDir . '/' . $this->webDirname;
-        $this->cacheDir = $this->appDir . '/cache';
-        $this->siteCacheDir = $this->cacheDir . '/' . $this->siteName;
-        $this->dataDir = $this->appDir . '/data';
-        $this->siteDir = $this->dataDir . '/' . $this->siteName;
-        $this->usersDir = $this->siteDir . '/users';
-        $this->absoluteUploadAssetsDir .= '/' . $this->siteName;
-        $this->uploadAssetsDirProduction = $this->webDir . $this->absoluteUploadAssetsDir . '/production';
-        $this->absoluteUploadAssetsDir .= '/backend';
-        $this->uploadAssetsDir = $this->webDir . $this->absoluteUploadAssetsDir;
-        $this->corePluginsDir = $this->rootDir . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms';
-        $this->customPluginsDir = $this->appDir . '/plugins/RedKiteCms';
-        $this->coreConfigDir = $this->rootDir . '/' . $this->frameworkAbsoluteDir . '/config';
-        $this->pagesRootDir = $this->siteDir . '/pages';
-        $this->pagesDir = $this->pagesRootDir . '/pages';
-        $this->pagesRemovedDir = $this->pagesRootDir . '/removed';
-
-        $this->createImagesDir($this->uploadAssetsDir);
-        $this->createImagesDir($this->uploadAssetsDirProduction);
-    }
-
-    private function createImagesDir($imagesDir)
-    {
-        if (is_dir($imagesDir)) {
-            return;
-        }
-
-        $folders = array(
-            $imagesDir,
-            $imagesDir . '/media',
-            $imagesDir . '/files',
-        );
-
-        $this->filesystem->mkdir($folders);
-    }
-
-    private function readConfiguration()
-    {
-
-        $globalCustomConfigDir = $this->appDir . '/config';
-        $siteCustomConfigDir = $this->siteDir . '/config';
-        if ( ! is_dir($siteCustomConfigDir)) {
-            $this->filesystem->mkdir($siteCustomConfigDir);
-        }
-
-        $coreConfiguration = $this->parse($this->coreConfigDir);
-        $globalCustomConfiguration = $this->parse($globalCustomConfigDir);
-        if (array_key_exists("assets", $globalCustomConfiguration) && array_key_exists("prod", $globalCustomConfiguration["assets"])) {
-            $coreConfiguration["assets"]["prod"] = $globalCustomConfiguration["assets"]["prod"];
-            unset($globalCustomConfiguration["assets"]["prod"]);
-        }
-
-        $siteCustomConfiguration = $this->parse($siteCustomConfigDir);
-        if (array_key_exists("assets", $siteCustomConfiguration) && array_key_exists("prod", $siteCustomConfiguration["assets"])) {
-            $coreConfiguration["assets"]["prod"] = $siteCustomConfiguration["assets"]["prod"];
-            unset($siteCustomConfiguration["assets"]["prod"]);
-        }
-
-
-
-
-        $this->configuration = array_merge_recursive($coreConfiguration, $globalCustomConfiguration, $siteCustomConfiguration);
-    }
-
-    private function parse($dir)
-    {
-        $configuration = array();
-        $finder = new Finder();
-        $files = $finder->files()->name('*.json')->in($dir);
-        foreach ($files as $file) {
-            $file = (string)$file;
-            $fileName = basename($file, '.json');
-            $jsonAssets = str_replace('%web_dir%', $this->webDir, file_get_contents($file));
-            $assets = json_decode($jsonAssets, true);
-            if (null === $assets) {
-                $assets = array();
-            }
-            $configuration[$fileName] = $assets;
-        }
-
-        return $configuration;
-    }
-
-    private function fetchSiteInfo()
-    {
-        $this->siteInfo = json_decode(FilesystemTools::readFile($this->siteDir . '/site.json'), true);
-        $fullLanguage = explode('_', $this->siteInfo["locale_default"]);
-        $this->language = $fullLanguage[0];
-        $this->country = $fullLanguage[1];
     }
 
     /**
@@ -349,7 +250,7 @@ class ConfigurationHandler
     }
 
     /**
-     * Configure the configuration options
+     * Configures the configuration options
      *
      * @param array $options
      */
@@ -372,16 +273,6 @@ class ConfigurationHandler
             $this->absoluteUploadAssetsDir = $options['uploads_dir'];
         }
     }
-
-    /**
-     * Returns true when the website is a theme
-     *
-     * @return bool
-
-    public function isTheme()
-    {
-        return $this->isTheme;
-    }*/
 
     /**
      * Returns the assets for the requested type
@@ -455,5 +346,113 @@ class ConfigurationHandler
     public function homepage()
     {
         return $this->siteInfo["homepage"];
+    }
+
+    private function checkWhenInProduction()
+    {
+        $this->isProduction = !(strpos($_SERVER["REQUEST_URI"], '/backend') !== false);
+    }
+
+    private function checkWhenIsTheme()
+    {
+        if (preg_match('/(.*?)\.theme/', $this->siteName, $match)) {
+            $this->isTheme = true;
+        }
+    }
+
+    private function initPaths()
+    {
+        $this->appDir = $this->rootDir . '/app';
+        $this->logDir = $this->appDir . '/logs';
+        $this->webDir = $this->rootDir . '/' . $this->webDirname;
+        $this->cacheDir = $this->appDir . '/cache';
+        $this->siteCacheDir = $this->cacheDir . '/' . $this->siteName;
+        $this->dataDir = $this->appDir . '/data';
+        $this->siteDir = $this->dataDir . '/' . $this->siteName;
+        $this->usersDir = $this->siteDir . '/users';
+        $this->absoluteUploadAssetsDir .= '/' . $this->siteName;
+        $this->uploadAssetsDirProduction = $this->webDir . $this->absoluteUploadAssetsDir . '/production';
+        $this->absoluteUploadAssetsDir .= '/backend';
+        $this->uploadAssetsDir = $this->webDir . $this->absoluteUploadAssetsDir;
+        $this->corePluginsDir = $this->rootDir . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms';
+        $this->customPluginsDir = $this->appDir . '/plugins/RedKiteCms';
+        $this->coreConfigDir = $this->rootDir . '/' . $this->frameworkAbsoluteDir . '/config';
+        $this->pagesRootDir = $this->siteDir . '/pages';
+        $this->pagesDir = $this->pagesRootDir . '/pages';
+        $this->pagesRemovedDir = $this->pagesRootDir . '/removed';
+
+        $this->createImagesDir($this->uploadAssetsDir);
+        $this->createImagesDir($this->uploadAssetsDirProduction);
+    }
+
+    private function createImagesDir($imagesDir)
+    {
+        // @codeCoverageIgnoreStart
+        if (is_dir($imagesDir)) {
+            return;
+        }
+        // @codeCoverageIgnoreEnd
+
+        $folders = array(
+            $imagesDir,
+            $imagesDir . '/media',
+            $imagesDir . '/files',
+        );
+
+        $this->filesystem->mkdir($folders);
+    }
+
+    private function readConfiguration()
+    {
+        $globalCustomConfigDir = $this->appDir . '/config';
+        $siteCustomConfigDir = $this->siteDir . '/config';
+        // @codeCoverageIgnoreStart
+        if ( ! is_dir($siteCustomConfigDir)) {
+            $this->filesystem->mkdir($siteCustomConfigDir);
+        }
+        // @codeCoverageIgnoreEnd
+
+        $coreConfiguration = $this->parse($this->coreConfigDir);
+        $globalCustomConfiguration = $this->parse($globalCustomConfigDir);
+        if (array_key_exists("assets", $globalCustomConfiguration) && array_key_exists("prod", $globalCustomConfiguration["assets"])) {
+            $coreConfiguration["assets"]["prod"] = $globalCustomConfiguration["assets"]["prod"];
+            unset($globalCustomConfiguration["assets"]["prod"]);
+        }
+
+        $siteCustomConfiguration = $this->parse($siteCustomConfigDir);
+        if (array_key_exists("assets", $siteCustomConfiguration) && array_key_exists("prod", $siteCustomConfiguration["assets"])) {
+            $coreConfiguration["assets"]["prod"] = $siteCustomConfiguration["assets"]["prod"];
+            unset($siteCustomConfiguration["assets"]["prod"]);
+        }
+
+        $this->configuration = array_merge_recursive($coreConfiguration, $globalCustomConfiguration, $siteCustomConfiguration);
+    }
+
+    private function parse($dir)
+    {
+        $configuration = array();
+        $finder = new Finder();
+        $files = $finder->files()->name('*.json')->in($dir);
+        foreach ($files as $file) {
+            $file = (string)$file;
+            $fileName = basename($file, '.json');
+            $jsonAssets = str_replace('%web_dir%', $this->webDir, file_get_contents($file));
+            $assets = json_decode($jsonAssets, true);
+            // @codeCoverageIgnoreStart
+            if (null === $assets) {
+                $assets = array();
+            }// @codeCoverageIgnoreEnd
+            $configuration[$fileName] = $assets;
+        }
+
+        return $configuration;
+    }
+
+    private function fetchSiteInfo()
+    {
+        $this->siteInfo = json_decode(FilesystemTools::readFile($this->siteDir . '/site.json'), true);
+        $fullLanguage = explode('_', $this->siteInfo["locale_default"]);
+        $this->language = $fullLanguage[0];
+        $this->country =  $fullLanguage[1];
     }
 }

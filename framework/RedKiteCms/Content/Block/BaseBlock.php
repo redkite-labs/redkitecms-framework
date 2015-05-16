@@ -20,6 +20,7 @@ namespace RedKiteCms\Content\Block;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use RedKiteCms\Exception\General\LogicException;
+use RedKiteCms\Bridge\Translation\Translator;
 
 /**
  * Class BaseBlock is the object deputed to define a base block class. Every time you need to create a new
@@ -101,9 +102,9 @@ abstract class BaseBlock
         foreach ($translatorOptions["fields"] as $field) {
             $field = ucfirst($field);
             $method = 'get' . $field;
-            $v = \RedKiteCms\Bridge\Translation\Translator::translate($this->$method(), $params, $domain);
+            $value = Translator::translate($this->$method(), $params, $domain);
             $method = 'set' . $field;
-            $this->$method($v);
+            $this->$method($value);
         }
     }
 
@@ -115,6 +116,7 @@ abstract class BaseBlock
      * while fields is an array of fields which will be translated by the translator
      *
      * @return array
+     * @codeCoverageIgnore
      */
     protected function getTranslatorOptions()
     {
@@ -168,33 +170,17 @@ abstract class BaseBlock
     }
 
     /**
-     * @param $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
      * @return null
      */
     public function getCustomTag()
     {
         if (null === $this->customTag) {
-            throw new \LogicException(
+            throw new LogicException(
                 'A derived class must always define the block custom tag property. Please define a protected property $customTag to set up the custom tag which will be used to render your block.'
             );
         }
 
         return $this->customTag;
-    }
-
-    /**
-     * @param $customTag
-     */
-    public function setCustomTag($customTag)
-    {
-        $this->customTag = $customTag;
     }
 
     /**

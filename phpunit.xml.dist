@@ -12,6 +12,7 @@
         >
     <php>
         <server name="BASE_URL" value="http://redkite-labs.com" />
+        <server name="REQUEST_URI" value="bar"/>
     </php>
     <testsuites>
         <testsuite name="RedKite CMS app test suite">

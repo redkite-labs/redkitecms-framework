@@ -15,7 +15,7 @@
  *
  */
 
-namespace RedKiteCms\BlockManager;
+namespace RedKiteCms\Content\BlockManager;
 
 use org\bovigo\vfs\vfsStream;
 use RedKiteCms\Content\BlockManager\BlockManagerAdd;
@@ -111,9 +111,6 @@ class BlockManagerAddTest extends BlockManagerBaseTestCase
         $this->log(2, 'info', $logMessage);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     public function addProvider()
     {
         return array(
