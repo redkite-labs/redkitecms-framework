@@ -31,13 +31,15 @@ abstract class ExtendableCollectionBlock extends ExtendableBlock
     /**
      * @Type("array")
      */
-    protected $children = array();
+    private $children = array();
 
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(array $children, array $tags = array())
     {
+        $this->children = $children;
+        $this->tags = $tags;
         if (null === $this->source) {
             $this->source = Yaml::dump($this->generateSourceFromChildren(), 100, 2);
         }

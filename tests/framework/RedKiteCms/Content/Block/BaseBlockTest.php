@@ -164,20 +164,4 @@ class BaseBlockTest extends TestCase
             ),
         );
     }
-/*
-    public function testBlockTranslated()
-    {
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-        $translator
-            ->expects($this->once())
-            ->method('trans')
-            ->with('foo', array(), 'RedKiteCms', null)
-        ;
-
-        Translator::setTranslator($translator);
-
-        $block = new BlockWithTranslationsTest();
-        $block->setSlotName('logo');
-        $block->setHistory(array('foo' => 'bar'));
-    }*/
 }

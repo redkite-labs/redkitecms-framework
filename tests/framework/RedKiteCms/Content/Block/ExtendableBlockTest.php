@@ -69,41 +69,4 @@ class ExtendableBlockTest extends TestCase
         $block->setSource($source);
         $this->assertEquals($source, $block->getSource());
     }
-
-    public function blockProvider()
-    {
-        return array(
-            array(
-                array(),
-            ),
-            array(
-                array(
-                    "fields" => array('value'),
-                ),
-            ),
-            array(
-                array(
-                    "fields" => array('value'),
-                    "params" => array('foo'),
-                    "domain" => "CustomDomain",
-                ),
-            ),
-        );
-    }
-/*
-    public function testBlockTranslated()
-    {
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-        $translator
-            ->expects($this->once())
-            ->method('trans')
-            ->with('foo', array(), 'RedKiteCms', null)
-        ;
-
-        Translator::setTranslator($translator);
-
-        $block = new BlockWithTranslationsTest();
-        $block->setSlotName('logo');
-        $block->setHistory(array('foo' => 'bar'));
-    }*/
 }
