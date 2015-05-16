@@ -111,9 +111,6 @@ class BlockManagerAddTest extends BlockManagerBaseTestCase
         $this->log(2, 'info', $logMessage);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     public function addProvider()
     {
         return array(

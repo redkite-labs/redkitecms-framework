@@ -185,14 +185,21 @@ class ConfigurationHandler
      *
      * @param string $rootDir
      * @param string $siteName
+     * @param string $frameworkAbsoluteDir
      */
-    public function __construct($rootDir, $siteName)
+    public function __construct($rootDir, $siteName, $frameworkAbsoluteDir = null)
     {
         $this->rootDir = $rootDir;
         $this->siteName = $siteName;
-        $namespaceToPath =  '/framework/' . str_replace('\\', '/', __NAMESPACE__);
-        $frameworkAbsoluteDir = str_replace(realpath($rootDir) . '/', "", __DIR__);
-        $this->frameworkAbsoluteDir = str_replace($namespaceToPath, "", $frameworkAbsoluteDir);
+
+        $this->frameworkAbsoluteDir = $frameworkAbsoluteDir;
+        if (null === $this->frameworkAbsoluteDir) {
+            // @codeCoverageIgnoreStart
+            $namespaceToPath =  '/framework/' . str_replace('\\', '/', __NAMESPACE__);
+            $frameworkAbsoluteDir = str_replace(realpath($rootDir) . '/', "", __DIR__);
+            $this->frameworkAbsoluteDir = str_replace($namespaceToPath, "", $frameworkAbsoluteDir);
+        }
+        // @codeCoverageIgnoreEnd
 
         $this->filesystem = new Filesystem();
         $this->checkWhenInProduction();
@@ -202,6 +209,7 @@ class ConfigurationHandler
     /**
      * Returns the application version number
      * @return string
+     * @codeCoverageIgnore
      */
     public static function getVersion()
     {
@@ -379,9 +387,11 @@ class ConfigurationHandler
 
     private function createImagesDir($imagesDir)
     {
+        // @codeCoverageIgnoreStart
         if (is_dir($imagesDir)) {
             return;
         }
+        // @codeCoverageIgnoreEnd
 
         $folders = array(
             $imagesDir,
@@ -394,12 +404,13 @@ class ConfigurationHandler
 
     private function readConfiguration()
     {
-
         $globalCustomConfigDir = $this->appDir . '/config';
         $siteCustomConfigDir = $this->siteDir . '/config';
+        // @codeCoverageIgnoreStart
         if ( ! is_dir($siteCustomConfigDir)) {
             $this->filesystem->mkdir($siteCustomConfigDir);
         }
+        // @codeCoverageIgnoreEnd
 
         $coreConfiguration = $this->parse($this->coreConfigDir);
         $globalCustomConfiguration = $this->parse($globalCustomConfigDir);
@@ -427,9 +438,10 @@ class ConfigurationHandler
             $fileName = basename($file, '.json');
             $jsonAssets = str_replace('%web_dir%', $this->webDir, file_get_contents($file));
             $assets = json_decode($jsonAssets, true);
+            // @codeCoverageIgnoreStart
             if (null === $assets) {
                 $assets = array();
-            }
+            }// @codeCoverageIgnoreEnd
             $configuration[$fileName] = $assets;
         }
 
@@ -441,6 +453,6 @@ class ConfigurationHandler
         $this->siteInfo = json_decode(FilesystemTools::readFile($this->siteDir . '/site.json'), true);
         $fullLanguage = explode('_', $this->siteInfo["locale_default"]);
         $this->language = $fullLanguage[0];
-        $this->country = $fullLanguage[1];
+        $this->country =  $fullLanguage[1];
     }
 }

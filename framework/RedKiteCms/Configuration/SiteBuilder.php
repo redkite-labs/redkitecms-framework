@@ -113,6 +113,18 @@ class SiteBuilder
     }
 
     /**
+     * Sets to true the handle theme configuration parameter
+     *
+     * @return $this
+     */
+    public function handleTheme()
+    {
+        $this->handleTheme = true;
+
+        return $this;
+    }
+
+    /**
      * @param $siteDir
      */
     private function createConfiguration($siteDir)
@@ -136,7 +148,7 @@ class SiteBuilder
             "handled_theme" => $this->handleTheme ? $this->themeName : "",
         );
 
-        $this->filesystem->dumpFile($siteDir . '/site.json', json_encode($site));
+        file_put_contents($siteDir . '/site.json', json_encode($site));
     }
 
     /**
@@ -148,7 +160,7 @@ class SiteBuilder
             "ROLE_ADMIN",
         );
 
-        $this->filesystem->dumpFile($rolesDir . '/roles.json', json_encode($roles));
+        file_put_contents($rolesDir . '/roles.json', json_encode($roles));
     }
 
     /**
@@ -166,18 +178,6 @@ class SiteBuilder
             ),
         );
 
-        $this->filesystem->dumpFile($usersDir . '/users.json', json_encode($users));
-    }
-
-    /**
-     * Sets to true the handle theme configuration parameter
-     *
-     * @return $this
-     */
-    public function handleTheme()
-    {
-        $this->handleTheme = true;
-
-        return $this;
+        file_put_contents($usersDir . '/users.json', json_encode($users));
     }
 }
