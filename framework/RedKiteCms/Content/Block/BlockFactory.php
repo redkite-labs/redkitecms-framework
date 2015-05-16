@@ -22,7 +22,7 @@ use RedKiteCms\Exception\General\RuntimeException;
 use Symfony\Component\Finder\Finder;
 
 /**
- * This is the object deputed to create blocks
+ * This is the object implements the factory deputed to create blocks
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Block
@@ -36,28 +36,31 @@ class BlockFactory implements BlockFactoryInterface
     /**
      * @type \RedKiteCms\Configuration\ConfigurationHandler
      */
-    private $redKiteCmsConfig;
+    private $configurationHandler;
 
     /**
      * Constructor
      *
-     * @param \RedKiteCms\Configuration\ConfigurationHandler $redKiteCmsConfig
+     * @param \RedKiteCms\Configuration\ConfigurationHandler $configurationHandler
      */
-    public function __construct(ConfigurationHandler $redKiteCmsConfig)
+    public function __construct(ConfigurationHandler $configurationHandler)
     {
-        $this->redKiteCmsConfig = $redKiteCmsConfig;
+        $this->configurationHandler = $configurationHandler;
     }
 
     /**
      * Boots the factory
+     *
+     * return $this
      */
     public function boot()
     {
-        $pluginDirs = $this->redKiteCmsConfig->pluginFolders();
-
+        $pluginDirs = $this->configurationHandler->pluginFolders();
         foreach ($pluginDirs as $pluginDir) {
             $this->blocks += $this->parse($pluginDir);
         }
+
+        return $this;
     }
 
     /**
@@ -68,7 +71,6 @@ class BlockFactory implements BlockFactoryInterface
     public function getAvailableBlocks()
     {
         return $this->blocks;
-        //return array_keys($this->blocks);
     }
 
     /**
