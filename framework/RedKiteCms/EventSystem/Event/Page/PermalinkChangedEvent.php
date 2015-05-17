@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Page;
 use RedKiteCms\EventSystem\Event\TextChangedEvent;
 
 /**
- * Class PermalinkChangedEvent is the object deputed to  implement the event raised when a permalink is changed
+ * Class PermalinkChangedEvent is the object assigned to  implement the event raised when a permalink is changed
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Seo

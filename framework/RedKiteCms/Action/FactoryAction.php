@@ -20,7 +20,7 @@ namespace RedKiteCms\Action;
 use Silex\Application;
 
 /**
- * This object is deputed to build an Action object to execute a specific action.
+ * This object is assigned to build an Action object to execute a specific action.
  *
  * An action could be adding a block or edit a page and so on.
  *

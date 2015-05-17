@@ -44,7 +44,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class PageCollectionManager is the object deputed to manage a website page
+ * Class PageCollectionManager is the object assigned to manage a website page
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Page

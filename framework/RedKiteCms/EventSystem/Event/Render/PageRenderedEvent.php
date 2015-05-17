@@ -21,7 +21,7 @@ use RedKiteCms\EventSystem\Event\Event;
 use RedKiteCms\FilesystemEntity\Page;
 
 /**
- * Class PageRenderedEvent is the object deputed to implement the event raised after rendering a page
+ * Class PageRenderedEvent is the object assigned to implement the event raised after rendering a page
  *
  * Connect to this event when you need to replace change dynamically the page attributes
  *

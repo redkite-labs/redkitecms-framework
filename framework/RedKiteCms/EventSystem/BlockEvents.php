@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem;
 
 /**
- * Class BlockEvents is the object deputed to define the names for blocks events
+ * Class BlockEvents is the object assigned to define the names for blocks events
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem

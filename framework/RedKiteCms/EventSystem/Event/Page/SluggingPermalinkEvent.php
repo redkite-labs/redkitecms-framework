@@ -19,7 +19,7 @@ namespace RedKiteCms\EventSystem\Event\Page;
 use RedKiteCms\EventSystem\Event\TextChangedEvent;
 
 /**
- * Class SluggingPermalinkEvent is the object deputed to implement the event raised before slugging a permalink
+ * Class SluggingPermalinkEvent is the object assigned to implement the event raised before slugging a permalink
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Seo

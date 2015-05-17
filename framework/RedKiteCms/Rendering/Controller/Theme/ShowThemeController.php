@@ -21,7 +21,7 @@ use RedKiteCms\Rendering\Controller\BaseController;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ShowThemeController is the object deputed to show the themes dashboard interface
+ * Class ShowThemeController is the object assigned to show the themes dashboard interface
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Theme

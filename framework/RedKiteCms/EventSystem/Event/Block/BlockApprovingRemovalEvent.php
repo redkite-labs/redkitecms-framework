@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Block;
 use JMS\Serializer\SerializerInterface;
 
 /**
- * Class BlockApprovingRemovalEvent is the object deputed to implement the event raised before approving a new block removal
+ * Class BlockApprovingRemovalEvent is the object assigned to implement the event raised before approving a new block removal
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

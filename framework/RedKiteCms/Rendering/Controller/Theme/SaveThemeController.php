@@ -22,7 +22,7 @@ use RedKiteCms\Rendering\Controller\BaseController;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SaveThemeController is the object deputed to save a theme
+ * Class SaveThemeController is the object assigned to save a theme
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Theme

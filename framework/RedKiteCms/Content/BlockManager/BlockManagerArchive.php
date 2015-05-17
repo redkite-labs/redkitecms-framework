@@ -27,7 +27,7 @@ use RedKiteCms\Tools\JsonTools;
 use RedKiteCms\Tools\Utils;
 
 /**
- * Class BlockManagerArchive is the object deputed to archive a block after it is changed
+ * Class BlockManagerArchive is the object assigned to archive a block after it is changed
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\BlockManager

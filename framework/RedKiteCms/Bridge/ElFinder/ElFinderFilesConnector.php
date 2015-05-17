@@ -18,7 +18,7 @@
 namespace RedKiteCms\Bridge\ElFinder;
 
 /**
- * The object deputed to defined an ElFinder connector to manage any kind of file
+ * The object assigned to defined an ElFinder connector to manage any kind of file
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Bridge\ElFinder

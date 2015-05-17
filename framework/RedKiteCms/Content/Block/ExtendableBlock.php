@@ -22,7 +22,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class ExtendableBlock is the object deputed to define an extendable block, which means a block you can extend its
+ * Class ExtendableBlock is the object assigned to define an extendable block, which means a block you can extend its
  * properties.
  *
  * For example when you manage a block link, you can extend it adding an arbitrary "class" property to tags parameter

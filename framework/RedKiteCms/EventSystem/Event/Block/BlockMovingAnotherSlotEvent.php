@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Block;
 use JMS\Serializer\SerializerInterface;
 
 /**
- * Class BlockMovingAnotherSlotEvent is the object deputed to implement the event raised before moving a block to another slot
+ * Class BlockMovingAnotherSlotEvent is the object assigned to implement the event raised before moving a block to another slot
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

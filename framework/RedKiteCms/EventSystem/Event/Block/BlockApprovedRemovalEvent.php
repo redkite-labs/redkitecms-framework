@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Block;
 
 /**
- * Class BlockApprovedRemovalEvent is the object deputed to implement the event raised when a block is approved for removal
+ * Class BlockApprovedRemovalEvent is the object assigned to implement the event raised when a block is approved for removal
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

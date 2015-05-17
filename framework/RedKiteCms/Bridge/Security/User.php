@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * This object is deputed to handle the RedKite CMS signed in user
+ * This object is assigned to handle the RedKite CMS signed in user
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Bridge\Security

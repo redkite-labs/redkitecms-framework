@@ -20,7 +20,7 @@ namespace RedKiteCms\Configuration;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * This object is deputed to generate an empty website from a given theme
+ * This object is assigned to generate an empty website from a given theme
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Configuration

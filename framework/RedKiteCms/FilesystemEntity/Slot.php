@@ -22,7 +22,7 @@ use RedKiteCms\Contribution\ContributionManagerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class Slot is the object deputed to handle a website slot
+ * Class Slot is the object assigned to handle a website slot
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\FilesystemEntity

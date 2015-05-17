@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Block;
 
 /**
- * Class BlockMovedAnotherSlotEvent is the object deputed to implement the event raised when a block is moved to another slot
+ * Class BlockMovedAnotherSlotEvent is the object assigned to implement the event raised when a block is moved to another slot
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

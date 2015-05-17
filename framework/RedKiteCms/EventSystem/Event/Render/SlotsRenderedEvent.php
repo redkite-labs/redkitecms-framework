@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Render;
 
 /**
- * Class SlotsRenderedEvent is the object deputed to implement the event raised when page slots are rendered.
+ * Class SlotsRenderedEvent is the object assigned to implement the event raised when page slots are rendered.
  *
  * Connect to this event when you need to add dynamically some contents to a slot.
  *

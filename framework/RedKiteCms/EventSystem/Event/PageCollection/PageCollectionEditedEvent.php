@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\PageCollection;
 
 /**
- * Class PageCollectionEditedEvent is the object deputed to implement the event raised when a page is edited
+ * Class PageCollectionEditedEvent is the object assigned to implement the event raised when a page is edited
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Page

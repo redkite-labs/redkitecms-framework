@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Block;
 use JMS\Serializer\SerializerInterface;
 
 /**
- * Class BlockRestoringEvent is the object deputed to
+ * Class BlockRestoringEvent is the object assigned to
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

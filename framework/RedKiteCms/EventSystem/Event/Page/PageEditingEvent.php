@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Page;
 use RedKiteCms\EventSystem\Event\JsonFileEvent;
 
 /**
- * Class PageEditingEvent is the object deputed to implement the event raised before editing a page
+ * Class PageEditingEvent is the object assigned to implement the event raised before editing a page
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Seo

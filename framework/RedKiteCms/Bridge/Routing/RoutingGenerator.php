@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * This object is deputed to generate dynamically the website page routes
+ * This object is assigned to generate dynamically the website page routes
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Bridge\Routing

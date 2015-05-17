@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\PageCollection;
 use RedKiteCms\EventSystem\Event\JsonFileEvent;
 
 /**
- * Class PageCollectionRemovingEvent is the object deputed to implement the event raised before removing a page
+ * Class PageCollectionRemovingEvent is the object assigned to implement the event raised before removing a page
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Page

@@ -24,7 +24,7 @@ use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Plugin\Plugin;
 
 /**
- * TemplateAssetsManager is the object deputed to collect assets parsing RedKite
+ * TemplateAssetsManager is the object assigned to collect assets parsing RedKite
  * CMS blocks and themes in use in the current website
  *
  * @author RedKite Labs <webmaster@redkite-labs.com>

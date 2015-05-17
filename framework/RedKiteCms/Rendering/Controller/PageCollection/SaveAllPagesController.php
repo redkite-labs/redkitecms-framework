@@ -22,7 +22,7 @@ use RedKiteCms\Rendering\Controller\Page\BaseSavePageController;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SaveAllPagesController is the object deputed to save the website in production
+ * Class SaveAllPagesController is the object assigned to save the website in production
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Page

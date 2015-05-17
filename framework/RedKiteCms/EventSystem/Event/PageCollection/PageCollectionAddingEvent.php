@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\PageCollection;
 use RedKiteCms\EventSystem\Event\JsonFileEvent;
 
 /**
- * Class PageCollectionAddingEvent is the object deputed to implement the event raised before adding a new page
+ * Class PageCollectionAddingEvent is the object assigned to implement the event raised before adding a new page
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Page

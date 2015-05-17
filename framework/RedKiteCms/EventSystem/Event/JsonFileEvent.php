@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event;
 use RedKiteCms\Bridge\Monolog\DataLogger;
 
 /**
- * Class JsonFileEvent is the object deputed to handle the base properties for an event which involves a json file management
+ * Class JsonFileEvent is the object assigned to handle the base properties for an event which involves a json file management
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event

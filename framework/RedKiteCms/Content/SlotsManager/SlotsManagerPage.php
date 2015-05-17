@@ -20,7 +20,7 @@ namespace RedKiteCms\Content\SlotsManager;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class SlotsManagerPage is the object deputed to cretae a slot repeated at page level
+ * Class SlotsManagerPage is the object assigned to cretae a slot repeated at page level
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\SlotsManager

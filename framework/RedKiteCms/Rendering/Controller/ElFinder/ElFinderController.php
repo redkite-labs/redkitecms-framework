@@ -21,7 +21,7 @@ use RedKiteCms\Rendering\Controller\BaseController;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ElFinderController is the object deputed to implement the action to create the connector for the ElFinder media
+ * Class ElFinderController is the object assigned to implement the action to create the connector for the ElFinder media
  * library
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>

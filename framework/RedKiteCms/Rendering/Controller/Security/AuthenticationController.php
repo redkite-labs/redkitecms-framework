@@ -21,7 +21,7 @@ use RedKiteCms\Rendering\Controller\Cms\BackendController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class AuthenticationController is the object deputed to sign in to the CMS backend
+ * Class AuthenticationController is the object assigned to sign in to the CMS backend
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Security

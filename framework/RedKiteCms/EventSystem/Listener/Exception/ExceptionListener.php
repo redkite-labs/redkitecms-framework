@@ -29,7 +29,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundE
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class ExceptionListener is the object deputed to listen for kernel exception
+ * Class ExceptionListener is the object assigned to listen for kernel exception
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Listener\Exception

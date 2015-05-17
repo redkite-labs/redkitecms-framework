@@ -24,7 +24,7 @@ use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class AddPageAction defines the object deputed to add a page to the website
+ * Class AddPageAction defines the object assigned to add a page to the website
  *
  * @package RedKiteCms\Action
  */

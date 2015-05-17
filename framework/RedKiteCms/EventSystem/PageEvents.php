@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem;
 
 /**
- * Class PageEvents is the object deputed to define the names for page events
+ * Class PageEvents is the object assigned to define the names for page events
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem

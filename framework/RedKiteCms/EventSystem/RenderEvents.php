@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem;
 
 /**
- * Class RenderEvents is the object deputed to define the names for slots render events
+ * Class RenderEvents is the object assigned to define the names for slots render events
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem

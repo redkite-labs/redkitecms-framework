@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event;
 
 /**
- * Class TextChangedEvent is the object deputed to handle the base properties for an event that involves a text changed,
+ * Class TextChangedEvent is the object assigned to handle the base properties for an event that involves a text changed,
  * i.e. a page name
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>

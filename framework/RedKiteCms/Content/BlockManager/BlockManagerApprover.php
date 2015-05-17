@@ -28,7 +28,7 @@ use RedKiteCms\Tools\FilesystemTools;
 use RedKiteCms\Tools\JsonTools;
 
 /**
- * Class BlockManagerApprover is the object deputed to approve a block contribution
+ * Class BlockManagerApprover is the object assigned to approve a block contribution
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\BlockManager

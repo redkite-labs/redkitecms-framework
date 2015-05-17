@@ -22,7 +22,7 @@ use RedKiteCms\Exception\General\InvalidArgumentException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * The object deputed to handle a base elFinder connector
+ * The object assigned to handle a base elFinder connector
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Bridge\ElFinder

@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Page;
 
 /**
- * Class PageApprovedEvent is the object deputed to implement the event raised when a page contribution is approved
+ * Class PageApprovedEvent is the object assigned to implement the event raised when a page contribution is approved
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Seo

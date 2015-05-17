@@ -25,7 +25,7 @@ use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class RemoveBlockAction defines the object deputed to remove a block from a web site page
+ * Class RemoveBlockAction defines the object assigned to remove a block from a web site page
  *
  * @package RedKiteCms\Action
  */

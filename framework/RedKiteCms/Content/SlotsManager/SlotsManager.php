@@ -22,7 +22,7 @@ use RedKiteCms\Tools\FilesystemTools;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Class SlotsManager is the object deputed to manage page slots
+ * Class SlotsManager is the object assigned to manage page slots
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\SlotsManager

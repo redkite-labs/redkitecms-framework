@@ -22,7 +22,7 @@ use RedKiteCms\Tools\FilesystemTools;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Class Plugin is the object deputed to handle a generic plugin
+ * Class Plugin is the object assigned to handle a generic plugin
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Plugin

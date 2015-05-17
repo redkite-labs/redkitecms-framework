@@ -21,7 +21,7 @@ use RedKiteCms\EventSystem\Event\Event;
 use RedKiteCms\FilesystemEntity\Page;
 
 /**
- * Class SlotsRenderingEvent is the object deputed to implement the event raised before rendering page slots.
+ * Class SlotsRenderingEvent is the object assigned to implement the event raised before rendering page slots.
  *
  * Connect to this event when you need to replace dynamically a slot content.
  *

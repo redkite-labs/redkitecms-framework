@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Block;
 
 /**
- * Class BlockEditingEvent is the object deputed to implement the event raised before editing a block
+ * Class BlockEditingEvent is the object assigned to implement the event raised before editing a block
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

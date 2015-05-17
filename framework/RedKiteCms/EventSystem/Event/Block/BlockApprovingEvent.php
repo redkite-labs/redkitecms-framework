@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Block;
 use JMS\Serializer\SerializerInterface;
 
 /**
- * Class BlockApprovingEvent is the object deputed to implement the event raised before approving a new block
+ * Class BlockApprovingEvent is the object assigned to implement the event raised before approving a new block
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

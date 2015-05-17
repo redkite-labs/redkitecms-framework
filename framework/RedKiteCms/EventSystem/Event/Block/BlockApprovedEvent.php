@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Block;
 
 /**
- * Class BlockApprovedEvent is the object deputed to implement the event raised when a new block is approved
+ * Class BlockApprovedEvent is the object assigned to implement the event raised when a new block is approved
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

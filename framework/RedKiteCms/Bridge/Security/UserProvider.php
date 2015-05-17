@@ -26,7 +26,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * This object is deputed to implement the RedKite CMS user provider
+ * This object is assigned to implement the RedKite CMS user provider
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Bridge\Security

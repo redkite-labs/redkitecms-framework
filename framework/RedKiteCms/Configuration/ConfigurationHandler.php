@@ -24,7 +24,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * This object is deputed to handle the RedKite CMS configuration
+ * This object is assigned to handle the RedKite CMS configuration
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Configuration

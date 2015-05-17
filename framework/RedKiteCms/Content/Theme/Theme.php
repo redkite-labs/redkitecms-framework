@@ -24,7 +24,7 @@ use RedKiteCms\Tools\FilesystemTools;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class Theme is the object deputed to handle a theme
+ * Class Theme is the object assigned to handle a theme
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Theme

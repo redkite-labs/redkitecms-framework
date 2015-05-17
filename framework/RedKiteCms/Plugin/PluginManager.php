@@ -21,7 +21,7 @@ use RedKiteCms\Configuration\ConfigurationHandler;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class PluginManager is the object deputed to handle the installed plugins
+ * Class PluginManager is the object assigned to handle the installed plugins
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Plugin

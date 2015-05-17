@@ -25,7 +25,7 @@ use RedKiteCms\Tools\JsonTools;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class BackendController is the object deputed to implement the action to render the CMS backend
+ * Class BackendController is the object assigned to implement the action to render the CMS backend
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Cms

@@ -29,7 +29,7 @@ use RedKiteCms\FilesystemEntity\Slot;
 
 
 /**
- * Class PageRendererBackend is the object deputed to render a page for the CMS backend
+ * Class PageRendererBackend is the object assigned to render a page for the CMS backend
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\PageRenderer

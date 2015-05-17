@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Page;
 use RedKiteCms\EventSystem\Event\Event;
 
 /**
- * Class PageHidEvent is the object deputed to implement the event raised when a page is hidden from production
+ * Class PageHidEvent is the object assigned to implement the event raised when a page is hidden from production
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Seo

@@ -20,7 +20,7 @@ namespace RedKiteCms\Content\PageCollection;
 use RedKiteCms\Configuration\ConfigurationHandler;
 
 /**
- * Class PermalinkManager is the object deputed to handle the blocks which contain one or more permalinks.
+ * Class PermalinkManager is the object assigned to handle the blocks which contain one or more permalinks.
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Page

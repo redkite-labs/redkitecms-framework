@@ -20,7 +20,7 @@ namespace RedKiteCms\Rendering\Controller\Page;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class PermalinksController is the object deputed to list the website permalinks
+ * Class PermalinksController is the object assigned to list the website permalinks
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Page

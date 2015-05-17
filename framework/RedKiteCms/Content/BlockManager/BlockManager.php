@@ -27,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
- * Class BlockManager is the base object deputed to handle a block
+ * Class BlockManager is the base object assigned to handle a block
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\BlockManager

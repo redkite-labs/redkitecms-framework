@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Page;
 use RedKiteCms\EventSystem\Event\JsonFileEvent;
 
 /**
- * Class PageSavedEvent is the object deputed to implement the event raised when a page is saved
+ * Class PageSavedEvent is the object assigned to implement the event raised when a page is saved
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Page

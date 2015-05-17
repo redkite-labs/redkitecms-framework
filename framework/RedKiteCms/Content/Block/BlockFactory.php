@@ -22,7 +22,7 @@ use RedKiteCms\Exception\General\RuntimeException;
 use Symfony\Component\Finder\Finder;
 
 /**
- * This is the object implements the factory deputed to create blocks
+ * This is the object implements the factory assigned to create blocks
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Block

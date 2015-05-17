@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Block;
 
 /**
- * Class BlockMovedSameSlotEvent is the object deputed to implement the event raised when a block is moved to the same slot
+ * Class BlockMovedSameSlotEvent is the object assigned to implement the event raised when a block is moved to the same slot
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

@@ -23,7 +23,7 @@ use RedKiteCms\Exception\General\LogicException;
 use RedKiteCms\Bridge\Translation\Translator;
 
 /**
- * Class BaseBlock is the object deputed to define a base block class. Every time you need to create a new
+ * Class BaseBlock is the object assigned to define a base block class. Every time you need to create a new
  * Block you must derive it from this base class
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>

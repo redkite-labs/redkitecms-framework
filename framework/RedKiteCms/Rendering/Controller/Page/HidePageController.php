@@ -17,7 +17,7 @@
 namespace RedKiteCms\Rendering\Controller\Page;
 
 /**
- * Class HidePageController is the object deputed to hide a published page from production
+ * Class HidePageController is the object assigned to hide a published page from production
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Seo

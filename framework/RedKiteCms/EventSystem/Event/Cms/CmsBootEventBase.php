@@ -21,7 +21,7 @@ use RedKiteCms\Configuration\ConfigurationHandler;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Class CmsBootEvent is the object deputed to handle the base properties to generate a new cms boot event
+ * Class CmsBootEvent is the object assigned to handle the base properties to generate a new cms boot event
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Cms

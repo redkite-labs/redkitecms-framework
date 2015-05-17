@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Page;
 use RedKiteCms\EventSystem\Event\JsonFileEvent;
 
 /**
- * Class PageApprovingEvent is the object deputed to implement the event raised before approving a page contribution
+ * Class PageApprovingEvent is the object assigned to implement the event raised before approving a page contribution
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Seo

@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\PageCollection;
 
 /**
- * Class PageCollectionAddedEvent is the object deputed to implement the event raised when a new page is added
+ * Class PageCollectionAddedEvent is the object assigned to implement the event raised when a new page is added
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Page

@@ -22,7 +22,7 @@ use RedKiteCms\Rendering\Controller\BaseController;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ShowUserController is the object deputed to show the user dashboard interface
+ * Class ShowUserController is the object assigned to show the user dashboard interface
  *
  * The only user information at the moment is the password and this feature will be expanded in te future.
  *

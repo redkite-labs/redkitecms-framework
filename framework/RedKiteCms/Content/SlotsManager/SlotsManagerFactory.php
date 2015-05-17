@@ -21,7 +21,7 @@ use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Exception\General\RuntimeException;
 
 /**
- * Class SlotsManagerFactory is the factory object deputed to build a slot manager from repeat status
+ * Class SlotsManagerFactory is the factory object assigned to build a slot manager from repeat status
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\SlotsManager

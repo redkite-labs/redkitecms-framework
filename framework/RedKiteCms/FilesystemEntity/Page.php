@@ -27,7 +27,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class Page is the object deputed to handle a website page
+ * Class Page is the object assigned to handle a website page
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\FilesystemEntity

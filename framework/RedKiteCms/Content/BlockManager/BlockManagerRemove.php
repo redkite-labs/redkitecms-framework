@@ -26,7 +26,7 @@ use RedKiteCms\Tools\FilesystemTools;
 use RedKiteCms\Tools\JsonTools;
 
 /**
- * Class BlockManagerRemove is the object deputed to remove a block froma slot
+ * Class BlockManagerRemove is the object assigned to remove a block froma slot
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\BlockManager

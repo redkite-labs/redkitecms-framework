@@ -25,7 +25,7 @@ use RedKiteCms\Tools\FilesystemTools;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class ThemeSlotsGenerator is the object deputed to update the Theme's blocks from the web site who handles the Theme itself
+ * Class ThemeSlotsGenerator is the object assigned to update the Theme's blocks from the web site who handles the Theme itself
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Theme

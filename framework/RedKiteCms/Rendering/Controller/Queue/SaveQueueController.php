@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SaveQueueController is the object deputed to save the operations from the frontend to the backend
+ * Class SaveQueueController is the object assigned to save the operations from the frontend to the backend
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Block

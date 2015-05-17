@@ -26,7 +26,7 @@ use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class RestoreBlockAction defines the object deputed to restore a block from the history
+ * Class RestoreBlockAction defines the object assigned to restore a block from the history
  *
  * @package RedKiteCms\Action
  */

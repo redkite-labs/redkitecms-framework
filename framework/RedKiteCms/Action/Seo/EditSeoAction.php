@@ -25,7 +25,7 @@ use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class EditSeoAction defines the object deputed to edit a page for a specific language
+ * Class EditSeoAction defines the object assigned to edit a page for a specific language
  *
  * @package RedKiteCms\Action
  */

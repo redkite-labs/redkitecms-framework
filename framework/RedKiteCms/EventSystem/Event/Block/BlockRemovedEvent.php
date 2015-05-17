@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Block;
 
 /**
- * Class BlockRemovedEvent is the object deputed to implement the event raised when a block is removed
+ * Class BlockRemovedEvent is the object assigned to implement the event raised when a block is removed
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

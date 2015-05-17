@@ -36,7 +36,7 @@ use RedKiteCms\Tools\FilesystemTools;
 use RedKiteCms\Tools\Utils;
 
 /**
- * Class PageManager is the object deputed to handle the page's seo attributes
+ * Class PageManager is the object assigned to handle the page's seo attributes
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Seo

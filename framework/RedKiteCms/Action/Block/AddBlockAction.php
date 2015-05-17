@@ -23,7 +23,7 @@ use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class AddBlockAction defines the object deputed to add a block to a web site page
+ * Class AddBlockAction defines the object assigned to add a block to a web site page
  *
  * @package RedKiteCms\Action
  */

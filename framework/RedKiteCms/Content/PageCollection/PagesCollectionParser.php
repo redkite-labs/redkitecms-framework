@@ -21,7 +21,7 @@ use RedKiteCms\Configuration\ConfigurationHandler;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class PagesCollectionParser is the object deputed to handle the website pages information.
+ * Class PagesCollectionParser is the object assigned to handle the website pages information.
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Page

@@ -29,7 +29,7 @@ use RedKiteCms\Tools\JsonTools;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class BlockManagerMove is the object deputed to move a block both on the same slot or to another one
+ * Class BlockManagerMove is the object assigned to move a block both on the same slot or to another one
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\BlockManager

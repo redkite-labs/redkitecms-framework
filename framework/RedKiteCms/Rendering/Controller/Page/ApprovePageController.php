@@ -17,7 +17,7 @@
 namespace RedKiteCms\Rendering\Controller\Page;
 
 /**
- * Class ApprovePageController is the object deputed to approve a page contribution
+ * Class ApprovePageController is the object assigned to approve a page contribution
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Seo

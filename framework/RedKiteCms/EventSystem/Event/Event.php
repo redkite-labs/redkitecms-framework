@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event;
 use Symfony\Component\EventDispatcher\Event as BaseEvent;
 
 /**
- * Class Event is the object deputed to handle the base properties for a RedKite CMS event
+ * Class Event is the object assigned to handle the base properties for a RedKite CMS event
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event

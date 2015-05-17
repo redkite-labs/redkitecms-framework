@@ -27,7 +27,7 @@ use RedKiteCms\Tools\JsonTools;
 use RedKiteCms\Tools\Utils;
 
 /**
- * Class BlockManagerEdit is the object deputed to edit a block
+ * Class BlockManagerEdit is the object assigned to edit a block
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\BlockManager

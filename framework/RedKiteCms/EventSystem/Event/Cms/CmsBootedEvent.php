@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Cms;
 
 /**
- * Class CmsBootedEvent is the object deputed to implement the event raised when the is booted
+ * Class CmsBootedEvent is the object assigned to implement the event raised when the is booted
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Cms

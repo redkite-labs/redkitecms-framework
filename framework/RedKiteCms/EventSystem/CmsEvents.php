@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem;
 
 /**
- * Class CmsEvents is the object deputed to define the names for cms events
+ * Class CmsEvents is the object assigned to define the names for cms events
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem

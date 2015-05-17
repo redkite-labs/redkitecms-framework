@@ -24,7 +24,7 @@ use Assetic\FilterManager;
 use RedKiteCms\Configuration\ConfigurationHandler;
 
 /**
- * This object is deputed to build an AssetFactory object
+ * This object is assigned to build an AssetFactory object
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Bridge\Assetic

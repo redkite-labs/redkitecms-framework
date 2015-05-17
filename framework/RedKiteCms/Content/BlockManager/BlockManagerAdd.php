@@ -25,7 +25,7 @@ use RedKiteCms\EventSystem\Event\Block\BlockAddingEvent;
 use RedKiteCms\Tools\FilesystemTools;
 
 /**
- * Class BlockManagerAdd is the object deputed to add a new block to the given slot
+ * Class BlockManagerAdd is the object assigned to add a new block to the given slot
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\BlockManager

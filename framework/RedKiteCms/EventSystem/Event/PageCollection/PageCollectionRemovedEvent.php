@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\PageCollection;
 
 /**
- * Class PageCollectionRemovedEvent is the object deputed to implement the event raised when a page is removed
+ * Class PageCollectionRemovedEvent is the object assigned to implement the event raised when a page is removed
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Page

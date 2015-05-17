@@ -26,7 +26,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class ThemeBase is the object deputed to handle Theme base methods and properties
+ * Class ThemeBase is the object assigned to handle Theme base methods and properties
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Theme

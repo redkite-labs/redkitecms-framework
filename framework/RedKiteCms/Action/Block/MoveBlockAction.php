@@ -26,7 +26,7 @@ use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class MoveBlockAction defines the object deputed to move a block on a web site page
+ * Class MoveBlockAction defines the object assigned to move a block on a web site page
  *
  * @package RedKiteCms\Action
  */

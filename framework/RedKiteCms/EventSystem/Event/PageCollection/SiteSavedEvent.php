@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\PageCollection;
 use RedKiteCms\EventSystem\Event\Event;
 
 /**
- * Class SiteSavedEvent is the object deputed to implement the event raised when the site is saved
+ * Class SiteSavedEvent is the object assigned to implement the event raised when the site is saved
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Page

@@ -25,7 +25,7 @@ use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class RemovePageAction defines the object deputed to remove a page from the website
+ * Class RemovePageAction defines the object assigned to remove a page from the website
  *
  * @package RedKiteCms\Action
  */

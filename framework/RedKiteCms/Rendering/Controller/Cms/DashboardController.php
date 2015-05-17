@@ -22,7 +22,7 @@ use RedKiteCms\Rendering\Controller\Cms\FrontendController as BaseFrontendContro
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class DashboardController is the object deputed to implement the action to show the CMS dashboard
+ * Class DashboardController is the object assigned to implement the action to show the CMS dashboard
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Cms

@@ -22,7 +22,7 @@ use RedKiteCms\Content\PageCollection\PagesCollectionParser;
 
 
 /**
- * SitemapGenerator is the object deputed to generate and write the website sitemap
+ * SitemapGenerator is the object assigned to generate and write the website sitemap
  *
  * @author RedKite Labs <webmaster@redkite-labs.com>
  */

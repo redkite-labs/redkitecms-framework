@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Page;
 
 /**
- * Class PagePublishedEvent is the object deputed to implement the event raised when a page is published in production
+ * Class PagePublishedEvent is the object assigned to implement the event raised when a page is published in production
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Seo

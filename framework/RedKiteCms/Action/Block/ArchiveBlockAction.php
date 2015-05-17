@@ -26,7 +26,7 @@ use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ArchiveBlockAction defines the object deputed to archive a block when it is edited
+ * Class ArchiveBlockAction defines the object assigned to archive a block when it is edited
  *
  * @package RedKiteCms\Action
  */

@@ -18,7 +18,7 @@
 namespace RedKiteCms\EventSystem\Event\Block;
 
 /**
- * Class BlockAddingEvent is the object deputed to implement the event raised before adding a new block
+ * Class BlockAddingEvent is the object assigned to implement the event raised before adding a new block
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

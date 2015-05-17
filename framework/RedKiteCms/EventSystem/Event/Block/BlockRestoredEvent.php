@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\Block;
 use JMS\Serializer\SerializerInterface;
 
 /**
- * Class BlockRestoredEvent is the object deputed to implement the event raised when a block is restored
+ * Class BlockRestoredEvent is the object assigned to implement the event raised when a block is restored
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block

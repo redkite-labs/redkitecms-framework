@@ -22,7 +22,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SavePageController is the object deputed to save a page in production
+ * Class SavePageController is the object assigned to save a page in production
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Page

@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * The object deputed to define a RedKiteCMS generic form
+ * The object assigned to define a RedKiteCMS generic form
  *
  * @author  RedKite Labs <info@redkite-labs.com>
  * @package RedKiteCms\Bridge\Form

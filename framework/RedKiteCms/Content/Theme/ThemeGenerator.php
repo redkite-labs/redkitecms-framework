@@ -22,7 +22,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class ThemeGenerator is the object deputed to generate the theme definition and slots folders for the given Theme
+ * Class ThemeGenerator is the object assigned to generate the theme definition and slots folders for the given Theme
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Theme

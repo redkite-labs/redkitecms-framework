@@ -84,7 +84,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use RedKiteCms\Bridge\Routing\Routing;
 
 /**
- * Class RedKiteCms is the object deputed to bootstrap the CMS. This object is the application entry point and it is
+ * Class RedKiteCms is the object assigned to bootstrap the CMS. This object is the application entry point and it is
  * used in front-controllers.
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>

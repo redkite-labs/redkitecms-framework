@@ -25,7 +25,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class ThemeAligner is the object deputed to align the site that handles a theme or a site that uses a theme when the theme had changed.
+ * Class ThemeAligner is the object assigned to align the site that handles a theme or a site that uses a theme when the theme had changed.
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Theme

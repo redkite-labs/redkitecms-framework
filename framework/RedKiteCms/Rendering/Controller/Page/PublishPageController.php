@@ -18,7 +18,7 @@
 namespace RedKiteCms\Rendering\Controller\Page;
 
 /**
- * Class PublishPageController is the object deputed to publish a page in production
+ * Class PublishPageController is the object assigned to publish a page in production
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Page

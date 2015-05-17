@@ -22,7 +22,7 @@ use RedKiteCms\Rendering\Controller\BaseController;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class FrontendController is the object deputed to implement the action to render the CMS frontend
+ * Class FrontendController is the object assigned to implement the action to render the CMS frontend
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Cms

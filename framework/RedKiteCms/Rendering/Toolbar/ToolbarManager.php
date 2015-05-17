@@ -21,7 +21,7 @@ namespace RedKiteCms\Rendering\Toolbar;
 use RedKiteCms\Plugin\PluginManager;
 
 /**
- * Class ToolbarManager is the object deputed to render the block's editor toolbar
+ * Class ToolbarManager is the object assigned to render the block's editor toolbar
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Toolbar

@@ -22,7 +22,7 @@ use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Exception\General\LogicException;
 
 /**
- * Class PageCollectionBase is a base object deputed to handle common methods for pages management
+ * Class PageCollectionBase is a base object assigned to handle common methods for pages management
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Page

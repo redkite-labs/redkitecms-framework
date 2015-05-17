@@ -18,7 +18,7 @@
 namespace RedKiteCms\Content\SlotsManager;
 
 /**
- * Class SlotsManagerSite is the object deputed to cretae a slot repeated at site level
+ * Class SlotsManagerSite is the object assigned to cretae a slot repeated at site level
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\SlotsManager

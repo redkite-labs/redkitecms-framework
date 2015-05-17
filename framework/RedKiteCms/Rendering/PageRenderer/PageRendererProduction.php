@@ -25,7 +25,7 @@ use RedKiteCms\FilesystemEntity\Slot;
 use RedKiteCms\Tools\Utils;
 
 /**
- * Class PageRendererProduction is the object deputed to render a page for the production
+ * Class PageRendererProduction is the object assigned to render a page for the production
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\PageRenderer

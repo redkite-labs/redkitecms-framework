@@ -22,7 +22,7 @@ use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Content\PageCollection\PagesCollectionParser;
 
 /**
- * The object deputed to handle the Symfony form factory
+ * The object assigned to handle the Symfony form factory
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Bridge\Form

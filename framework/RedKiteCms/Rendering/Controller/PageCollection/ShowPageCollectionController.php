@@ -22,7 +22,7 @@ use RedKiteCms\Core\RedKiteCms\Core\Form\PageCollection\SeoType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ShowPageCollectionController is the object deputed to show the page collection dashboard interface
+ * Class ShowPageCollectionController is the object assigned to show the page collection dashboard interface
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Page

@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\PageCollection;
 use RedKiteCms\EventSystem\Event\TextChangedEvent;
 
 /**
- * Class SluggingPageNameEvent is the object deputed to implement the event raised before slugging the page name
+ * Class SluggingPageNameEvent is the object assigned to implement the event raised before slugging the page name
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Page

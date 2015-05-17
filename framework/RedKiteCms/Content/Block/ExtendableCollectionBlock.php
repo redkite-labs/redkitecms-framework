@@ -21,7 +21,7 @@ use JMS\Serializer\Annotation\Exclude;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class ExtendableCollectionBlock is the object deputed to handle a collection of extendable blocks
+ * Class ExtendableCollectionBlock is the object assigned to handle a collection of extendable blocks
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Block

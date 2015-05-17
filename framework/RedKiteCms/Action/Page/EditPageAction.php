@@ -24,7 +24,7 @@ use RedKiteCms\Content\Page\PageManager;
 use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
- * Class EditPageAction defines the object deputed to edit a website page
+ * Class EditPageAction defines the object assigned to edit a website page
  *
  * @package RedKiteCms\Action
  */

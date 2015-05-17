@@ -21,7 +21,7 @@ use RedKiteCms\Tools\FilesystemTools;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SaveUserController is the object deputed to update the user information
+ * Class SaveUserController is the object assigned to update the user information
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Security

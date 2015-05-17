@@ -25,7 +25,7 @@ use Silex\Application;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class EditBlockAction defines the object deputed to edit a block on a web site page
+ * Class EditBlockAction defines the object assigned to edit a block on a web site page
  *
  * @package RedKiteCms\Action
  */

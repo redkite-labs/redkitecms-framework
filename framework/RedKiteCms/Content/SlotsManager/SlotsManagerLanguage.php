@@ -18,7 +18,7 @@
 namespace RedKiteCms\Content\SlotsManager;
 
 /**
- * Class SlotsManagerLanguage is the object deputed to cretae a slot repeated at language level
+ * Class SlotsManagerLanguage is the object assigned to cretae a slot repeated at language level
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\SlotsManager

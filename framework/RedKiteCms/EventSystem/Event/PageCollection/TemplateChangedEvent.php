@@ -20,7 +20,7 @@ namespace RedKiteCms\EventSystem\Event\PageCollection;
 use RedKiteCms\EventSystem\Event\TextChangedEvent;
 
 /**
- * Class TemplateChangedEvent is the object deputed to implement the event raised when the page template is changed
+ * Class TemplateChangedEvent is the object assigned to implement the event raised when the page template is changed
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Page

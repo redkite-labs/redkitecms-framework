@@ -21,7 +21,7 @@ use JMS\Serializer\SerializerInterface;
 use RedKiteCms\EventSystem\Event\JsonFileEvent;
 
 /**
- * Class BlockEventBase is the object deputed to handle the base properties to generate a new block event
+ * Class BlockEventBase is the object assigned to handle the base properties to generate a new block event
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\EventSystem\Event\Block
