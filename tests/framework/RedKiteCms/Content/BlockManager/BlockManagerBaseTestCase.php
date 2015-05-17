@@ -23,7 +23,7 @@ use RedKiteCms\Content\BlockManager\BlockManagerApprover;
 use RedKiteCms\TestCase;
 
 /**
- * BlockManagerApproverTest
+ * BlockManagerBaseTestCase
  *
  * @author RedKite Labs <webmaster@redkite-labs.com>
  */

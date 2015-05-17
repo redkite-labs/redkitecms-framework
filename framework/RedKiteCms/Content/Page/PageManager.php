@@ -59,7 +59,7 @@ class PageManager extends PageCollectionBase
     }
 
     /**
-     * Edits the seo for the given page
+     * Edits the seo attributes for the given page
      * @param string $pageName
      * @param array $values
      *
@@ -67,37 +67,29 @@ class PageManager extends PageCollectionBase
      */
     public function edit($pageName, array $values)
     {
-        $pageDir = $this->pagesDir . '/' . $pageName . '/' . $values["language"];
-        $seoFile = (null !== $this->username) ? $pageDir . '/' . $this->username . '.json' : $pageDir . '/seo.json';
-        $currentSeo = json_decode(FilesystemTools::readFile($seoFile), true);
+        $language = $values["language"];
+        unset($values["language"]);
+        $pageDir = $this->pagesDir . '/' . $pageName . '/' . $language;
+        $seoFile = $pageDir . '/seo.json';
+        if (null !== $this->username){
+            $seoFile = $pageDir . '/' . $this->username . '.json';
+        }
+        $currentPage = json_decode(FilesystemTools::readFile($seoFile), true);
 
         $values = $this->slugifyPermalink($values);
-        if ($currentSeo["permalink"] != $values["permalink"]) {
-            if (!array_key_exists("current_permalink", $values)) {
-                $values["current_permalink"] = $currentSeo["permalink"];
-            }
-            $this->changedPermalink = array(
-                'old' => $currentSeo["permalink"],
-                'new' => $values["permalink"],
-            );
-            Dispatcher::dispatch(
-                PageEvents::PERMALINK_CHANGED,
-                new PermalinkChangedEvent($currentSeo["permalink"], $values["permalink"])
-            );
-        }
+        $this->dispatchPermalinkChanged($currentPage, $values);
 
-        $encodedSeo = json_encode($values);
-        $event = Dispatcher::dispatch(PageEvents::PAGE_EDITING, new PageEditingEvent($seoFile, $encodedSeo));
-        $encodedSeo = $event->getFileContent();
-        FilesystemTools::writeFile($seoFile, $encodedSeo);
+        $encodedPage = json_encode($values);
+        $event = Dispatcher::dispatch(PageEvents::PAGE_EDITING, new PageEditingEvent($seoFile, $encodedPage));
+        $encodedPage = $event->getFileContent();
+        FilesystemTools::writeFile($seoFile, $encodedPage);
 
-
-        Dispatcher::dispatch(PageEvents::PAGE_EDITED, new PageEditedEvent($seoFile, $encodedSeo));
+        Dispatcher::dispatch(PageEvents::PAGE_EDITED, new PageEditedEvent($seoFile, $encodedPage));
         DataLogger::log(
-            sprintf('Page SEO attributes "%s" for language "%s" were edited', $pageName, $values["language"])
+            sprintf('Page SEO attributes "%s" for language "%s" were edited', $pageName, $language)
         );
 
-        return $encodedSeo;
+        return $encodedPage;
     }
 
     /**
@@ -183,18 +175,42 @@ class PageManager extends PageCollectionBase
     private function slugifyPermalink(array $values)
     {
         $sluggedPermalink = Utils::slugify($values["permalink"]);
-        if ($sluggedPermalink != $values["permalink"]) {
-            $event = Dispatcher::dispatch(
-                PageEvents::SLUGGING_PERMALINK,
-                new SluggingPermalinkEvent($values["permalink"], $sluggedPermalink)
-            );
-            $sluggedText = $event->getChangedText();
-            if ($sluggedText != $sluggedPermalink) {
-                $sluggedPermalink = $sluggedText;
-            }
-            $values["permalink"] = $sluggedPermalink;
+        if ($sluggedPermalink == $values["permalink"]) {
+            return $values;
         }
 
+        $event = Dispatcher::dispatch(
+            PageEvents::SLUGGING_PERMALINK,
+            new SluggingPermalinkEvent($values["permalink"], $sluggedPermalink)
+        );
+        $sluggedText = $event->getChangedText();
+        // @codeCoverageIgnoreStart
+        if ($sluggedText != $sluggedPermalink) {
+            $sluggedPermalink = $sluggedText;
+        }
+        // @codeCoverageIgnoreEnd
+        $values["permalink"] = $sluggedPermalink;
+
         return $values;
+    }
+
+    private function dispatchPermalinkChanged(array $currentPage, array $values)
+    {
+        if ($currentPage["permalink"] == $values["permalink"]) {
+            return;
+        }
+
+        if (!array_key_exists("current_permalink", $values)) {
+            $values["current_permalink"] = $currentPage["permalink"];
+        }
+
+        $this->changedPermalink = array(
+            'old' => $currentPage["permalink"],
+            'new' => $values["permalink"],
+        );
+        Dispatcher::dispatch(
+            PageEvents::PERMALINK_CHANGED,
+            new PermalinkChangedEvent($currentPage["permalink"], $values["permalink"])
+        );
     }
 } 
