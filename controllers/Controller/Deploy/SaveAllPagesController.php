@@ -15,22 +15,22 @@
  *
  */
 
-namespace Controller\Page;
+namespace Controller\Deploy;
 
-use RedKiteCms\Rendering\Controller\Page\SavePageController as BaseSavePageController;
+use RedKiteCms\Rendering\Controller\Deploy\SaveAllPagesController as BaseSaveAllPagesController;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * This object implements the Silex controller to save a website page
+ * This object implements the Silex controller to save the whole website
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package Controller\Page
  */
-class SavePageController extends BaseSavePageController
+class SaveAllPagesController extends BaseSaveAllPagesController
 {
     /**
-     * Save page action
+     * Save site action
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Silex\Application                        $app
@@ -40,11 +40,11 @@ class SavePageController extends BaseSavePageController
     {
         $options = array(
             "request" => $request,
-            "page_collection_manager" => $app["red_kite_cms.page_collection_manager"],
+            "deployer" => $app["red_kite_cms.deployer"],
             "block_factory" => $app["red_kite_cms.block_factory"],
             "sitemap_generator" => $app["red_kite_cms.sitemap_generator"],
-            "configuration_handler" => $app["red_kite_cms.configuration_handler"],
             "serializer" => $app["jms.serializer"],
+            "configuration_handler" => $app["red_kite_cms.configuration_handler"],
             "username" => $this->fetchUsername($app["security"], $app["red_kite_cms.configuration_handler"]),
         );
 

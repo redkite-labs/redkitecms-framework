@@ -15,9 +15,10 @@
  *
  */
 
-namespace RedKiteCms\Rendering\Controller\Page;
+namespace RedKiteCms\Rendering\Controller\Deploy;
 
 use RedKiteCms\Content\BlockManager\BlockManagerApprover;
+use RedKiteCms\Rendering\Controller\BaseController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,7 +28,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Page
  */
-abstract class BaseSavePageController extends BasePageController
+abstract class BaseSavePageController extends BaseController
 {
     protected function buldSitemap($options)
     {
@@ -54,6 +55,7 @@ abstract class BaseSavePageController extends BasePageController
                 'block_factory',
                 'sitemap_generator',
                 'configuration_handler',
+                'deployer',
             )
         );
 
@@ -63,6 +65,7 @@ abstract class BaseSavePageController extends BasePageController
                 'block_factory' => '\RedKiteCms\Content\Block\BlockFactory',
                 'sitemap_generator' => '\RedKiteCms\Content\SitemapGenerator\SitemapGenerator',
                 'configuration_handler' => '\RedKiteCms\Configuration\ConfigurationHandler',
+                'deployer' => '\RedKiteCms\Content\Content\Deploy\Deployer',
             )
         );
     }

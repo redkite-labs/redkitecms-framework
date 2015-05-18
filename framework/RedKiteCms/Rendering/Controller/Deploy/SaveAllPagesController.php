@@ -15,42 +15,35 @@
  *
  */
 
-namespace RedKiteCms\Rendering\Controller\Page;
+namespace RedKiteCms\Rendering\Controller\Deploy;
 
 use RedKiteCms\Content\BlockManager\BlockManagerApprover;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SavePageController is the object assigned to save a page in production
+ * Class SaveAllPagesController is the object assigned to save the website in production
  *
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Rendering\Controller\Page
  */
-abstract class SavePageController extends BaseSavePageController
+abstract class SaveAllPagesController extends BaseSavePageController
 {
     /**
-     * Implements the action to save the page
+     * Implements the action to save the website
      * @param array $options
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function save(array $options)
     {
-        $request = $options["request"];
         $serializer = $options["serializer"];
-        $pageManager = $options["page_collection_manager"];
-        $saveOptions = array(
-            'page' => $request->get('page'),
-            'language' => $request->get('language'),
-            'country' => $request->get('country'),
-        );
+        $deployer = $options["deployer"];
+        $languages = $options["configuration_handler"]->languages();
 
         $blockManager = new BlockManagerApprover($serializer, $options["block_factory"], new OptionsResolver());
-        $pageManager
+        $deployer
             ->contributor($options["username"])
-            ->save($blockManager, $saveOptions)
-        ;
+            ->saveAllPages($blockManager, $languages);
 
         $this->buldSitemap($options);
         $this->removeCache($options);

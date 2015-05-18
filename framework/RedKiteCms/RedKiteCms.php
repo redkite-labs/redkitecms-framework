@@ -38,6 +38,7 @@ use RedKiteCms\Content\Block\BlockFactory;
 use RedKiteCms\Content\BlockManager\BlockManager;
 use RedKiteCms\Content\BlockManager\BlockManagerApprover;
 use RedKiteCms\Content\BlockManager\BlockManagerFactory;
+use RedKiteCms\Content\Deploy\Deployer;
 use RedKiteCms\Content\PageCollection\PageCollectionManager;
 use RedKiteCms\Content\PageCollection\PagesCollectionParser;
 use RedKiteCms\Content\PageCollection\PermalinkManager;
@@ -342,12 +343,13 @@ abstract class RedKiteCms
         );
         $this->app["red_kite_cms.page_collection_manager"] = new PageCollectionManager(
             $this->app["red_kite_cms.configuration_handler"],
-            $this->app["red_kite_cms.slots_manager_factory"],
-            $this->app["dispatcher"]
+            $this->app["red_kite_cms.slots_manager_factory"]
         );
         $this->app["red_kite_cms.page_manager"] = new PageManager(
-            $this->app["red_kite_cms.configuration_handler"],
-            $this->app["dispatcher"]
+            $this->app["red_kite_cms.configuration_handler"]
+        );
+        $this->app["red_kite_cms.deployer"] = new Deployer(
+            $this->app["red_kite_cms.configuration_handler"]
         );
         $this->app["red_kite_cms.elfinder_media_connector"] = new ElFinderMediaConnector(
             $this->app["red_kite_cms.configuration_handler"]

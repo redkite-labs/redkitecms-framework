@@ -161,7 +161,7 @@ ControlPanelModel.prototype.savePage = function (view, event)
         $(document).trigger("rkcms.event.saving_page", [ self, event ]);
 
         saveQueue();
-        var url = frontcontroller + '/backend/page/save';
+        var url = frontcontroller + '/backend/deploy/save';
         var data = {
             'page':  page,
             'language': language,

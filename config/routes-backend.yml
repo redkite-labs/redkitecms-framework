@@ -14,13 +14,13 @@ _rkcms_pages_collection_approve:
     methods:  [POST]
 
 _rkcms_save_page:
-    path:     /backend/page/save
-    defaults: { _controller: 'Controller\Page\SavePageController::saveAction' }
+    path:     /backend/deploy/save
+    defaults: { _controller: 'Controller\Deploy\SavePageController::saveAction' }
     methods:  [POST]
 
 _rkcms_save_site:
     path:     /backend/page/collection/save-all
-    defaults: { _controller: 'Controller\PageCollection\SaveAllPagesController::saveAction' }
+    defaults: { _controller: 'Controller\Deploy\SaveAllPagesController::saveAction' }
     methods:  [POST]
 
 _rkcms_page_approve:

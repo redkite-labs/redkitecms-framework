@@ -64,15 +64,6 @@ SeoModel.prototype.editSeo = function()
             'seoData': _prepareSeoData()
         }
     };
-
-    /*
-    var url = frontcontroller + '/backend/page/edit';
-    var data = {
-        'page-name': page,
-        'seo-data': _prepareSeoData()
-    };
-
-    executeAjax(url, data);*/
 };
 
 SeoModel.prototype.approve = function()
