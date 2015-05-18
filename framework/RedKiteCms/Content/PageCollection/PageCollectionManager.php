@@ -21,7 +21,7 @@ use RedKiteCms\Bridge\Dispatcher\Dispatcher;
 use RedKiteCms\Bridge\Monolog\DataLogger;
 use RedKiteCms\Configuration\ConfigurationHandler;
 use RedKiteCms\Content\BlockManager\BlockManagerApprover;
-use RedKiteCms\Content\SlotsManager\SlotsManagerFactory;
+use RedKiteCms\Content\SlotsManager\SlotsManagerFactoryInterface;
 use RedKiteCms\Content\Theme\Theme;
 use RedKiteCms\EventSystem\Event\Page\PageSavedEvent;
 use RedKiteCms\EventSystem\Event\PageCollection\PageCollectionAddedEvent;
@@ -39,7 +39,6 @@ use RedKiteCms\Exception\General\InvalidArgumentException;
 use RedKiteCms\Exception\General\RuntimeException;
 use RedKiteCms\Tools\FilesystemTools;
 use RedKiteCms\Tools\Utils;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -61,11 +60,10 @@ class PageCollectionManager extends PageCollectionBase
      *
      * @param \RedKiteCms\Configuration\ConfigurationHandler $configurationHandler
      * @param \RedKiteCms\Content\SlotsManager\SlotsManagerFactory $slotsManagerFactory
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(ConfigurationHandler $configurationHandler, SlotsManagerFactory $slotsManagerFactory, EventDispatcherInterface $eventDispatcher)
+    public function __construct(ConfigurationHandler $configurationHandler, SlotsManagerFactoryInterface $slotsManagerFactory)
     {
-        parent::__construct($configurationHandler, $eventDispatcher);
+        parent::__construct($configurationHandler);
 
         $this->slotsManagerFactory = $slotsManagerFactory;
     }
@@ -74,23 +72,25 @@ class PageCollectionManager extends PageCollectionBase
      * Adds a new page to the website using the given template from the given theme
      *
      * @param \RedKiteCms\Content\Theme\Theme $theme
-     * @param $templateName
+     * @param $pageValues
      *
      * @return array Tha added page
      */
-    public function add(Theme $theme, $page)
+    public function add(Theme $theme, array $pageValues)
     {
-        $pageName = $page["name"];
+        $pageName = $pageValues["name"];
         $pageDir = $this->pagesDir . '/' . $pageName;
         $this->pageExists($pageDir);
 
-        if (!mkdir($pageDir)) {
+        // @codeCoverageIgnoreStart
+        if (!@mkdir($pageDir)) {
             $this->folderNotCreated($pageDir);
         }
+        // @codeCoverageIgnoreEnd
 
-        $seoValues = $page["seo"];
-        unset($page["seo"]);
-        $encodedPage = json_encode($page);
+        $seoValues = $pageValues["seo"];
+        unset($pageValues["seo"]);
+        $encodedPage = json_encode($pageValues);
         $pageFile = $pageDir . '/' . $this->pageFile;
         $event = Dispatcher::dispatch(PageCollectionEvents::PAGE_COLLECTION_ADDING, new PageCollectionAddingEvent($pageFile, $encodedPage));
         $encodedPage = $event->getFileContent();
@@ -106,13 +106,13 @@ class PageCollectionManager extends PageCollectionBase
             $languageDir = $pageDir . '/' . $languageName;
             @mkdir($languageDir);
             FilesystemTools::writeFile($languageDir . '/' . $this->seoFile, json_encode($seoValue));
-            $theme->addTemplateSlots($page["template"], $this->username);
+            $theme->addTemplateSlots($pageValues["template"], $this->username);
         }
 
         Dispatcher::dispatch(PageCollectionEvents::PAGE_COLLECTION_ADDED, new PageCollectionAddedEvent($pageFile, $encodedPage));
         DataLogger::log(sprintf('Page "%s" was successfully added to the website', $pageName));
 
-        return $page;
+        return $pageValues;
     }
 
     /**
@@ -133,7 +133,7 @@ class PageCollectionManager extends PageCollectionBase
 
         $pageFile = $pageDir . '/' . $this->pageFile;
         $currentValues = json_decode(FilesystemTools::readFile($pageFile), true);
-        if ($currentValues["template"] != $values["template"]) {
+        if (array_key_exists("template", $values) && $currentValues["template"] != $values["template"]) {
             Dispatcher::dispatch(
                 PageCollectionEvents::TEMPLATE_CHANGED,
                 new TemplateChangedEvent($currentValues["template"], $values["template"], $this->username)
@@ -155,7 +155,7 @@ class PageCollectionManager extends PageCollectionBase
         }
 
         Dispatcher::dispatch(PageCollectionEvents::PAGE_COLLECTION_EDITED, new PageCollectionEditedEvent($pageFile, $encodedPage));
-        DataLogger::log(sprintf('Page "%s" was successfully edited', $this->pageFile));
+        DataLogger::log(sprintf('Page "%s" was successfully edited', $currentName));
 
         return $encodedPage;
     }
@@ -260,10 +260,6 @@ class PageCollectionManager extends PageCollectionBase
     {
         // Skips the control when the page name has not been changed
         $pageName = basename($pageFolder);
-        if (null !== $currentValues && $pageName == $currentValues["name"]) {
-            return;
-        }
-
         if (is_dir($pageFolder)) {
             $exception = array(
                 "message" => 'exception_page_exists',
@@ -275,6 +271,9 @@ class PageCollectionManager extends PageCollectionBase
         }
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function folderNotCreated($folder)
     {
         $exception = array(
@@ -289,17 +288,21 @@ class PageCollectionManager extends PageCollectionBase
     private function slugifyPageName(array $values)
     {
         $slugPageName = Utils::slugify($values["name"]);
-        if ($slugPageName != $values["name"]) {
-            $event = Dispatcher::dispatch(
-                PageCollectionEvents::SLUGGING_PAGE_COLLECTION_NAME,
-                new SluggingPageNameEvent($values["name"], $slugPageName)
-            );
-            $sluggedText = $event->getChangedText();
-            if ($sluggedText != $slugPageName) {
-                $slugPageName = $sluggedText;
-            }
-            $values["name"] = $slugPageName;
+        if ($slugPageName == $values["name"]) {
+            return $values;
         }
+
+        $event = Dispatcher::dispatch(
+            PageCollectionEvents::SLUGGING_PAGE_COLLECTION_NAME,
+            new SluggingPageNameEvent($values["name"], $slugPageName)
+        );
+        $sluggedText = $event->getChangedText();
+        // @codeCoverageIgnoreStart
+        if ($sluggedText != $slugPageName) {
+            $slugPageName = $sluggedText;
+        }
+        // @codeCoverageIgnoreEnd
+        $values["name"] = $slugPageName;
 
         return $values;
     }

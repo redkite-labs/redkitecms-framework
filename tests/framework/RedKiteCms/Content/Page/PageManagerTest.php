@@ -15,12 +15,13 @@
  *
  */
 
-namespace RedKiteCms\Content\BlockManager;
+namespace RedKiteCms\Content\Page;
 
 use org\bovigo\vfs\vfsStream;
 use RedKiteCms\Bridge\Dispatcher\Dispatcher;
 use RedKiteCms\Content\BlockManager\BlockManagerApprover;
 use RedKiteCms\Content\Page\PageManager;
+use RedKiteCms\Content\PageCollection\BasePagesTest;
 use RedKiteCms\TestCase;
 
 /**
@@ -28,7 +29,7 @@ use RedKiteCms\TestCase;
  *
  * @author RedKite Labs <webmaster@redkite-labs.com>
  */
-class PageManagerTest extends TestCase
+class PageManagerTest extends BasePagesTest
 {
     /**
      * @dataProvider pagesProvider
@@ -37,17 +38,7 @@ class PageManagerTest extends TestCase
     {
         $this->init();
         $configurationHandler = $this->initConfigurationHandler();
-
-        $at = 0;
-        foreach($events as $eventName => $eventClass) {
-            $this->dispatch($at, $eventName, $eventClass);
-            $at++;
-        }
-        $at = 0;
-        foreach($logs as $logMessage) {
-            $this->log($at, 'info', $logMessage);
-            $at++;
-        }
+        $this->initDispatcherAndLogger($events, $logs);
 
         $pageManger = new PageManager($configurationHandler);
         $pageManger
@@ -291,41 +282,5 @@ class PageManagerTest extends TestCase
         );
 
         vfsStream::setup('localhost', null, $folders);
-    }
-
-    private function initConfigurationHandler()
-    {
-        $configurationHandler = $this
-            ->getMockBuilder('\RedKiteCms\Configuration\ConfigurationHandler')
-            ->disableOriginalConstructor()
-            ->setMethods(array('siteDir', 'pagesRootDir', 'pagesDir', 'pagesRemovedDir'))
-            ->getMock()
-        ;
-
-        $configurationHandler
-            ->expects($this->once())
-            ->method('siteDir')
-            ->will($this->returnValue(vfsStream::url('localhost')));
-        ;
-
-        $configurationHandler
-            ->expects($this->once())
-            ->method('pagesRootDir')
-            ->will($this->returnValue(vfsStream::url('localhost/pages')));
-        ;
-
-        $configurationHandler
-            ->expects($this->once())
-            ->method('pagesDir')
-            ->will($this->returnValue(vfsStream::url('localhost/pages/pages')));
-        ;
-
-        $configurationHandler
-            ->expects($this->once())
-            ->method('pagesRemovedDir')
-            ->will($this->returnValue(vfsStream::url('localhost/pages/removed')));
-        ;
-
-        return $configurationHandler;
     }
 }

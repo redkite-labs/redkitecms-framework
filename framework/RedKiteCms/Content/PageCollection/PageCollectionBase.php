@@ -18,8 +18,11 @@
 namespace RedKiteCms\Content\PageCollection;
 
 
+use RedKiteCms\Bridge\Dispatcher\Dispatcher;
 use RedKiteCms\Configuration\ConfigurationHandler;
+use RedKiteCms\EventSystem\Event\Event;
 use RedKiteCms\Exception\General\LogicException;
+use RedKiteCms\Tools\Utils;
 
 /**
  * Class PageCollectionBase is a base object assigned to handle common methods for pages management
