@@ -38,6 +38,9 @@
             convert_urls: false,
             relative_urls: true,
             menubar: false,
+            force_br_newlines : true,
+            force_p_newlines : false,
+            forced_root_block : '',
             extended_valid_elements: "i[*],span[class=fa-stack],span[class=glyphicon]",
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
