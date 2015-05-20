@@ -4,7 +4,11 @@
 
 {% block custom_element %}
     <script type="text/html" id="rkcms-markdown">
-        <rkcms-markdown params='{ block: $data, parent: $parent }'></rkcms-markdown>
+        <!-- ko component: {
+            name: "rkcms-markdown",
+            params: { block: $data, parent: $parent }
+        } -->
+        <!-- /ko -->
     </script>
 {% endblock %}
 

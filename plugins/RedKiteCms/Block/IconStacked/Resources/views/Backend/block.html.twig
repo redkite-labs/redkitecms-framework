@@ -4,7 +4,11 @@
 
 {% block custom_element %}
     <script type="text/html" id="rkcms-icon-stacked">
-        <rkcms-icon-stacked params='{ block: $data, parent: $parent }'></rkcms-icon-stacked>
+        <!-- ko component: {
+            name: "rkcms-icon-stacked",
+            params: { block: $data, parent: $parent }
+        } -->
+        <!-- /ko -->
     </script>
 {% endblock %}
 

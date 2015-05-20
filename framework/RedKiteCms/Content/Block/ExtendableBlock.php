@@ -51,7 +51,7 @@ abstract class ExtendableBlock extends BaseBlock
      * @param string $value
      * @param array $tags
      */
-    public function __construct($value = "", array $tags = array())
+    public function __construct($value = null, array $tags = null)
     {
         parent::__construct();
 
@@ -61,8 +61,12 @@ abstract class ExtendableBlock extends BaseBlock
         }
         // @codeCoverageIgnoreEnd
 
-        $this->value = $value;
-        $this->tags = $tags;
+        if (null !== $value) {
+            $this->value = $value;
+        }
+        if (null !== $tags) {
+            $this->tags = $tags;
+        }
         $this->updateSource();
     }
 

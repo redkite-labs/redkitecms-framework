@@ -41,6 +41,9 @@ class ThemeAligner extends ThemeBase
     {
         $themeSlots = $this->findSlotsInTemplates();
         $slots = $this->mergeSlotsByStatus($themeSlots);
+        if (!array_key_exists("page", $slots)) {
+            return;
+        }
         $pageSlots = $slots["page"];
         unset($slots["page"]);
 

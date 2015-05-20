@@ -570,7 +570,10 @@ abstract class RedKiteCms
                 $this->app["red_kite_cms.block_factory"],
                 new OptionsResolver()
             );
-            $this->app["red_kite_cms.page_collection_manager"]->saveAllPages($blockManager, array('en_GB'));
+            $this->app["red_kite_cms.deployer"]
+                ->contributor('admin')
+                ->saveAllPages($blockManager, array('en_GB'))
+            ;
         }
 
         $fileSystem = new Filesystem();
