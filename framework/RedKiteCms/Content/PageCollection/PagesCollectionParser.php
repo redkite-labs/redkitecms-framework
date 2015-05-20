@@ -88,19 +88,6 @@ class PagesCollectionParser extends PageCollectionBase
     }
 
     /**
-     * Sets the page language
-     * @param $language
-     *
-     * @return $this
-     */
-    public function currentLanguage($language)
-    {
-        $this->currentLanguage = $language;
-
-        return $this;
-    }
-
-    /**
      * Return the permalinks for the given language. By default this method returns the permalinks for the handled
      * language
      *
@@ -138,6 +125,8 @@ class PagesCollectionParser extends PageCollectionBase
     {
         $finder = new Finder();
         $pages = $finder->directories()->depth(0)->sortByName()->in($this->pagesDir);
+        $languages = $this->configurationHandler->languages();
+        $homepage = $this->configurationHandler->homepage();
         foreach ($pages as $page) {
             $pageDir = (string)$page;
             $pageName = basename($pageDir);
@@ -146,10 +135,10 @@ class PagesCollectionParser extends PageCollectionBase
                 continue;
             }
 
-            $seoDefinition = $this->fetchSeoDefinition($this->pagesDir . '/' . $pageName, $this->seoFile);
+            $seoDefinition = $this->fetchSeoDefinition($this->pagesDir . '/' . $pageName, $this->seoFile, $languages);
             $pageDefinition = json_decode(file_get_contents($pageDefinitionFile), true);
             $pageDefinition["seo"] = $seoDefinition;
-            $pageDefinition["isHome"] = $this->configurationHandler->homepage() == $pageName;
+            $pageDefinition["isHome"] = $homepage == $pageName;
 
             $this->pages[$pageName] = $pageDefinition;
         }
@@ -157,10 +146,9 @@ class PagesCollectionParser extends PageCollectionBase
         return $this;
     }
 
-    private function fetchSeoDefinition($dir, $seoFile)
+    private function fetchSeoDefinition($dir, $seoFile, $languages)
     {
         $seo = array();
-        $languages = $this->configurationHandler->languages();
         foreach ($languages as $language) {
             $languageDir = $dir . '/' . $language;
             $languageName = basename($languageDir);

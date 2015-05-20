@@ -35,32 +35,32 @@ abstract class BasePagesTest extends TestCase
         $configurationHandler = $this
             ->getMockBuilder('\RedKiteCms\Configuration\ConfigurationHandler')
             ->disableOriginalConstructor()
-            ->setMethods(array('siteDir', 'pagesRootDir', 'pagesDir', 'pagesRemovedDir', 'homepage'))
+            ->setMethods(array('siteDir', 'pagesRootDir', 'pagesDir', 'pagesRemovedDir', 'homepage', 'language', 'country', 'languages'))
             ->getMock()
         ;
 
         $configurationHandler
             ->expects($this->once())
             ->method('siteDir')
-            ->will($this->returnValue(vfsStream::url('localhost')));
+            ->will($this->returnValue(vfsStream::url('localhost')))
         ;
 
         $configurationHandler
             ->expects($this->once())
             ->method('pagesRootDir')
-            ->will($this->returnValue(vfsStream::url('localhost/pages')));
+            ->will($this->returnValue(vfsStream::url('localhost/pages')))
         ;
 
         $configurationHandler
             ->expects($this->once())
             ->method('pagesDir')
-            ->will($this->returnValue(vfsStream::url('localhost/pages/pages')));
+            ->will($this->returnValue(vfsStream::url('localhost/pages/pages')))
         ;
 
         $configurationHandler
             ->expects($this->once())
             ->method('pagesRemovedDir')
-            ->will($this->returnValue(vfsStream::url('localhost/pages/removed')));
+            ->will($this->returnValue(vfsStream::url('localhost/pages/removed')))
         ;
 
         return $configurationHandler;
