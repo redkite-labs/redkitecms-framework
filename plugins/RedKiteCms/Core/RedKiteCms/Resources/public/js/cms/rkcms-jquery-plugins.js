@@ -82,8 +82,13 @@
     function _render(target, elements)
     {
         var position = target.offset();
-        var blockWidth = target.outerWidth() + 4;
-        var blockHeight = target.outerHeight() + 6;
+        var blockWidth = target.outerWidth(true) + 4;
+        var blockHeight = target.outerHeight(true);
+        if (blockHeight == 0) {
+            // Finds the slot container to try to get its height
+            blockHeight = target.closest('.rkcms-slot').parent().outerHeight(true);
+        }
+        blockHeight += 6;
 
         $(elements['top'])
             .width(blockWidth)
