@@ -72,6 +72,11 @@ abstract class BaseBlock
     protected $revision = 0;
 
     /**
+     * @Exclude
+     */
+    protected $internal = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -213,5 +218,13 @@ abstract class BaseBlock
     public function setHistoryName($historyName)
     {
         $this->historyName = $historyName;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isInternal()
+    {
+        return $this->internal;
     }
 } 

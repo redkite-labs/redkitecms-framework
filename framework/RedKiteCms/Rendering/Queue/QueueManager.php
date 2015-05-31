@@ -83,6 +83,7 @@ class QueueManager
             return "An error occured when saving to the backend";
         }
 
+        $error = '';
         if (array_key_exists("error", $this->queue)) {
             $error = Utils::translateException($this->queue["error"]);
         }

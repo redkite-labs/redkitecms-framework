@@ -57,6 +57,7 @@ class PluginManager
 
     /**
      * Returns core and blocks assets
+     *
      * @return array
      */
     public function getAssets()

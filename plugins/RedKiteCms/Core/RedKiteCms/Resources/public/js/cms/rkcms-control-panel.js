@@ -122,6 +122,16 @@ ControlPanelModel.prototype.dashboard = function()
 
 ControlPanelModel.prototype.seoPanel = function (view, event)
 {
+    blockEditorModel
+        .setModel(null)
+        .closePanel()
+    ;
+
+    slotEditorModel
+        .setModel(null)
+        .closeEditor()
+    ;
+
     var seoModel = ko.dataFor(document.getElementById('rkcms-seo'));
     var element = $(event.target).parent();
     _toggleButtonPressed(element, seoModel.toggleBlocksEditor());

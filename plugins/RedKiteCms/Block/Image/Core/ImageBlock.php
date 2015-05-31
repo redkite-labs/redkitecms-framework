@@ -67,6 +67,7 @@ class ImageBlock extends ExtendableBlock
             "value" => $this->value,
             "tags" => $this->tags,
             "href" => $this->href,
+            "type" => $this->type,
         );
 
         $this->source = \Symfony\Component\Yaml\Yaml::dump($source, 100, 2);

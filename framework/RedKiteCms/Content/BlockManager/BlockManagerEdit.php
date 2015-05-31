@@ -88,8 +88,15 @@ class BlockManagerEdit extends BlockManager
             return $json;
         }
 
-        $parsedChildren = array();
         $children = $values["children"];
+        $values["children"] = $this->doParseChildren($children);
+
+        return json_encode($values);
+    }
+
+    private function doParseChildren(array $children)
+    {
+        $parsedChildren = array();
         foreach ($children as $child) {
             if (!array_key_exists("type", $child)) {
                 // @codeCoverageIgnoreStart
@@ -104,12 +111,15 @@ class BlockManagerEdit extends BlockManager
             $block = $this->serializer->deserialize(json_encode($updatedBlock), get_class($block), 'json');
             $block->updateSource();
 
-            $parsedChildren[] = json_decode($this->serializer->serialize($block, 'json'), true);
+            $children = json_decode($this->serializer->serialize($block, 'json'), true);
+
+            if (array_key_exists("children", $children)) {
+                $children["children"] = $this->doParseChildren($children["children"]);
+            }
+            $parsedChildren[] = $children;
         }
 
-        $values["children"] = $parsedChildren;
-
-        return json_encode($values);
+        return $parsedChildren;
     }
 
 }

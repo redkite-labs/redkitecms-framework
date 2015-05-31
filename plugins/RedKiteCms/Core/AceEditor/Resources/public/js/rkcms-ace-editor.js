@@ -36,30 +36,65 @@
                 var target = blockEditorModel.activeModel.target();
                 var $target = $(target);
 
-                if (blockEditorModel.mode() == 'inline') {
-                    width = self._options.width;
-                    height = self._options.height;
-                    _resize(width, height);
+                $(".rkcms-blocks-editor:visible")
+                    .removeClass('fullscreen')
+                ;
+                if (blockEditorModel.mode() == 'fullscreen') {
+                    $(".rkcms-blocks-editor:visible")
+                        .addClass('fullscreen')
+                        .width('100%')
+                        .height('100%')
+                        .position({
+                            of: window,
+                            my: "left top",
+                            at: "left top",
+                            collision: "none"
+                        })
+                    ;
 
-                    $(".rkcms-blocks-editor:visible").position({
-                        of: $target,
-                        my: "left-4 top+4",
-                        at: "left bottom",
-                        collision: "none"
-                    })
-                    .width(width + 20);
+                    _resize(
+                        $(".rkcms-blocks-editor:visible").width() - 22,
+                        $(".rkcms-blocks-editor:visible").height() - 58
+                    );
 
                     return;
                 }
 
-                $(".rkcms-blocks-editor:visible").position({
-                    of: $target,
-                    my: "left top",
-                    at: "left top",
-                    collision: "none"
-                })
-                .width($target.width())
-                .height($target.height());
+                if (blockEditorModel.mode() == 'inline') {
+                    width = self._options.width;
+                    height = self._options.height;
+                    var $element = $target;
+                    if ($target.height() == 0) {
+                        // Finds the slot container to try to get its height
+                        $element = $target.closest('.rkcms-slot').parent();
+                    }
+
+                    $(".rkcms-blocks-editor:visible")
+                        .width(width)
+                        .height(height)
+                        .position({
+                            of: $element,
+                            my: "left-4 top+4",
+                            at: "left bottom",
+                            collision: "none"
+                        })
+                    ;
+
+                    _resize(width - 22, height);
+
+                    return;
+                }
+
+                $(".rkcms-blocks-editor:visible")
+                    .width($target.width())
+                    .height($target.height())
+                    .position({
+                        of: $target,
+                        my: "left top",
+                        at: "left top",
+                        collision: "none"
+                    })
+                ;
 
                 width = $target.width() - 20;
                 height = $target.height() - $('.rkcms-blocks-editor-toolbar:visible').height() - 20;
@@ -84,8 +119,8 @@
     AceEditor.DEFAULTS = {
         theme: 'twilight',
         mode: 'yaml',
-        width: '450px',
-        height: '150px'
+        width: '450',
+        height: '150'
     };
 
     AceEditor.prototype.open = function()
@@ -99,7 +134,6 @@
             .width(self._options.width)
             .height(self._options.height)
         ;
-        $('.rkcms-ace-editor-error').width(self._options.width);
 
         if(self._editor != null) {
             self._editor.destroy();
@@ -154,17 +188,16 @@
             });
             var RKCMS_SCHEMA = jsyaml.Schema.create([ RkCmsYamlType ]);
 
-            var msg = "";
+            blockEditorModel.error("");
             try {
                 var obj = jsyaml.load(content, { schema: RKCMS_SCHEMA });
                 inspect(obj, false, 10);
 
                 _update(obj, content);
             } catch (err) {
-                msg = '<p>The yml code you entered is malformed:<br />' + err.message + '</p>';
+                var msg = '<p>The yml code you entered is malformed:<br />' + err.message + '</p>';
+                blockEditorModel.error(msg);
             }
-
-            blockEditorModel.error(msg);
         }
 
         function _save()
@@ -198,6 +231,9 @@
 
             var data = $this.data('rkcms.ace_editor');
             var parsedOptions = $.extend({}, AceEditor.DEFAULTS, typeof options == 'object' && options);
+
+            parsedOptions.width = parsedOptions.width.replace( /[^\d.]/g, '' );
+            parsedOptions.height = parsedOptions.height.replace( /[^\d.]/g, '' );
 
             // Rebuilds ace editor only when an editor should be opened and the model has been changed,
             // because just destroying the editor before opening it causes a wrong behavior

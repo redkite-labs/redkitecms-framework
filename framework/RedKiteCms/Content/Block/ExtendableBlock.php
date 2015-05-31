@@ -78,6 +78,7 @@ abstract class ExtendableBlock extends BaseBlock
         $source = array(
             "value" => $this->value,
             "tags" => $this->tags,
+            "type" => $this->type,
         );
 
         $this->source = Yaml::dump($source, 100, 2);

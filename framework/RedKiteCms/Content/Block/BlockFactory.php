@@ -116,8 +116,21 @@ class BlockFactory implements BlockFactoryInterface
         $finder = new Finder();
         $folders = $finder->directories()->depth(0)->in($blocksDir);
         foreach ($folders as $folder) {
-            $blockName = basename($folder);
-            $blocks[$blockName] = sprintf('RedKiteCms\Block\%s\Core\%sBlock', $blockName, $blockName);
+            $blocks = array_merge($blocks, $this->fetchBlocks($folder));
+        }
+
+        return $blocks;
+    }
+
+    private function fetchBlocks($folder)
+    {
+        $blocks = array();
+        $finder = new Finder();
+        $files = $finder->files()->depth(0)->name('*Block.php')->in($folder . '/Core');
+        $folderName = basename($folder);
+        foreach ($files as $file) {
+            $blockName = basename($file, 'Block.php');
+            $blocks[$blockName] = sprintf('RedKiteCms\Block\%s\Core\%sBlock', $folderName, $blockName);
         }
 
         return $blocks;

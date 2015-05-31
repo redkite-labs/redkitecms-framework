@@ -14,9 +14,31 @@
  *
  */
 
-#rkcms-body
-  width: 100%
-  margin: 0 auto
+$index: 100000
 
-.rkcms-block
-  cursor: pointer
+#rkcms-control-panel
+  z-index: $index
+
+.rkcms-blocks-toolbar
+  z-index: $index + 10
+
+.rkcms-blocks-editor
+  z-index: $index + 20
+
+.rkcms-preview-toolbar
+  z-index: $index + 30
+
+.rkcms-blocks-panel
+  z-index: $index + 30
+
+.popover
+  :z-index $index + 20
+
+.bootbox
+  z-index: $index + 30
+
+#rkcms-overlay-bg
+  z-index: $index + 40
+
+#rkcms-spinner
+  z-index: $index + 50

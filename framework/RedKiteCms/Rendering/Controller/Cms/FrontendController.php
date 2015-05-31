@@ -166,6 +166,13 @@ abstract class FrontendController extends BaseController
 
     protected function initTemplateAssetsManager()
     {
-        return $this->options["template_assets"];
+        $templateAssetsManager = $this->options["template_assets"];
+        $pluginManager = $this->options["plugin_manager"];
+        $templateAssetsManager
+            ->frontend()
+            ->add($pluginManager->getAssets())
+        ;
+
+        return $templateAssetsManager;
     }
 }

@@ -124,7 +124,8 @@ class Plugin
      */
     public function hasToolbar()
     {
-        return file_exists($this->pluginDir . '/Resources/views/Editor/Toolbar/_toolbar.html.twig');
+        $fileSkeleton = '/Resources/views/Editor/Toolbar/_toolbar_%s_buttons.html.twig';
+        return file_exists($this->pluginDir . sprintf($fileSkeleton, 'left')) || file_exists($this->pluginDir . sprintf($fileSkeleton, 'right'));
     }
 
     /**

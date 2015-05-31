@@ -29,7 +29,7 @@ Menu.prototype.startBlockEditing = function()
         return true;
     }
 
-    $(".rkcms-ace-editor:visible").aceEditor('open', { height: '350px' });
+    $(".rkcms-ace-editor:visible").aceEditor('open', { height: '350' });
 };
 
 ko.components.register('rkcms-menu', {

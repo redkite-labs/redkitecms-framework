@@ -58,7 +58,9 @@ abstract class ExtendableCollectionBlock extends ExtendableBlock
         $children = array();
         foreach ($this->children as $child) {
             $childValue = Yaml::parse($child->getSource());
-            $childValue["type"] = $child->getType();
+            if (is_array($childValue) && array_key_exists("type", $childValue)) {
+                $childValue["type"] = $child->getType();
+            }
             $children['item' . $i] = $childValue;
             $i++;
         }
@@ -70,6 +72,7 @@ abstract class ExtendableCollectionBlock extends ExtendableBlock
         if (!empty($this->tags)) {
             $source["tags"] = $this->tags;
         }
+        $source["type"] = $this->type;
 
         return $source;
     }

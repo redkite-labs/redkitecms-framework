@@ -1,0 +1,8 @@
+{% block body %}
+<ul {{ include('RedKiteCms/Resources/views/Block/_block_tags.html.twig') }}>
+{% for child in block.children %}
+{% set is_active = block.uri|default('') == '/' ~ child.tags.href|default('n-a') %}
+<li {% if (is_active) %}class="active"{% endif %}>{% include child.type ~ '/Resources/views/Frontend/' ~ child.type|lower ~ '.html.twig' with{"block": child} %}</li>
+{% endfor %} 
+</ul>
+{% endblock %}

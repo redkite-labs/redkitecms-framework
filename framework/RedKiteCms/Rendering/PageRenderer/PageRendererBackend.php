@@ -44,8 +44,14 @@ class PageRendererBackend
      * @type \RedKiteCms\Content\PageCollection\PagesCollectionParser
      */
     private $pagesParser;
-
+    /**
+     * @var array
+     */
     private $slots = array();
+    /**
+     * @var string
+     */
+    protected $environment = "Backend";
 
     /**
      * Constructor
@@ -114,7 +120,7 @@ class PageRendererBackend
      */
     public function renderCmsBlock(BaseBlock $block, $username, array $options = array())
     {
-        $blockTemplate = $block->getType() . '/Resources/views/Backend/block.html.twig';
+        $blockTemplate = $this->fetchTemplateBlock($block);
         if ($blockTemplate == "") {
             return "";
         }
@@ -237,5 +243,14 @@ class PageRendererBackend
         }
 
         return $result;
+    }
+
+    protected function fetchTemplateBlock(BaseBlock $block)
+    {
+        preg_match('/RedKiteCms\\\\Block\\\\([^\\\\]+)\\\\Core/',  get_class($block), $matches);
+        $pluginName = $matches[1];
+        $blockName = $block->getType();
+
+        return sprintf('%s/Resources/views/%s/%s.html.twig', $pluginName, $this->environment, strtolower($blockName));
     }
 } 

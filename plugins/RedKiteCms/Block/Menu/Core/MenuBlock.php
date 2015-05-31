@@ -41,14 +41,16 @@ class MenuBlock extends ExtendableCollectionBlock
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(array $children = array(), array $tags = array())
     {
-        $children = array(
-            new LinkBlock(),
-            new LinkBlock(),
-        );
+        if (empty($children)) {
+            $children = array(
+                new LinkBlock(),
+                new LinkBlock(),
+            );
+        }
 
-        parent::__construct($children);
+        parent::__construct($children, $tags);
     }
 
     public function uri()

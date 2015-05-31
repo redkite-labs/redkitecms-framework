@@ -44,6 +44,8 @@ saveQueue = function(){
                 });
             }
 
+            queue = {};
+
             return true;
         },
         function() {

@@ -151,6 +151,9 @@ abstract class BackendController extends FrontendController
         $availableBlocks = array();
         $blocks = $blockFactory->createAllBlocks();
         foreach($blocks as $block) {
+            if ($block->isInternal()) {
+                continue;
+            }
             $availableBlocks[$block->getType()] = JsonTools::toJson($this->options["serializer"], $block);
         }
 
@@ -184,10 +187,12 @@ abstract class BackendController extends FrontendController
      */
     protected function initTemplateAssetsManager()
     {
-        $templateAssetsManager = parent::initTemplateAssetsManager();
-
+        $templateAssetsManager = $this->options["template_assets"];
         $pluginManager = $this->options["plugin_manager"];
-        $templateAssetsManager->add($pluginManager->getAssets());
+        $templateAssetsManager
+            ->backend()
+            ->add($pluginManager->getAssets())
+        ;
 
         return $templateAssetsManager;
     }

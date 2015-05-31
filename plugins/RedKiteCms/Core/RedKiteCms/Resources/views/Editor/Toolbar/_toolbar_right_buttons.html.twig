@@ -1,0 +1,10 @@
+<button type="button" class="btn btn-danger" data-bind="click: showError, visible: toolbar.indexOf('error') != -1 && hasError">
+    <i class="fa fa-spin fa-bug"></i>
+</button>
+{% include 'RedKiteCms/Resources/views/Editor/Toolbar/_preview_button.html.twig' %}
+<a class="btn btn-default" data-bind="click: changeMode, clickBubble: false, visible: toolbar.indexOf('toggle-editor') != -1 && $data.isEditing()" href="#">
+    <i data-bind="{ 'attr': {'class': $data.mode()=='inline' ? 'fa fa-star' : 'fa fa-star-o' } }"></i>
+</a>
+<a class="btn btn-default" data-bind="click: fullscreen, visible: toolbar.indexOf('fullscreen') != -1" href="#">
+    <i class="fa fa-arrows-alt"></i>
+</a>

@@ -54,23 +54,34 @@ class ToolbarManager
      */
     public function render()
     {
-        $toolbar = $this->doRender($this->pluginManager->getCorePlugins());
-        $toolbar .= $this->doRender($this->pluginManager->getBlockPlugins());
+        $plugins = $this->pluginManager->getBlockPlugins();
 
-        return $toolbar;
-    }
-
-    private function doRender($plugins)
-    {
         $toolbar = array();
+        $left[] = $this->twig->render("RedKiteCms/Resources/views/Editor/Toolbar/_toolbar_left_buttons.html.twig");
+        $right[] = $this->twig->render("RedKiteCms/Resources/views/Editor/Toolbar/_toolbar_right_buttons.html.twig");
         foreach ($plugins as $plugin) {
             if (!$plugin->hasToolbar()) {
                 continue;
             }
 
-            $toolbar[] = $this->twig->render("RedKiteCms/Resources/views/Editor/Toolbar/_toolbar.html.twig");
+            $left[] = $this->addButtons($plugin, 'left');
+            $right[] = $this->addButtons($plugin, 'right');
         }
 
-        return implode("\n", $toolbar);
+        $toolbar["left"] = implode("\n", $left);
+        $toolbar["right"] = implode("\n", $right);
+
+        return $toolbar;
+    }
+
+    private function addButtons($plugin, $type)
+    {
+        $file = sprintf('/Resources/views/Editor/Toolbar/_toolbar_%s_buttons.html.twig', $type);
+        $realFilepath = $plugin->getPluginDir() . $file;
+        if (!is_file($realFilepath)) {
+            return "";
+        }
+
+        return $this->twig->render($plugin->getName() . $file);
     }
 }

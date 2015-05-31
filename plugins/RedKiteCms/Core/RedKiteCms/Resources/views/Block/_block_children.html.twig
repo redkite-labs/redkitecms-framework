@@ -1,4 +1,4 @@
 
 {% for child in block.children %}
-    {% include child.type ~ '/Resources/views/Frontend/block.html.twig' with{"block": child} %}
+    {% include child.type ~ '/Resources/views/Frontend/' ~ child.type|lower ~ '.html.twig' with{"block": child} %}
 {% endfor %}

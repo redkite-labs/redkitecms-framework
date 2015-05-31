@@ -48,6 +48,10 @@ class PageRendererProduction extends PageRendererBackend
      * @type array
      */
     private $mediaFiles = array();
+    /**
+     * @var string
+     */
+    protected $environment = "Frontend";
 
     /**
      * Constructor
@@ -134,9 +138,10 @@ class PageRendererProduction extends PageRendererBackend
         if (!array_key_exists("type", $values) || null === $values["type"]) {
             return "";
         }
-
+        
         $block = $this->serializer->deserialize($encodedBlock, Utils::blockClassFromType($values["type"]), 'json');
-        $content = $this->templating->render($block->getType() . '/Resources/views/Frontend/block.html.twig', array('block' => $block));
+        $blockTemplate = $this->fetchTemplateBlock($block);
+        $content = $this->templating->render($blockTemplate, array('block' => $block));
 
         // Looks for images
         $this->updateMediaFiles('src', $content);

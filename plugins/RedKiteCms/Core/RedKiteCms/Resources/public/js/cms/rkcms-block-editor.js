@@ -32,6 +32,13 @@ var BlockEditorModel = function ()
         return self.history().length == 0;
     });
 
+    self.hasError = ko.computed(function()
+    {
+        var error = self.error();
+
+        return error != undefined && error.length !== 0;
+    });
+
     _add = function(direction)
     {
         var model = self.activeModel;
@@ -124,6 +131,22 @@ var BlockEditorModel = function ()
 
         self.history(activeModel.history());
     };
+
+    _openEditor = function()
+    {
+        self.error("");
+        slotEditorModel.closeEditor();
+        _closePanels();
+        BaseEditorModel.prototype.openEditor.call(self);
+
+        var savedMode = localStorage.getItem(_storageName());
+        if(savedMode != null) {
+            self.mode(savedMode);
+        }
+        if (self.mode() == 'inplace'){
+            $(self.activeModel.target()).highlight('close');
+        }
+    }
 };
 
 BlockEditorModel.prototype = Object.create(BaseEditorModel.prototype);
@@ -148,17 +171,16 @@ BlockEditorModel.prototype.setModel = function(model)
 
 BlockEditorModel.prototype.openEditor = function()
 {
-    slotEditorModel.closeEditor();
-    _closePanels();
-    BaseEditorModel.prototype.openEditor.call(this);
+    var self = this;
+    if (self.hasError()) {
+        confirmDialog(redkitecmsDomain.frontend_confirm_close_when_an_error_exists, function(){
+            _openEditor();
+        });
 
-    var savedMode = localStorage.getItem(_storageName());
-    if(savedMode != null) {
-        this.mode(savedMode);
+        return;
     }
-    if (this.mode() == 'inplace'){
-        $(this.activeModel.target()).highlight('close');
-    }
+
+    _openEditor();
 };
 
 BlockEditorModel.prototype.closeEditor = function(keepHighlighted)
@@ -314,33 +336,57 @@ BlockEditorModel.prototype.changeMode = function()
     localStorage.setItem(_storageName(), mode);
     this.mode(mode);
 
-    var $target = $(this.activeModel.target());
+    var target = $(this.activeModel.target());
     if (mode == 'inline') {
-        $target.highlight('activate');
+        target.highlight('activate');
     } else {
-        $target.highlight('close');
+        target.highlight('close');
     }
     $(".rkcms-ace-editor:visible").aceEditor('place');
 };
 
-BlockEditorModel.prototype.toggleEditor = function(a, event)
+BlockEditorModel.prototype.toggleEditor = function()
 {
     this.isEditing(!this.isEditing());
 
     var target = this.activeModel.target();
     if (this.isEditing()) {
         this.showEditor(true);
-        $(target).highlight('close').trigger("rkcms.event.in_place_editing", [ target ]);
-    } else {
-        this.showEditor(false);
-        $('.rkcms-preview-toolbar').position({
-            of: target,
-            my: "right top",
-            at: "right top",
-            collision: "none"
-        });
-        $(target).highlight('activate').trigger("rkcms.event.in_place_preview", [ target ]);
+        if (this.mode() == 'inplace') {
+            $(target).highlight('close').trigger("rkcms.event.in_place_editing", [ target ]);
+        }
+
+        return;
     }
+
+    this.showEditor(false);
+    $('.rkcms-preview-toolbar').position({
+        of: target,
+        my: "right top",
+        at: "right top",
+        collision: "none"
+    });
+
+    $(target).highlight('activate').trigger("rkcms.event.in_place_preview", [ target ]);
+};
+
+BlockEditorModel.prototype.fullscreen = function()
+{
+    var mode = 'fullscreen';
+    if (this.mode() == mode) {
+        mode = 'inline';
+    }
+    this.mode(mode);
+    $(".rkcms-ace-editor:visible").aceEditor('place');
+
+    localStorage.setItem(_storageName(), mode);
+};
+
+BlockEditorModel.prototype.showError = function()
+{
+    var self = this;
+
+    alertDialog(self.error() , null, 'danger');
 };
 
 BlockEditorModel.prototype.insertPermalink = function()

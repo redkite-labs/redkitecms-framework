@@ -24,6 +24,8 @@ var Extendable = function (params)
     self.source = self.block.source;
     self.error = ko.observable();
     self.editor = null;
+
+    self.toolbar.push("fullscreen", "preview", "error");
 };
 
 Extendable.prototype = Object.create(Block.prototype);
@@ -79,9 +81,13 @@ var ExtendableCollection = function (params)
 ExtendableCollection.prototype = Object.create(Extendable.prototype);
 ExtendableCollection.prototype.constructor = ExtendableCollection;
 
-ExtendableCollection.prototype.update = function(newValue, source)
+ExtendableCollection.prototype.update = function(newValue, source, model)
 {
     var self = this;
+    if (model != undefined) {
+        self = model;
+    }
+
     var save = true;
     var children = [];
     for (var key in newValue.children) {
@@ -89,7 +95,7 @@ ExtendableCollection.prototype.update = function(newValue, source)
             var child = newValue.children[key];
             if ( ! child.hasOwnProperty('type')) {
                 msg = '<p>The property "type: [block type]" is mandatory for each child in a collection block: please add that property to fix the issue. The block was not saved.</p>';
-                alertDialog(msg, null, 'warning');
+                blockEditorModel.error(msg);
                 save = false;
 
                 break;

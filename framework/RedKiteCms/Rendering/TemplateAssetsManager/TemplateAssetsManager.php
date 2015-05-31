@@ -68,6 +68,10 @@ class TemplateAssetsManager
      * @type string
      */
     private $type = "";
+    /**
+     * @type string
+     */
+    private $mode = "backend";
 
     /**
      * @param \RedKiteCms\Configuration\ConfigurationHandler $configurationHandler
@@ -99,6 +103,20 @@ class TemplateAssetsManager
         $this->cacheDir = $this->configurationHandler->siteCacheDir() . '/assetic/' . $type;
         $assets = $this->configurationHandler->getAssetsByType($type);
         $this->assets = array_merge($this->assets, $assets);
+
+        return $this;
+    }
+
+    public function backend()
+    {
+        $this->mode = "backend";
+
+        return $this;
+    }
+
+    public function frontend()
+    {
+        $this->mode = "frontend";
 
         return $this;
     }
@@ -176,7 +194,12 @@ class TemplateAssetsManager
 
         $name = $plugin->getName();
         foreach ($methods as $method) {
-            $blockAssets = $plugin->$method();
+            $methodName = $method;
+            if ($this->mode == "frontend") {
+                $methodName .= 'Frontend';
+            }
+
+            $blockAssets = $plugin->$methodName();
             if (null === $blockAssets) {
                 continue;
             }

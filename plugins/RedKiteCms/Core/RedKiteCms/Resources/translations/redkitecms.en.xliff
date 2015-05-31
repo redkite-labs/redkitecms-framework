@@ -287,6 +287,12 @@
             <source>frontend_block_restoration_completed</source>
             <target>The block has been restored from history</target>
         </trans-unit>
+        <trans-unit id="frontend_confirm_close_when_an_error_exists">
+            <source>frontend_confirm_close_when_an_error_exists</source>
+            <target>The block you are editing has an error and it will NOT be saved: are you sure to continue closing the editor?</target>
+        </trans-unit>
+
+
 
         <!-- THEME -->
         <trans-unit id="themes_author">
