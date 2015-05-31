@@ -34,12 +34,6 @@ class IconStackedBlock extends ExtendableCollectionBlock
      */
     protected $value = "stacked_icon_default_value";
     /**
-     * @Type("array")
-     */
-    protected $tags = array(
-        'class' => 'fa-stack fa-lg',
-    );
-    /**
      * @Type("string")
      */
     protected $type = "IconStacked";
@@ -50,14 +44,27 @@ class IconStackedBlock extends ExtendableCollectionBlock
     /**
      * Contructor
      */
-    public function __construct()
+    public function __construct($children = null, $value = null, array $tags = array())
     {
-        $children = array(
-            new IconBlock("", array('class' => "fa fa-circle-o fa-stack-2x")),
-            new IconBlock("", array('class' => "fa fa-cog fa-stack-1x")),
-        );
+        if (null === $children) {
+            $children = array(
+                new IconBlock("", array('class' => "fa fa-circle-o fa-stack-2x")),
+                new IconBlock("", array('class' => "fa fa-cog fa-stack-1x")),
+            );
+        }
 
-        parent::__construct($children);
+        if (null !== $value) {
+            $this->value = $value;
+        }
+
+        $this->tags = array(
+            'class' => 'fa-stack fa-lg',
+        );
+        if (!empty($tags)) {
+            $this->tags = $tags;
+        }
+
+        parent::__construct($children, $tags);
     }
 
     /**

@@ -14,7 +14,11 @@
 
 {% block block_element %}
     <span data-bind="element: target, dynamicAttr: tags, foreach: children, event: { mouseenter: highlight, mouseleave: hide }, attr: { 'data-type': type, 'data-name': name, 'data-slot-name': slotName}, click: startBlockEditing">
-        <rkcms-icon params='{ block: $data, parent: $parent }'></rkcms-icon>
+        <!-- ko component: {
+            name: "rkcms-icon",
+            params: { block: $data, parent: $parent }
+        } -->
+        <!-- /ko -->
     </span>
     <!-- ko text:value --><!-- /ko -->
 {% endblock %}
