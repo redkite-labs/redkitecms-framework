@@ -40,10 +40,10 @@ class ImageBlock extends ExtendableBlock
      * @Type("array")
      */
     protected $tags = array(
-        'src' => '',
-        'data-src' => 'holder.js/260x180',
+        'src' => '/plugins/image/images/sample.jpg',
         'title' => '',
         'alt' => '',
+        'class' => 'img-responsive',
     );
     /**
      * @Type("string")

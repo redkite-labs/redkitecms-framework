@@ -19,6 +19,7 @@ namespace RedKiteCms\Content\BlockManager;
 
 use RedKiteCms\Bridge\Dispatcher\Dispatcher;
 use RedKiteCms\Bridge\Monolog\DataLogger;
+use RedKiteCms\Content\Block\BlockFactory;
 use RedKiteCms\EventSystem\BlockEvents;
 use RedKiteCms\EventSystem\Event\Block\BlockEditedEvent;
 use RedKiteCms\EventSystem\Event\Block\BlockEditingEvent;
@@ -56,7 +57,7 @@ class BlockManagerEdit extends BlockManager
         $block = JsonTools::join($currentBlock, $values);
         $encodedBlock = json_encode($block);
 
-        $blockClass = Utils::blockClassFromType($block["type"]);
+        $blockClass = BlockFactory::getBlockClass($block["type"]);
         $event = Dispatcher::dispatch(
             BlockEvents::BLOCK_EDITING,
             new BlockEditingEvent($this->serializer, $filename, $encodedBlock, $blockClass)
@@ -104,7 +105,7 @@ class BlockManagerEdit extends BlockManager
                 // @codeCoverageIgnoreEnd
             }
 
-            $block = $this->blockFactory->createBlock($child["type"]);
+            $block = BlockFactory::createBlock($child["type"]);
             $encodedBlock = $this->serializer->serialize($block, 'json');
 
             $updatedBlock = JsonTools::join($encodedBlock, $child);

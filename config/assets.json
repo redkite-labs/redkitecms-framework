@@ -29,7 +29,6 @@
         "%web_dir%/components/redkitecms/jquery-ui/jquery-ui.min.js",
         "%web_dir%/components/redkitecms/twitter-bootstrap/js/bootstrap.min.js",
         "%web_dir%/components/jquery-easing/jquery.easing.min.js",
-        "%web_dir%/components/holderjs/holder.js",
         "%web_dir%/components/knockout/knockout.min.js",
         "%web_dir%/components/knockout.mapping/knockout.mapping.js",
         "%web_dir%/components/bootbox/bootbox.js",

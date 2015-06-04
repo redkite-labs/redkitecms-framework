@@ -16,6 +16,7 @@
 
 var slotEditorModel;
 var blockEditorModel;
+var timeout = 100;
 
 $(document).ready(function()
 {
@@ -52,16 +53,8 @@ $(document).ready(function()
     var seoModel = new SeoModel($('#rkcms-seo').attr("data-seo"));
     ko.applyBindings(seoModel, document.getElementById('rkcms-seo'));
 
-    RunHolder();
     Highlight();
 });
-
-function RunHolder()
-{
-    window.setTimeout(function(){
-        Holder.run();
-    }, 1);
-}
 
 function Highlight()
 {
@@ -69,7 +62,7 @@ function Highlight()
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
-    }, 1);
+    }, timeout);
 }
 
 function mediaLibrary(url, callback)

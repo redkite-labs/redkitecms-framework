@@ -312,11 +312,9 @@ abstract class RedKiteCms
             clone $optionsResolver,
             $this->app["red_kite_cms.slot_parser"]
         );
-        $this->app["red_kite_cms.block_factory"] = new BlockFactory($this->app["red_kite_cms.configuration_handler"]);
 
         $this->app["red_kite_cms.blocks_manager_factory"] = new BlockManagerFactory(
             $this->app["jms.serializer"],
-            $this->app["red_kite_cms.block_factory"],
             clone $optionsResolver
         );
         $this->app["red_kite_cms.pages_collection_parser"] = new PagesCollectionParser($this->app["red_kite_cms.configuration_handler"]);
@@ -467,6 +465,8 @@ abstract class RedKiteCms
 
     private function boot()
     {
+
+        BlockFactory::boot($this->app["red_kite_cms.configuration_handler"]);
         Dispatcher::setDispatcher($this->app["dispatcher"]);
         DataLogger::init($this->app["monolog"]);
         Translator::setTranslator($this->app["translator"]);
@@ -489,7 +489,7 @@ abstract class RedKiteCms
             CmsEvents::CMS_BOOTING,
             new CmsBootingEvent($this->app["red_kite_cms.configuration_handler"])
         );
-        $this->app["red_kite_cms.block_factory"]->boot();
+
         $this->app["red_kite_cms.template_assets"]->boot();
         $this->app["red_kite_cms.assetic"]->addFilter('cssrewrite', new CssRewriteFilter());
     }
@@ -567,7 +567,6 @@ abstract class RedKiteCms
         if (!$isTheme) {
             $blockManager = new BlockManagerApprover(
                 $this->app["jms.serializer"],
-                $this->app["red_kite_cms.block_factory"],
                 new OptionsResolver()
             );
             $this->app["red_kite_cms.deployer"]

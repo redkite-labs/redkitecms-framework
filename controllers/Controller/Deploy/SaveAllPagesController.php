@@ -41,7 +41,6 @@ class SaveAllPagesController extends BaseSaveAllPagesController
         $options = array(
             "request" => $request,
             "deployer" => $app["red_kite_cms.deployer"],
-            "block_factory" => $app["red_kite_cms.block_factory"],
             "sitemap_generator" => $app["red_kite_cms.sitemap_generator"],
             "serializer" => $app["jms.serializer"],
             "configuration_handler" => $app["red_kite_cms.configuration_handler"],

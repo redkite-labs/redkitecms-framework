@@ -40,7 +40,7 @@ abstract class SaveAllPagesController extends BaseSavePageController
         $deployer = $options["deployer"];
         $languages = $options["configuration_handler"]->languages();
 
-        $blockManager = new BlockManagerApprover($serializer, $options["block_factory"], new OptionsResolver());
+        $blockManager = new BlockManagerApprover($serializer, new OptionsResolver());
         $deployer
             ->contributor($options["username"])
             ->saveAllPages($blockManager, $languages);

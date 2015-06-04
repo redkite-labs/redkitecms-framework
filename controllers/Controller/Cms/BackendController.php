@@ -56,7 +56,6 @@ class BackendController extends BaseBackendController
         $configurationHandler = $app["red_kite_cms.configuration_handler"];
 
         $options["skin"] = $configurationHandler->skin();
-        $options["block_factory"] = $app["red_kite_cms.block_factory"];
         $options["page_renderer"] = $app["red_kite_cms.page_renderer_backend"];
         $options["languages"] = $configurationHandler->languages();
         $options["username"] = $this->fetchUsername($app["security"], $configurationHandler);

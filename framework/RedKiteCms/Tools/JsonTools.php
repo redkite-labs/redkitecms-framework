@@ -18,6 +18,7 @@
 namespace RedKiteCms\Tools;
 
 use JMS\Serializer\Serializer;
+use RedKiteCms\Content\Block\BlockFactory;
 
 /**
  * Class JsonTools collects several methods to handle a json content
@@ -46,7 +47,7 @@ class JsonTools
             return null;
         }
 
-        $className = Utils::blockClassFromType($contentArray["type"]);
+        $className = BlockFactory::getBlockClass($contentArray["type"]);
         if (!class_exists($className)) {
             return null;
         }

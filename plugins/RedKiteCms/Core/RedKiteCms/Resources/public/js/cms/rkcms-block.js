@@ -153,7 +153,7 @@ Block.prototype.resize  = function()
     if (self.target() != null && $('.rkcms-block-menu').is(':visible')) {
         window.setTimeout(function(){
             $(self.target()).highlight('resize');
-        }, 10);
+        }, timeout);
     }
 
     return true;

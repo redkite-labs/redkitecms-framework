@@ -46,7 +46,7 @@ abstract class SavePageController extends BaseSavePageController
             'country' => $request->get('country'),
         );
 
-        $blockManager = new BlockManagerApprover($serializer, $options["block_factory"], new OptionsResolver());
+        $blockManager = new BlockManagerApprover($serializer, new OptionsResolver());
         $deployer
             ->contributor($options["username"])
             ->save($blockManager, $saveOptions)

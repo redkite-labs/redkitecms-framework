@@ -27,40 +27,38 @@ use Symfony\Component\Finder\Finder;
  * @author  RedKite Labs <webmaster@redkite-labs.com>
  * @package RedKiteCms\Content\Block
  */
-class BlockFactory implements BlockFactoryInterface
+class BlockFactory
 {
     /**
      * @type array
      */
-    private $blocks = array();
-    /**
-     * @type \RedKiteCms\Configuration\ConfigurationHandler
-     */
-    private $configurationHandler;
-
-    /**
-     * Constructor
-     *
-     * @param \RedKiteCms\Configuration\ConfigurationHandler $configurationHandler
-     */
-    public function __construct(ConfigurationHandler $configurationHandler)
-    {
-        $this->configurationHandler = $configurationHandler;
-    }
+    private static $blocks = array();
 
     /**
      * Boots the factory
      *
-     * return $this
+     * @param \RedKiteCms\Configuration\ConfigurationHandler $configurationHandler
      */
-    public function boot()
+    public static function boot(ConfigurationHandler $configurationHandler)
     {
-        $pluginDirs = $this->configurationHandler->pluginFolders();
+        $pluginDirs = $configurationHandler->pluginFolders();
         foreach ($pluginDirs as $pluginDir) {
-            $this->blocks += $this->parse($pluginDir);
+            self::$blocks += self::parse($pluginDir);
+        }
+    }
+
+    /**
+     * Returns the available blocks
+     *
+     * @return string
+     */
+    public static function getBlockClass($type)
+    {
+        if (!array_key_exists($type, self::$blocks)) {
+            return '';
         }
 
-        return $this;
+        return self::$blocks[$type];
     }
 
     /**
@@ -68,61 +66,61 @@ class BlockFactory implements BlockFactoryInterface
      *
      * @return array
      */
-    public function getAvailableBlocks()
+    public static function getAvailableBlocks()
     {
-        return $this->blocks;
+        return self::$blocks;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createBlock($type)
+    public static function createBlock($type)
     {
-        if (!array_key_exists($type, $this->blocks)) {
+        if (!array_key_exists($type, self::$blocks)) {
             throw new RuntimeException(
                 sprintf('The plugin %s is not registered: the block has not been created', $type)
             );
         }
 
-        $class = $this->blocks[$type];
+        $class = self::$blocks[$type];
 
-        return $this->instantiateBlock($class);
+        return self::instantiateBlock($class);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createAllBlocks()
+    public static function createAllBlocks()
     {
         $blocks = array();
-        foreach ($this->blocks as $blockClass) {
-            $blocks[] = $this->instantiateBlock($blockClass);
+        foreach (self::$blocks as $blockClass) {
+            $blocks[] = self::instantiateBlock($blockClass);
         }
 
         return $blocks;
     }
 
-    private function instantiateBlock($class)
+    private static function instantiateBlock($class)
     {
         $reflectionClass = new \ReflectionClass($class);
 
         return $reflectionClass->newInstance();
     }
 
-    private function parse($pluginDir)
+    private static function parse($pluginDir)
     {
         $blocks = array();
         $blocksDir = $pluginDir . '/Block';
         $finder = new Finder();
         $folders = $finder->directories()->depth(0)->in($blocksDir);
         foreach ($folders as $folder) {
-            $blocks = array_merge($blocks, $this->fetchBlocks($folder));
+            $blocks = array_merge($blocks, self::fetchBlocks($folder));
         }
 
         return $blocks;
     }
 
-    private function fetchBlocks($folder)
+    private static function fetchBlocks($folder)
     {
         $blocks = array();
         $finder = new Finder();

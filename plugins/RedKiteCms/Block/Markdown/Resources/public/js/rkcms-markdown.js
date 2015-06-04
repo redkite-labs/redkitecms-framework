@@ -53,10 +53,6 @@ Markdown.prototype.blockToJson = function()
     block.markdown = self.markdown;
 
     Highlight();
-    self.resize();
-    window.setTimeout(function(){
-        $(".rkcms-ace-editor:visible").aceEditor('place');
-    }, 100);
 
     return ko.toJSON(block);
 };

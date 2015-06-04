@@ -45,14 +45,12 @@ abstract class BlockManager extends FilesystemEntity
 
     /**
      * @param \JMS\Serializer\SerializerInterface                $serializer
-     * @param \RedKiteCms\Content\Block\BlockFactoryInterface    $blockFactory
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function __construct(SerializerInterface $serializer, BlockFactoryInterface $blockFactory, OptionsResolver $resolver)
+    public function __construct(SerializerInterface $serializer, OptionsResolver $resolver)
     {
         parent::__construct($serializer, $resolver);
 
-        $this->blockFactory = $blockFactory;
         $this->filesystem = new Filesystem();
     }
 

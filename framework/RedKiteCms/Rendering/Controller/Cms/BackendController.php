@@ -18,6 +18,7 @@
 namespace RedKiteCms\Rendering\Controller\Cms;
 
 use Controller\Cms\FrontendController;
+use RedKiteCms\Content\Block\BlockFactory;
 use RedKiteCms\Core\RedKiteCms\Core\Form\PageCollection\SeoType;
 use RedKiteCms\FilesystemEntity\Page;
 use RedKiteCms\Rendering\TemplateAssetsManager\TemplateAssetsManager;
@@ -71,7 +72,6 @@ abstract class BackendController extends FrontendController
             array(
                 'skin',
                 'languages',
-                'block_factory',
                 'form_factory',
                 'serializer',
                 'toolbar_manager',
@@ -82,7 +82,6 @@ abstract class BackendController extends FrontendController
             array(
                 'skin' => 'string',
                 'languages' => 'array',
-                'block_factory' => '\RedKiteCms\Content\Block\BlockFactory',
                 'form_factory' => '\Symfony\Component\Form\FormFactory',
                 'serializer' => '\JMS\Serializer\Serializer',
                 'toolbar_manager' => 'RedKiteCms\Rendering\Toolbar\ToolbarManager',
@@ -143,13 +142,12 @@ abstract class BackendController extends FrontendController
      */
     protected function renderSlots(Page $page)
     {
-        $blockFactory = $this->options["block_factory"];
         $templateRenderer = $this->options['page_renderer'];
 
         // We need to render all blocks to avoid problems when a kind ok block is
         // not present on a page
         $availableBlocks = array();
-        $blocks = $blockFactory->createAllBlocks();
+        $blocks = BlockFactory::createAllBlocks();
         foreach($blocks as $block) {
             if ($block->isInternal()) {
                 continue;

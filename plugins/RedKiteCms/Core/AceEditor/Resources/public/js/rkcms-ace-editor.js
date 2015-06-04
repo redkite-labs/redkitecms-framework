@@ -102,7 +102,7 @@
                     height = self._options.height;
                 }
                 _resize(width, height);
-            }, 1);
+            }, timeout);
         };
 
         function _resize(width, height)
@@ -232,8 +232,8 @@
             var data = $this.data('rkcms.ace_editor');
             var parsedOptions = $.extend({}, AceEditor.DEFAULTS, typeof options == 'object' && options);
 
-            parsedOptions.width = parsedOptions.width.replace( /[^\d.]/g, '' );
-            parsedOptions.height = parsedOptions.height.replace( /[^\d.]/g, '' );
+            parsedOptions.width = parsedOptions.width.toString().replace( /[^\d.]/g, '' );
+            parsedOptions.height = parsedOptions.height.toString().replace( /[^\d.]/g, '' );
 
             // Rebuilds ace editor only when an editor should be opened and the model has been changed,
             // because just destroying the editor before opening it causes a wrong behavior

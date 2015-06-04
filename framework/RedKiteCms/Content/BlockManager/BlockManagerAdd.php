@@ -19,6 +19,7 @@ namespace RedKiteCms\Content\BlockManager;
 
 use RedKiteCms\Bridge\Dispatcher\Dispatcher;
 use RedKiteCms\Bridge\Monolog\DataLogger;
+use RedKiteCms\Content\Block\BlockFactory;
 use RedKiteCms\EventSystem\BlockEvents;
 use RedKiteCms\EventSystem\Event\Block\BlockAddedEvent;
 use RedKiteCms\EventSystem\Event\Block\BlockAddingEvent;
@@ -101,7 +102,7 @@ class BlockManagerAdd extends BlockManager
     private function addBlock($dir, array $options, $blockName)
     {
         $filename = sprintf('%s/blocks/%s.json', $dir, $blockName);
-        $block = $this->blockFactory->createBlock($options["type"]);
+        $block = BlockFactory::createBlock($options["type"]);
         $block->setName($blockName);
         $block->setSlotName($options["slot"]);
         $blockClass = get_class($block);

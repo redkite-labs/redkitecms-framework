@@ -52,7 +52,6 @@ abstract class BaseSavePageController extends BaseController
         $resolver->setRequired(
             array(
                 'serializer',
-                'block_factory',
                 'sitemap_generator',
                 'configuration_handler',
                 'deployer',
@@ -62,7 +61,6 @@ abstract class BaseSavePageController extends BaseController
         $resolver->setAllowedTypes(
             array(
                 'serializer' => '\JMS\Serializer\Serializer',
-                'block_factory' => '\RedKiteCms\Content\Block\BlockFactory',
                 'sitemap_generator' => '\RedKiteCms\Content\SitemapGenerator\SitemapGenerator',
                 'configuration_handler' => '\RedKiteCms\Configuration\ConfigurationHandler',
                 'deployer' => '\RedKiteCms\Content\Content\Deploy\Deployer',

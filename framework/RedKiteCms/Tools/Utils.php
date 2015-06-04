@@ -92,17 +92,6 @@ class Utils
     }
 
     /**
-     * Returns the block class from type
-     *
-     * @param string $type
-     * @return string
-     */
-    public static function blockClassFromType($type)
-    {
-        return sprintf('RedKiteCms\Block\%1$s\Core\%1$sBlock', $type);
-    }
-
-    /**
      * Finds recursively differences in two arrays
      *
      * @param $aArray1

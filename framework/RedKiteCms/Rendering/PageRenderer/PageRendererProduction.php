@@ -19,6 +19,7 @@ namespace RedKiteCms\Rendering\PageRenderer;
 
 use JMS\Serializer\Serializer;
 use RedKiteCms\Configuration\ConfigurationHandler;
+use RedKiteCms\Content\Block\BlockFactory;
 use RedKiteCms\EventSystem\RenderEvents;
 use RedKiteCms\FilesystemEntity\Page;
 use RedKiteCms\FilesystemEntity\Slot;
@@ -138,8 +139,8 @@ class PageRendererProduction extends PageRendererBackend
         if (!array_key_exists("type", $values) || null === $values["type"]) {
             return "";
         }
-        
-        $block = $this->serializer->deserialize($encodedBlock, Utils::blockClassFromType($values["type"]), 'json');
+
+        $block = $this->serializer->deserialize($encodedBlock, BlockFactory::getBlockClass($values["type"]), 'json');
         $blockTemplate = $this->fetchTemplateBlock($block);
         $content = $this->templating->render($blockTemplate, array('block' => $block));
 

@@ -48,34 +48,6 @@ Image.prototype.doClosePanel = function(view)
         _initImageEditor();
     }
 };
-Image.prototype.update = function(newValue, source)
-{
-    var self = this;
-    self.value(newValue.value);
-
-    if (newValue.tags.src != "") {
-        newValue.tags["data-src"] = "";
-        $(self.target())
-            .css("width", "auto")
-            .css("height", "auto")
-        ;
-    }
-
-    if (newValue.tags.src == "") {
-        newValue.tags["data-src"] = "holder.js/260x180";
-
-    }
-
-    self.tags(newValue.tags);
-    self.href(newValue.href);
-    self.source = source;
-
-    RunHolder();
-    self.resize();
-    window.setTimeout(function(){
-        $(".rkcms-ace-editor:visible").aceEditor('place');
-    }, 100);
-};
 
 Image.prototype.blockToJson = function()
 {
@@ -88,10 +60,6 @@ Image.prototype.blockToJson = function()
 
     return ko.toJSON(block);
 };
-
-$(document).on("rkcms.event.block_added", function(){
-    RunHolder();
-});
 
 ko.components.register('rkcms-image', {
     viewModel: Image,

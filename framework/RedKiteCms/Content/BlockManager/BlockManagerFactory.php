@@ -46,13 +46,11 @@ class BlockManagerFactory
      * Constructor
      *
      * @param SerializerInterface $serializer
-     * @param BlockFactoryInterface $blockFactory
      * @param OptionsResolver $optionsResolver
      */
-    public function __construct(SerializerInterface $serializer, BlockFactoryInterface $blockFactory, OptionsResolver $optionsResolver)
+    public function __construct(SerializerInterface $serializer, OptionsResolver $optionsResolver)
     {
         $this->serializer = $serializer;
-        $this->blockFactory = $blockFactory;
         $this->optionsResolver = $optionsResolver;
     }
 
@@ -73,6 +71,6 @@ class BlockManagerFactory
 
         $reflectionClass = new \ReflectionClass($class);
 
-        return $reflectionClass->newInstance($this->serializer, $this->blockFactory, $this->optionsResolver);
+        return $reflectionClass->newInstance($this->serializer, $this->optionsResolver);
     }
 }
