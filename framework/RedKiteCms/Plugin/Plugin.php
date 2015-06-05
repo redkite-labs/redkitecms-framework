@@ -177,6 +177,7 @@ class Plugin
     {
         $paths = array(
             sprintf('%s/%s/plugins/RedKiteCms/%s/%s', $this->rootDir, $this->frameworkAbsoluteDir, $type, $name),
+            sprintf('%s/vendor/redkite-labs/redkitecms-plugins/RedKiteCms/%s/%s', $this->rootDir, $type, $name),
             sprintf('%s/app/plugins/RedKiteCms/%s/%s', $this->rootDir, $type, $name),
         );
 

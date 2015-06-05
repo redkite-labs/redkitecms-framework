@@ -173,6 +173,8 @@ abstract class RedKiteCms
                     $this->app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Core',
                     $this->app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Block',
                     $this->app["red_kite_cms.root_dir"] . '/' . $this->frameworkAbsoluteDir . '/plugins/RedKiteCms/Theme',
+                    $this->app["red_kite_cms.root_dir"] . '/vendor/redkite-labs/redkitecms-plugins/RedKiteCms/Block',
+                    $this->app["red_kite_cms.root_dir"] . '/vendor/redkite-labs/redkitecms-plugins/RedKiteCms/Theme',
                     $this->app["red_kite_cms.root_dir"] . '/app/plugins/RedKiteCms/Block',
                     $this->app["red_kite_cms.root_dir"] . '/app/plugins/RedKiteCms/Theme',
                     $this->app["red_kite_cms.root_dir"] . '/src',

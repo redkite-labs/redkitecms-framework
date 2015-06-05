@@ -299,6 +299,7 @@ class ConfigurationHandler
         return array(
             $this->corePluginsDir,
             $this->customPluginsDir,
+            realpath($this->rootDir) . '/vendor/redkite-labs/redkitecms-plugins/RedKiteCms',
         );
     }
 
