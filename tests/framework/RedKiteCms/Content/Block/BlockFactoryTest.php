@@ -29,7 +29,7 @@ use RedKiteCms\TestCase;
  */
 class BlockFactoryTest extends TestCase
 {
-    private $blockFactory;
+    private $configurationHandler;
 
     protected function setUp()
     {
@@ -37,7 +37,7 @@ class BlockFactoryTest extends TestCase
 
         $this->init();
         $configurationHandler = $this->initConfigurationHandler();
-        $this->blockFactory = new BlockFactory($configurationHandler);
+        BlockFactory::boot($configurationHandler);
     }
 
     /**
@@ -46,34 +46,34 @@ class BlockFactoryTest extends TestCase
      */
     public function testBlockNotRegistered()
     {
-        $this->blockFactory
-            ->boot()
-            ->createBlock('Foo')
-        ;
+        BlockFactory::createBlock('Foo');
     }
 
     public function testBlockCreated()
     {
-        $block = $this->blockFactory
-            ->boot()
-            ->createBlock('Link')
-        ;
+        $block = BlockFactory::createBlock('Link');
 
         $this->assertInstanceOf('\RedKiteCms\Block\Link\Core\LinkBlock', $block);
     }
 
+    public function testGetBlockClass()
+    {
+        $blockClass = BlockFactory::getBlockClass('Foo');
+        $this->assertEquals('', $blockClass);
+
+        $blockClass = BlockFactory::getBlockClass('Link');
+        $this->assertEquals('RedKiteCms\Block\Link\Core\LinkBlock', $blockClass);
+    }
+
     public function testAllBlocksCreated()
     {
-        $blocks = $this->blockFactory
-            ->boot()
-            ->createAllBlocks()
-        ;
+        $blocks = BlockFactory::createAllBlocks();
 
         $this->assertCount(2, $blocks);
         $this->assertEquals(array(
             "Link" => 'RedKiteCms\Block\Link\Core\LinkBlock',
             "Text" => 'RedKiteCms\Block\Text\Core\TextBlock',
-        ), $this->blockFactory->getAvailableBlocks());
+        ), BlockFactory::getAvailableBlocks());
         $this->assertInstanceOf('\RedKiteCms\Block\Link\Core\LinkBlock', $blocks[0]);
         $this->assertInstanceOf('\RedKiteCms\Block\Text\Core\TextBlock', $blocks[1]);
     }

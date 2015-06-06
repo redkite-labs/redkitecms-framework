@@ -33,7 +33,7 @@ class BlockManagerRemoveTest extends BlockManagerBaseTestCase
     {
         parent::setUp();
 
-        $this->blockManager = new BlockManagerRemove($this->serializer, $this->blockFactory, $this->optionsResolver);
+        $this->blockManager = new BlockManagerRemove($this->serializer, $this->optionsResolver);
     }
 
     /**

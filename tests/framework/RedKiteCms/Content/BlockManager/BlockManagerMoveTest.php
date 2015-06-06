@@ -33,7 +33,7 @@ class BlockManagerMoveTest extends BlockManagerBaseTestCase
     {
         parent::setUp();
 
-        $this->blockManager = new BlockManagerMove($this->serializer, $this->blockFactory, $this->optionsResolver);
+        $this->blockManager = new BlockManagerMove($this->serializer, $this->optionsResolver);
     }
 
     /**

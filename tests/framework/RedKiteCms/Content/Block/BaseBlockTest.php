@@ -142,6 +142,8 @@ class BaseBlockTest extends TestCase
         $this->assertEmpty($block->getHistoryName());
         $block->setHistoryName($historyName);
         $this->assertEquals($historyName, $block->getHistoryName());
+
+        $this->assertFalse($block->isInternal());
     }
 
     public function blockProvider()

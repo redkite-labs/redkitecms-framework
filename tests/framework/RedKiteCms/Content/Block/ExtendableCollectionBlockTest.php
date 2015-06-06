@@ -29,6 +29,7 @@ use RedKiteCms\TestCase;
 
 class TestExtendableCollectionBlock extends ExtendableCollectionBlock
 {
+    protected $type = "Foo";
 }
 
 
@@ -62,6 +63,7 @@ class ExtendableCollectionBlockTest extends TestCase
         $expectedSource .= "    type: Link\n";
         $expectedSource .= "tags:\n";
         $expectedSource .= "  class: bar\n";
+        $expectedSource .= "type: Foo\n";
 
         $this->assertEquals($expectedSource, $block->getSource());
 
@@ -76,6 +78,7 @@ class ExtendableCollectionBlockTest extends TestCase
         $source = "value: foo\n";
         $source .= "tags:\n";
         $source .= "  class: bar\n";
+        $source .= "type: Link\n";
 
         $link->expects($this->once())
             ->method('getSource')

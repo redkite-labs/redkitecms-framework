@@ -33,7 +33,7 @@ class BlockManagerRestoreTest extends BlockManagerBaseTestCase
     {
         parent::setUp();
 
-        $this->blockManager = new BlockManagerRestore($this->serializer, $this->blockFactory, $this->optionsResolver);
+        $this->blockManager = new BlockManagerRestore($this->serializer, $this->optionsResolver);
     }
 
     /**

@@ -18,6 +18,7 @@
 namespace RedKiteCms\Content\BlockManager;
 
 use org\bovigo\vfs\vfsStream;
+use RedKiteCms\Content\Block\BlockFactory;
 use RedKiteCms\Content\BlockManager\BlockManagerEdit;
 
 /**
@@ -33,7 +34,9 @@ class BlockManagerEditTest extends BlockManagerBaseTestCase
     {
         parent::setUp();
 
-        $this->blockManager = new BlockManagerEdit($this->serializer, $this->blockFactory, $this->optionsResolver);
+        $configurationHandler = $this->initConfigurationHandler();
+        BlockFactory::boot($configurationHandler);
+        $this->blockManager = new BlockManagerEdit($this->serializer, $this->optionsResolver);
     }
 
     /**
@@ -61,19 +64,12 @@ class BlockManagerEditTest extends BlockManagerBaseTestCase
                     ->will($this->returnValue(array("block" => "block source updated")))
                 ;
 
-                $this->blockFactory
-                    ->expects($this->at($i))
-                    ->method('createBlock')
-                    ->with('IconLinked')
-                    ->will($this->returnValue($block))
-                ;
-
                 $at++;
                 $this->serializer
 
                     ->expects($this->at($at))
                     ->method('serialize')
-                    ->with($block, 'json')
+                    ->with($this->isInstanceOf('RedKiteCms\Block\IconLinked\Core\IconLinkedBlock'))
                     ->will($this->returnValue('{"block":"encoded"}'))
                 ;
 
@@ -88,6 +84,7 @@ class BlockManagerEditTest extends BlockManagerBaseTestCase
                 $this->serializer
                     ->expects($this->at($at))
                     ->method('serialize')
+                    ->with($block, 'json')
                     ->will($this->returnValue('{"block":"encoded"}'))
                 ;
             }
@@ -113,9 +110,6 @@ class BlockManagerEditTest extends BlockManagerBaseTestCase
         $this->log(2, 'info', $logMessage);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     public function editProvider()
     {
         return array(

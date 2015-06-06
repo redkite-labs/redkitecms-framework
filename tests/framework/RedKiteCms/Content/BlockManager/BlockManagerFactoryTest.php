@@ -33,7 +33,7 @@ class BlockManagerFactoryTest extends BlockManagerBaseTestCase
     {
         parent::setUp();
 
-        $this->blockManagerFactory = new BlockManagerFactory($this->serializer, $this->blockFactory, $this->optionsResolver);
+        $this->blockManagerFactory = new BlockManagerFactory($this->serializer, $this->optionsResolver);
     }
 
     public function testCreateReturnsNullWhenBlockManagerClassDoesNotExists()

@@ -64,4 +64,26 @@ class BlockManagerBaseTestCase extends TestCase
     {
         $this->root = vfsStream::setup('root', null, $folders);
     }
+
+    protected function initConfigurationHandler()
+    {
+        $configurationHandler = $this
+            ->getMockBuilder('\RedKiteCms\Configuration\ConfigurationHandler')
+            ->disableOriginalConstructor()
+            ->setMethods(array('pluginFolders'))
+            ->getMock()
+        ;
+
+        $pluginsFolders = array(
+            __DIR__ . '/../../../../../plugins/RedKiteCms',
+        );
+
+        $configurationHandler
+            ->expects($this->once())
+            ->method('pluginFolders')
+            ->will($this->returnValue($pluginsFolders));
+        ;
+
+        return $configurationHandler;
+    }
 }

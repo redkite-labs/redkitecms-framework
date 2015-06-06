@@ -28,6 +28,7 @@ use RedKiteCms\TestCase;
 
 class TestExtendableBlock extends ExtendableBlock
 {
+    protected $type = "Foo";
 }
 
 
@@ -57,6 +58,7 @@ class ExtendableBlockTest extends TestCase
         $expectedSource = "value: foo\n";
         $expectedSource .= "tags:\n";
         $expectedSource .= "  class: bar\n";
+        $expectedSource .= "type: Foo\n";
         $this->assertEquals($expectedSource, $block->getSource());
         $this->assertEquals($tags, $block->getTags());
         $tags = array(
