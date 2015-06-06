@@ -1,8 +1,44 @@
+RedKite CMS Framework Alpha 3 (2015/06/06)
+af0ccf3 removed hover.js to generate images and added a fixed placeholder image for a new image block
+        made BlockFactory static and added getBlockClass method which replaces Utils::blockClassFromType
+62a009a fixed icon stacked block to correctly display the tags attribute when a new block is added and updated constructor parameters to be fully ovveridable; fixed backend template to use icon component
+d2bf783 added the "internal" property to BaseBlock to declare a block which cannot be added from the add blocks interface
+        BlockFactory refactored to let a plugin to handle more than one block
+        changed how blocks views must be named both for backend and frontend: they must be called as the block they represent in lower case without underscores
+        BlockManagerEdit fixed to correctly save an extendable block which contains another extendable block, saving them recursively
+        fixed the extendable blocks editor toolbar which was not correctly rendered, when new buttons were added from a custom plugin
+        added a new configuration for plugins to define the plugin assets which must be loaded when the cms is in backend or when it is in frontend
+        added fullscreen mode for ace editor
+        changed how the error is displayed for the ace editor: now a button is showed on the toolbar and the error is displayed into a bootbox alert at user request
+        fixed ace editor position, when the edited block has zero height
+        fixed and arranged the RedKite CMS panels sorting
+        added a bootbox confirm alert when a user closes ace editor and the block has an error, to give him the chance to fix the issue
+        cleared the queue when a save operation is completed; this could have caused an issue when a save operation was made by an Ajax transaction on the current page
+        the seo panel was not correctly displayed, when the add or history panel was opened: fixed
+        splitted the toolbar file in two files one for buttons displayed on the left and one for the right
+        removed single files which contain a single toolbar button: they have been added to the file which contains all the toolbar buttons
+0e9d7d7 configured tinyMCE to avoid adding P tag for new lines
+1cac597 used slot parent height when current block height is zero, to display the rectangle that wraps the candidate block for editing
+        used knockout virtual element for menu block
+c5959ac fixed ExtendableBlock value and tags assignment in contructor
+        updated RedKiteCms to use the new Deployer class to save default web site when it is bootstrapped
+        incremented z-index for control panel popover
+        used knockout virtual element to avoid rendering an extra dom element which could cause issues with template css
+9448be4 moved pages saving to Deployer class added new controllers to handle the new Deployer object
+e01a7a6 refactored PageManager to reduce complexity; added PageManager unit test
+7237028 updated IconLinkedBlock and IconStackedBlock due to changes made to ExtendableCollectionBlock
+65e726d refactored ExtendableCollectionBlock making children variable private and passing it in the contructor added unit test for ExtendableCollectionBlock
+6322dda refactored ExtendableBlock constructor; added unit test for ExtendableBlock class
+fc1bb5a removed setType and setCustomTag methods from BaseBlock fixed exception thrown in getCustomTag added unit test for BaseBlock
+39c6d52 required php 5.4 or higher
+
+
 RedKite CMS Framework Alpha 2 (2015/05/14)
 2c9aa7b showed the class where the error is raised in the queue execution flow
 ed610cd cleared options resolver in BlockManager to avoid unwanted options mix
         fixed elfinder routes to make the uploader working
         fixed html editor which does not open in certain situations
+
 
 RedKite CMS Framework Alpha 1 (2015/05/11)
 4834689 changed how tinymce editor is closed by adding a button to tinymce toolbar which closes it; removed the double click action used to close the editor
