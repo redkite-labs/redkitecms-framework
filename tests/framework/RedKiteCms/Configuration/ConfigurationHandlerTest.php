@@ -256,6 +256,7 @@ class ConfigurationHandlerTest extends TestCase
         $this->assertEquals(array(
                 "vfs://RedKiteCMS/vendor/redkitecms-framework/plugins/RedKiteCms",
                 "vfs://RedKiteCMS/app/plugins/RedKiteCms",
+                "/vendor/redkite-labs/redkitecms-plugins/RedKiteCms",
         ), $configurationHandler->pluginFolders());
 
         $this->assertEmpty($configurationHandler->handledTheme());

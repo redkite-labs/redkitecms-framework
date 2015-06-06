@@ -34,7 +34,7 @@ class BlockManagerArchiveTest extends BlockManagerBaseTestCase
     {
         parent::setUp();
 
-        $this->blockManager = new BlockManagerArchive($this->serializer, $this->blockFactory, $this->optionsResolver);
+        $this->blockManager = new BlockManagerArchive($this->serializer, $this->optionsResolver);
     }
 
     /**

@@ -18,6 +18,7 @@
 namespace RedKiteCms\Content\BlockManager;
 
 use org\bovigo\vfs\vfsStream;
+use RedKiteCms\Content\Block\BlockFactory;
 use RedKiteCms\Content\BlockManager\BlockManagerAdd;
 
 /**
@@ -32,8 +33,10 @@ class BlockManagerAddTest extends BlockManagerBaseTestCase
     protected function setUp()
     {
         parent::setUp();
-        
-        $this->blockManager = new BlockManagerAdd($this->serializer, $this->blockFactory, $this->optionsResolver);
+
+        $configurationHandler = $this->initConfigurationHandler();
+        BlockFactory::boot($configurationHandler);
+        $this->blockManager = new BlockManagerAdd($this->serializer, $this->optionsResolver);
     }
 
     /**
@@ -42,58 +45,21 @@ class BlockManagerAddTest extends BlockManagerBaseTestCase
     public function testAdd($folders, $options, $blockAddedName, $expectedAddedBlocks, $logMessage,  $username = 'john')
     {
         $this->configureFilesystem($folders);
-        $block = $this->configureBlock($blockAddedName, $options);
-        
-        $this->configureBlockFactory($block, $options);
-        $this->configureSerializer($block);
+        $this->configureSerializer();
 
         $this->checkDispatcher();
         $this->checkLogger($logMessage);
-
 
         $this->blockManager->add(vfsStream::url('root\redkitecms.com'), $options, $username);
         $this->checkBlockFiles($expectedAddedBlocks);
     }
 
-    private function configureBlockFactory($block, array $options)
-    {
-        $this->blockFactory
-            ->expects($this->once())
-            ->method('createBlock')
-            ->with($options["type"])
-            ->will($this->returnValue($block))
-        ;
-
-        return $block;
-    }
-
-    private function configureBlock($blockAddedName, array $options)
-    {
-        $block = $this
-            ->getMockBuilder('RedKiteCms\Block\Link\Core\LinkBlock')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-        $block
-            ->expects($this->once())
-            ->method('setName')
-            ->with($blockAddedName)
-        ;
-        $block
-            ->expects($this->once())
-            ->method('setSlotName')
-            ->with($options["slot"])
-        ;
-
-        return $block;
-    }
-
-    private function configureSerializer($block)
+    private function configureSerializer()
     {
         $this->serializer
             ->expects($this->once())
             ->method('serialize')
-            ->with($block, 'json')
+            ->with($this->isInstanceOf('RedKiteCms\Block\Link\Core\LinkBlock'))
             ->will($this->returnValue('{"foo":"bar"}'))
         ;
     }

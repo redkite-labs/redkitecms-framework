@@ -33,7 +33,7 @@ class BlockManagerApproverTest extends BlockManagerBaseTestCase
     {
         parent::setUp();
 
-        $this->blockManager = new BlockManagerApprover($this->serializer, $this->blockFactory, $this->optionsResolver);
+        $this->blockManager = new BlockManagerApprover($this->serializer, $this->optionsResolver);
     }
 
     /**
