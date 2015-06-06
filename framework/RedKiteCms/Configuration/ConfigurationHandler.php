@@ -60,7 +60,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConfigurationHandler
 {
-    const VERSION = "2.0.0-alpha2";
+    const VERSION = "2.0.0-alpha3";
 
     /**
      * @type string
