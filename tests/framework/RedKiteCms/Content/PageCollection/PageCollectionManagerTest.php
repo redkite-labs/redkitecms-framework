@@ -144,39 +144,7 @@ class PageCollectionManagerTest extends BasePagesTest
         $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
         $this->assertEquals($expectedPage, $structure["localhost"]["pages"]["pages"]);
     }
-
-    /**
-     * @expectedException \RedKiteCms\Exception\General\InvalidArgumentException
-     * @expectedExceptionMessage {"message":"exception_page_exists","parameters":{"%page_name%":"homepage"}}
-     */
-    public function testEditPageFailsBecausePageAlreadyExists()
-    {
-        $pages = array(
-            "new-page-1" => array(
-                "admin.json" => '{"name":"new-page-1","currentName":"new-page-1","template":"home","isHome":false}',
-                "page.json" => '{"name":"new-page-1","currentName":"new-page-1","template":"home","isHome":false}',
-                "en_GB" => array(
-                    "admin.json" => '{"permalink":"en-gb-new-page-1","title":"new-page-1-title","description":"new-page-1-description","keywords":"new-page-1-keywords","sitemap_frequency":"monthly","sitemap_priority":"0.5"}',
-                ),
-            ),
-            "homepage" => array(
-                "admin.json" => '{"name":"homepage","currentName":"new-page-1","template":"home","isHome":false}',
-                "page.json" => '{"name":"new-page-1","currentName":"new-page-1","template":"home","isHome":false}',
-                "en_GB" => array(
-                    "admin.json" => '{"permalink":"en-gb-new-page-1","title":"new-page-1-title","description":"new-page-1-description","keywords":"new-page-1-keywords","sitemap_frequency":"monthly","sitemap_priority":"0.5"}',
-                ),
-            ),
-        );
-        $this->init($pages);
-        $values = array(
-            "name" => "homepage",
-            "currentName" => "new-page-1",
-        );
-        $this->pageManger
-            ->contributor('admin')
-            ->edit($values)
-        ;
-    }
+    
     /**
      * @dataProvider pagesProvider
      */
