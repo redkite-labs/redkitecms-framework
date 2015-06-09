@@ -143,7 +143,6 @@ class PageCollectionManager extends PageCollectionBase
 
         $values = $this->slugifyPageName($values);
         $targetFolder = $this->pagesDir . '/' . $values["name"];
-        $this->pageExists($targetFolder, $currentValues);
 
         $encodedPage = json_encode($values);
         $event = Dispatcher::dispatch(PageCollectionEvents::PAGE_COLLECTION_EDITING, new PageCollectionEditingEvent($pageFile, $encodedPage));
@@ -184,7 +183,7 @@ class PageCollectionManager extends PageCollectionBase
         DataLogger::log(sprintf('Page "%s" was successfully removed from website', $pageName));
     }
 
-    private function pageExists($pageFolder, array $currentValues = null)
+    private function pageExists($pageFolder)
     {
         // Skips the control when the page name has not been changed
         $pageName = basename($pageFolder);
