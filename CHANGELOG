@@ -1,3 +1,6 @@
+RedKite CMS Framework Alpha 4 (2015/06/09)
+ea7de2d fixed bug which causes a false positive error when adding and immediately editing a new page
+
 RedKite CMS Framework Alpha 3 (2015/06/06)
 af0ccf3 removed hover.js to generate images and added a fixed placeholder image for a new image block
         made BlockFactory static and added getBlockClass method which replaces Utils::blockClassFromType
