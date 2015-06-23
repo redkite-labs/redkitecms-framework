@@ -384,6 +384,12 @@ class ConfigurationHandler
 
         $this->createImagesDir($this->uploadAssetsDir);
         $this->createImagesDir($this->uploadAssetsDirProduction);
+
+        $folders = array(
+            $this->logDir,
+            $this->cacheDir,
+        );
+        $this->filesystem->mkdir($folders);
     }
 
     private function createImagesDir($imagesDir)
